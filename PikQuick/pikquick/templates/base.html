@@ -10,7 +10,6 @@
         <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}">
 
         {% block css %}
-
         {% endblock %}
 
         <!--optimizacion para moviles-->
@@ -42,6 +41,8 @@
             </nav>
         </div>
 
+    {% block post %}
+    {% endblock %}
     {% block content %}
     {% endblock %}
 

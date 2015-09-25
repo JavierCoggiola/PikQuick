@@ -6,12 +6,15 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import requires_csrf_token
 from django.core.mail import send_mail
 from django.http import HttpResponse
+from pikquick.models import Entrada
 
 # Create your views here.
 @login_required(login_url='/usuario/ingreso')
 def inicio(request):
     context = RequestContext(request)
+    posts = Entrada.objects.filter(published = True)
     return render_to_response('inicio.html',
+                              {'posts':posts},
                               context)
 
 @login_required(login_url='/usuario/ingreso')
@@ -87,4 +90,37 @@ def cambiar_pass(request):
             login(request, user)
             return redirect("/ajustes")
     return render_to_response('ajustes.html',
+                              context)
+
+@login_required(login_url='/usuario/ingreso')
+def ver_post(request,id_post):
+    context = RequestContext(request)
+    mi_post = Entrada.objects.get(id = id_post)
+    mensajes = Mensajes.objects.filter(published_in = mi_post, published = True)
+
+    return render_to_response('post.html',
+                              {'post':mi_post,},
+                              context)
+
+@login_required(login_url='/usuario/ingreso')
+def nuevapublic(request):
+    context = RequestContext(request)
+    return render_to_response('nuevapublic.html',
+                              context)
+
+@login_required(login_url='/usuario/ingreso')
+def crear_public(request):
+    context = RequestContext(request)
+    if request.method=='POST':
+        pub=Entrada()
+        pub.titulo=request.POST['titulo']
+        pub.autor=request.POST['autor']
+        pub.fecha=request.POST['fecha']
+        pub.img1=request.FILES['img1']
+        pub.img2=request.FILES['img2']
+        pub.desc1=request.POST['desc1']
+        pub.desc2=request.POST['desc2']
+        pub.save()
+
+    return render_to_response('nuevapublic.html',
                               context)
