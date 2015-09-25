@@ -97,7 +97,6 @@ def ver_post(request,id_post):
     context = RequestContext(request)
     mi_post = Entrada.objects.get(id = id_post)
     mensajes = Mensajes.objects.filter(published_in = mi_post, published = True)
-
     return render_to_response('post.html',
                               {'post':mi_post,},
                               context)
@@ -113,14 +112,13 @@ def crear_public(request):
     context = RequestContext(request)
     if request.method=='POST':
         pub=Entrada()
-        pub.titulo=request.POST['titulo']
-        pub.autor=request.POST['autor']
-        pub.fecha=request.POST['fecha']
+        pub.titulo=request.user.username
+        #pub.autor=request.POST['autor']
+        #pub.fecha=request.POST['fecha']
         pub.img1=request.FILES['img1']
         pub.img2=request.FILES['img2']
         pub.desc1=request.POST['desc1']
         pub.desc2=request.POST['desc2']
         pub.save()
-
     return render_to_response('nuevapublic.html',
                               context)
