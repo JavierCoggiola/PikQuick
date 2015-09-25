@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import requires_csrf_token
 from django.core.mail import send_mail
 from django.http import HttpResponse
-from pikquick.models import Entrada
+from pikquick.models import Entrada, Coment
 
 # Create your views here.
 @login_required(login_url='/usuario/ingreso')
@@ -117,6 +117,7 @@ def crear_public(request):
         pub.img2=request.FILES['img2']
         pub.desc1=request.POST['desc1']
         pub.desc2=request.POST['desc2']
+        pub.descPub=request.POST['descPub']
         pub.save()
     return render_to_response('nuevapublic.html',
                               context)
