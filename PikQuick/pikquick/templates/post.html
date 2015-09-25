@@ -1,0 +1,48 @@
+{% for post in posts %}
+<div class='section white center'>
+    <div class='container' style='background: #f5f5f5;'>
+        <div class='container' style='background:#f5f5f5; width:100%'>
+            <ul class='collection'>
+                <li class='collection-item avatar'>
+                    <img src='' alt='' class='circle'>
+                    <a href='#!' class='title'>{{post.titulo}}</a>
+                    <i class='material-icons'>{{post.autor}}</i>
+                    <a class='secondary-content'>
+                        <i class='material-icons'>{{post.fecha}}</i>
+                    </a>
+                </li>
+            </ul>
+            <div class='row'>
+                <div class="col s12 m6">
+                    <div class="card">
+                        <div class="card-image">
+                            <img class='activator' src='{{ MEDIA_URL }}{{post.img1}}' style='width:90%; height:90%; margin-top:4%'>
+                        </div>
+                        <div class="card-content">
+                            <p>{{post.desc1}}</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m6">
+                    <div class="card">
+                        <div class="card-image">
+                            <img class='activator' src='{{ MEDIA_URL }}{{post.img2}}' style='width:90%; height:90%; margin-top:4%'>
+                        </div>
+                        <div class="card-content">
+                            <p>{{post.desc2}}</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{post.descPub}}
+    </div>
+    Comentarios
+</div>
+{% endfor %}

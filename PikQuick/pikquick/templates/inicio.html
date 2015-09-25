@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block post %}
-<div id="containLib" class="container center" style="width:100%"></div>
+<div id="containLib" class="container center" style="width:100%">{% include 'post.html' %}</div>
 {% endblock %}
 
 {% block scripts %}
 <script>
-    var elementoAnterior=1;
+    /*var elementoAnterior=1;
 
     $(function() {
         {% for post in posts %}
