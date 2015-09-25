@@ -112,9 +112,7 @@ def crear_public(request):
     context = RequestContext(request)
     if request.method=='POST':
         pub=Entrada()
-        pub.titulo=request.user.username
-        #pub.autor=request.POST['autor']
-        #pub.fecha=request.POST['fecha']
+        pub.usuario=request.user.username
         pub.img1=request.FILES['img1']
         pub.img2=request.FILES['img2']
         pub.desc1=request.POST['desc1']

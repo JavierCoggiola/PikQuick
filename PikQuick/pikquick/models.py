@@ -8,7 +8,7 @@ class Entrada(models.Model):
         verbose_name_plural = "Todas las Publicaciones"
         ordering = ['-fecha']
 
-    titulo = models.CharField(u'Título', max_length = 100)
+    usuario = models.CharField(u'Usuario', max_length = 100)
     fecha = models.DateTimeField(u'Fecha del Post',auto_now_add=True)
     img1 = models.FileField(u'Imagen de portada',upload_to = 'img_public', default='null')
     img2 = models.FileField(u'Imagen de portada',upload_to = 'img_public', default='null')
@@ -17,4 +17,4 @@ class Entrada(models.Model):
     published = models.BooleanField(u'Publicado?', default=True)
 
     def __str__(self):
-        return self.titulo
+        return self.usuario
