@@ -18,7 +18,7 @@ class Entrada(models.Model):
     published = models.BooleanField(u'Publicado?', default=True)
 
     def __str__(self):
-        return self.usuario + " / "+self.descPub
+        return self.usuario.encode('utf8') + " / "+self.descPub.encode('utf8')
 
 class Coment(models.Model):
     nombre = models.CharField(u'Nombre', max_length=100)
