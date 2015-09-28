@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-
 <title>Subir imagenes</title>
 
 <div class="container">
@@ -8,7 +7,6 @@
         {% csrf_token %}
         <div class="card-panel red darken-3 row">
             <div class="input-field file-field col s2">
-                <!--<input class="file-path validate" name="imagen" type="text" value="">!-->
                 <div class="card-panel red lighten-1 waves-effect waves-orange btn" style="position:relative">
                     <span>Imagen 1</span>
                     <input type="file" name="img1"/>
@@ -27,9 +25,19 @@
             <div class="input-field col s8">
                 <input placeholder="Pregunta de la publicacion" maxlength="100" name="descPub" type="text" value="">
             </div>
-            </div>
-            <button class="card-panel red lighten-1 waves-effect waves-orange btn col s2 offset-s10" id="crear" type="submit">Subir Publicacion</button>
         </div>
+        <button class="card-panel red lighten-1 waves-effect waves-orange btn col s2 offset-s10" id="crear" type="submit">Subir Publicacion</button>
     </form>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$('#crear').click(function() {
+        if($('input:file[name=img1]').val()=="" || $('input:file[name=img2]').val()==""){
+            Materialize.toast('Debe cargar las imagenes', 2000)
+        }else{
+        }
+    });
+</script>
 {% endblock %}

@@ -12,10 +12,10 @@ class Entrada(models.Model):
     fecha = models.DateTimeField(u'Fecha del Post',auto_now_add=True)
     img1 = models.FileField(u'Imagen de portada',upload_to = 'img_public', default='null')
     img2 = models.FileField(u'Imagen de portada',upload_to = 'img_public', default='null')
-    desc1 = models.TextField(u'Epigrafe Imagen 1' , max_length = 100 , default='')
-    desc2 = models.TextField(u'Epigrafe Imagen 2' , max_length = 100 , default='')
-    descPub = models.TextField(u'Descripcion de la Publicacion' , max_length = 100 , default='Quien')
-    published = models.BooleanField(u'Publicado?', default=True)
+    desc1 = models.TextField(u'Descripcion Imagen 1' , max_length = 100 , default='')
+    desc2 = models.TextField(u'Descripcion Imagen 2' , max_length = 100 , default='')
+    descPub = models.TextField(u'Descripcion de la Publicacion' , max_length = 100 , default='Cual')
+    published = models.BooleanField(u'¿Publicado?', default=True)
 
     def __str__(self):
         return self.usuario.encode('utf8') + " / "+self.descPub.encode('utf8')
