@@ -25,5 +25,6 @@ class Coment(models.Model):
     mensaje = models.TextField(u'Mensaje')
     postDelComent = models.ForeignKey(Entrada)
     fecha = models.DateTimeField(u'Fecha del comentario',auto_now_add=True)
+
     def __str__(self):
         return "Nombre: "+self.nombre.encode('utf8')+" / Mensaje: "+self.mensaje.encode('utf8')
