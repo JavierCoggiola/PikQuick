@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+
+    <head>
+        <!--Import materialize-->
+        <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}"  media="screen,projection"/>
+        <link rel="icon" type="image/png" href="{% static 'images/miniLogo.png' %}">
+        <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}">
+
+        {% block css %}
+        {% endblock %}
+
+        <!--optimizacion para moviles-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body>
+
+        <div class="page-wrap">
+            <nav class="red darken-4" role="navigation">
+                <div class="nav-wrapper container">
+                    <a id="logo-container" href="{% url 'pikquick:inicio' %}" class="truncate brand-logo center"><img src="{% static 'images/logo.png' %}"></img></a>
+
+                <a class="waves-effect circle button-collapse" style="margin:0 0 0 -50px;" href="#" data-activates="nav-mobile"><i class="mdi-navigation-menu"></i></a></div>
+            </nav>
+        </div>
+
+    {% block content %}
+    {% endblock %}
+
+    <footer class="page-footer orange lighten-2">
+        <div class="container">
+            <div class="row">
+                <div class="center-align">
+                    <ul>
+                        <a href="https://www.facebook.com" class="waves-effect blue darken-4 btn-large"><i class="fa fa-facebook-official"></i> FACEBOOK</a>
+                        <a href="https://twitter.com"class="waves-effect light-blue accent-2 btn-large"><i class="fa fa-twitter"></i>TWITTER</a>
+                        <a href="https://instagram.com"class="waves-effect brown btn-large"><i class="fa fa-instagram"></i> INSTAGRAM</a>
+                        <a href="https://plus.google.com"class="waves-effect red btn-large"><i class="fa fa-google-plus-square"></i> GOOGLE+</a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container center-align">
+                © 2015 All rights reserved to PikQuick
+            </div>
+        </div>
+    </footer>
+
+    </body>
+
+<!--Imports (jquery antes que materialize)-->
+<script type="text/javascript" src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+
+{% block scripts %}
+{% endblock %}
+</html>
