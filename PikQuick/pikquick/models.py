@@ -21,9 +21,11 @@ class Entrada(models.Model):
         return self.usuario.encode('utf8') + " / "+self.descPub.encode('utf8')
 
 class Coment(models.Model):
-    nombre = models.CharField(u'Nombre', max_length=100)
-    mensaje = models.TextField(u'Mensaje')
-    postDelComent = models.ForeignKey(Entrada)
-    fecha = models.DateTimeField(u'Fecha del comentario',auto_now_add=True)
+    usuario = models.CharField(u'Usuario', max_length = 100, default=' ')
+    fecha_pub = models.DateTimeField('date published', auto_now_add=True)
+    coment_txt = models.TextField('Comentatrio', max_length=100)
+    published = models.BooleanField(u'Publicado?', default=True)
+    entrada = models.ForeignKey(Entrada)
+
     def __str__(self):
-        return "Nombre: "+self.nombre.encode('utf8')+" / Mensaje: "+self.mensaje.encode('utf8')
+        return self.coment_txt.encode('utf8') + self.usuario.encode('utf8')
