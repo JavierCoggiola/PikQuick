@@ -10,6 +10,9 @@
                     <a class='secondary-content'>
                         <i class='material-icons'>{{post.fecha}}</i>
                     </a>
+                    {% if user.is_staff %}
+                    <a href=""><i class="fa fa-trash-o" style="margin-right:1%"></i>Eliminar</a>
+                    {% endif %}
                 </li>
             </ul>
             <div class='row'>
