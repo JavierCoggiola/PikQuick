@@ -13,7 +13,7 @@ from pikquick.models import Entrada, Coment
 @login_required(login_url='/usuario/ingreso')
 def inicio(request):
     context = RequestContext(request)
-    posts = Entrada.objects.filter(published = True)
+    posts = Entrada.objects.all
     return render_to_response('inicio.html',
                               {'posts':posts},
                               context)
@@ -97,7 +97,7 @@ def cambiar_pass(request):
 def ver_post(request,id_post):
     context = RequestContext(request)
     mi_post = Entrada.objects.get(id = id_post)
-    mensajes = Mensajes.objects.filter(published_in = mi_post, published = True)
+    mensajes = Mensajes.objects.filter(published_in = mi_post)
     return render_to_response('post.html',
                               {'post':mi_post,},
                               context)
