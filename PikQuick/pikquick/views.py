@@ -13,7 +13,7 @@ from pikquick.models import Entrada, Coment
 @login_required(login_url='/usuario/ingreso')
 def inicio(request):
     context = RequestContext(request)
-    posts = Entrada.objects.filter(published = True)
+    posts = Entrada.objects.all
     return render_to_response('inicio.html',
                               {'posts':posts},
                               context)
@@ -38,15 +38,19 @@ def enviar_mail(request):
 def nuevo_usuario(request):
     context = RequestContext(request)
     if request.method=='POST':
-        n_u=User()
         username=request.POST['username']
-        n_u.username=username
-        n_u.email=request.POST['email']
-        password=request.POST['password']
-        n_u.set_password(password)
-        n_u.save()
-        user = authenticate(username=username, password=password)
-        login(request, user)
+        try:
+            user = User.objects.get(username=username)
+            return HttpResponse(status=203)
+        except User.DoesNotExist:
+            n_u=User()
+            n_u.username=username
+            n_u.email=request.POST['email']
+            password=request.POST['password']
+            n_u.set_password(password)
+            n_u.save()
+            user = authenticate(username=username, password=password)
+            login(request, user)
         return redirect('/')
     return render_to_response('nuevousuario.html',
                               context)
@@ -97,7 +101,7 @@ def cambiar_pass(request):
 def ver_post(request,id_post):
     context = RequestContext(request)
     mi_post = Entrada.objects.get(id = id_post)
-    mensajes = Mensajes.objects.filter(published_in = mi_post, published = True)
+    mensajes = Mensajes.objects.filter(published_in = mi_post)
     return render_to_response('post.html',
                               {'post':mi_post,},
                               context)
@@ -120,5 +124,6 @@ def crear_public(request):
         pub.desc2=request.POST['desc2']
         pub.descPub=request.POST['descPub']
         pub.save()
+        return redirect("/")
     return render_to_response('nuevapublic.html',
                               context)

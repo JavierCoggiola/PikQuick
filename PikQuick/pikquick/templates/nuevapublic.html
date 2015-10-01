@@ -3,21 +3,29 @@
 <title>Subir imagenes</title>
 
 <div class="container">
-    <form action="{% url 'pikquick:crear_public' %}" method="POST" enctype="multipart/form-data">
+    <form action="{% url 'pikquick:crear_public' %}" method="POST" enctype="multipart/form-data" id="cargar">
         {% csrf_token %}
         <div class="card-panel red darken-3 row">
-            <div class="input-field file-field col s2">
-                <div class="card-panel red lighten-1 waves-effect waves-orange btn" style="position:relative">
+
+            <div class="input-field file-field col s2 m6">
+                <img id='blah' src="#" alt='your image' style='width:270px; height:320px;'/>
+                <div class="card-panel red lighten-1 waves-effect waves-orange btn" style="position:fixed">
                     <span>Imagen 1</span>
                     <input type='file' id='imgInp' name="img1"/>
                 </div>
-                <div class="card-panel red lighten-1 waves-effect waves-orange btn" style="position:relative">
+            </div>
+            <div class="input-field file-field col s2 m6">
+                <img id='blah1' src="#" alt='your image' style='width:270px; height:320px;'/>
+                <div class="card-panel red lighten-1 waves-effect waves-orange btn" style="position:fixed">
                     <span>Imagen 2</span>
                     <input type='file' id='imgInp1' name='img2'/>
                 </div>
             </div>
+<<<<<<< HEAD
             <img id='blah' src="#" alt='your image' style='width:300px; height:300px;'/>
             <img id='blah1' src="#" alt='your image' style='width:300px; height:300px;'/>
+=======
+>>>>>>> origin/master
             <div class="input-field col s8">
                 <input placeholder="Comentario foto 1" maxlength="100" name="desc1" type="text" value="">
             </div>
@@ -28,7 +36,7 @@
                 <input placeholder="Pregunta de la publicacion" maxlength="100" name="descPub" type="text" value="">
             </div>
         </div>
-        <button class="card-panel red lighten-1 waves-effect waves-orange btn col s2 offset-s10" id="crear" type="submit">Subir Publicacion</button>
+        <a href="#" class="card-panel red lighten-1 waves-effect waves-orange btn col s2 offset-s10" id="crear">Subir Publicacion</a>
     </form>
 </div>
 {% endblock %}
@@ -38,37 +46,31 @@
 
     $('#crear').click(function() {
         if($('input:file[name=img1]').val()=="" || $('input:file[name=img2]').val()==""){
-            Materialize.toast('Debe cargar las imagenes', 2000)
+            Materialize.toast('Debe cargar las imagenes', 2500)
         }else{
+            $("#cargar").submit();
         }
     });
 
     function readURL(input) {
-
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-
             reader.onload = function (e) {
                 $('#blah').attr('src', e.target.result);
             }
-
             reader.readAsDataURL(input.files[0]);
         }
     }
-
     $('#imgInp').change(function(){
         readURL(this);
     });
 
     function readURL1(input) {
-
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-
             reader.onload = function (e) {
                 $('#blah1').attr('src', e.target.result);
             }
-
             reader.readAsDataURL(input.files[0]);
         }
     }

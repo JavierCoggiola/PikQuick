@@ -14,8 +14,7 @@ class Entrada(models.Model):
     img2 = models.FileField(u'Imagen de portada',upload_to = 'img_public', default='null')
     desc1 = models.TextField(u'Descripcion Imagen 1' , max_length = 100 , default='')
     desc2 = models.TextField(u'Descripcion Imagen 2' , max_length = 100 , default='')
-    descPub = models.TextField(u'Descripcion de la Publicacion' , max_length = 100 , default='Cual')
-    published = models.BooleanField(u'¿Publicado?', default=True)
+    descPub = models.TextField(u'Descripcion de la Publicacion' , max_length = 100 , default='Help')
 
     def __str__(self):
         return self.usuario.encode('utf8') + " / "+self.descPub.encode('utf8')
