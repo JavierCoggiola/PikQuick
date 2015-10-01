@@ -120,5 +120,6 @@ def crear_public(request):
         pub.desc2=request.POST['desc2']
         pub.descPub=request.POST['descPub']
         pub.save()
+        return redirect("/")
     return render_to_response('nuevapublic.html',
                               context)

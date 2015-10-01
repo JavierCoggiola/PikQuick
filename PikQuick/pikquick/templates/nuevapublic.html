@@ -3,7 +3,7 @@
 <title>Subir imagenes</title>
 
 <div class="container">
-    <form action="{% url 'pikquick:crear_public' %}" method="POST" enctype="multipart/form-data">
+    <form action="{% url 'pikquick:crear_public' %}" method="POST" enctype="multipart/form-data" id="cargar">
         {% csrf_token %}
         <div class="card-panel red darken-3 row">
             <div class="input-field file-field col s2">
@@ -28,7 +28,7 @@
                 <input placeholder="Pregunta de la publicacion" maxlength="100" name="descPub" type="text" value="">
             </div>
         </div>
-        <button class="card-panel red lighten-1 waves-effect waves-orange btn col s2 offset-s10" id="crear" type="submit">Subir Publicacion</button>
+        <a href="#" class="card-panel red lighten-1 waves-effect waves-orange btn col s2 offset-s10" id="crear">Subir Publicacion</a>
     </form>
 </div>
 {% endblock %}
@@ -38,8 +38,9 @@
 
     $('#crear').click(function() {
         if($('input:file[name=img1]').val()=="" || $('input:file[name=img2]').val()==""){
-            Materialize.toast('Debe cargar las imagenes', 2000)
+            Materialize.toast('Debe cargar las imagenes', 2500)
         }else{
+            $("#cargar").submit();
         }
     });
 
