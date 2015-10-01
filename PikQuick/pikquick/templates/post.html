@@ -1,15 +1,20 @@
+{% load staticfiles %}
 {% for post in posts %}
 <div class='section white center'>
     <div class='container' style='background: #f5f5f5;'>
         <div class='container' style='background:#f5f5f5; width:100%'>
             <ul class='collection'>
                 <li class='collection-item avatar'>
-                    <img src='' alt='' class='circle'>
-                    <a href='#!' class='title'>{{post.titulo}}</a>
-                    <i class='material-icons'>{{post.autor}}</i>
+                    <img src="{% static 'images/perfil.jpg' %}" alt='' class='circle'>
+                    <i class='material-icons' style="margin-right:95%">{{post.usuario}}</i>
                     <a class='secondary-content'>
                         <i class='material-icons'>{{post.fecha}}</i>
                     </a>
+
+                    {% if user.is_staff %}
+                    <a href=""><i class="fa fa-trash-o" style="margin-right:1%"></i>Eliminar</a>
+                    {% endif %}
+
                 </li>
             </ul>
             <div class='row'>
@@ -22,7 +27,7 @@
                             <p>{{post.desc1}}</p>
                         </div>
                         <div class="card-action">
-                            <a href="#">This is a link</a>
+                            <a href="#">Stars</a>
                         </div>
                     </div>
                 </div>
@@ -35,14 +40,16 @@
                             <p>{{post.desc2}}</p>
                         </div>
                         <div class="card-action">
-                            <a href="#">This is a link</a>
+                            <a href="#">Stars</a>
                         </div>
                     </div>
                 </div>
+                {{post.descPub}}
             </div>
         </div>
-        {{post.descPub}}
+        Comentarios
     </div>
+<<<<<<< HEAD
     {% csrf_token %}
     Comentarios
     <div id="mensajes_{{post.id}}">
@@ -52,6 +59,8 @@
     <textarea name="mensaje" rows="6" cols="60" style="color:black" id="message_{{post.id}}" required data-validation-required-message="Please enter a message."></textarea>
     <button id="btn_enviar_{{post.id}}" name="enviar"> Comment </button>
     </div>
+=======
+>>>>>>> origin/master
 </div>
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script>

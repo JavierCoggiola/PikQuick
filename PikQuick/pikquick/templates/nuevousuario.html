@@ -130,20 +130,19 @@
                 }
             }
 
-
             $.ajax({
                 type: "POST",
                 url: "{% url 'pikquick:nuevo_usuario' %}",
                 data: data,
-                success: function(result){
-                    $("#res").html(result);
-                    Materialize.toast('Registrado con éxito', 2000);
-                },
-                error: function(err){
-                    console.log("Hay Un Error");
-                    console.log(err.responseText);
+                statusCode: {
+                    200: function(){
+                        $("#res").html(result);
+                        Materialize.toast('Registrado con éxito', 2000);
+                    },
 
-
+                    203: function(){
+                        Materialize.toast('Usuario ya existente', 2000);
+                    },
                 },
             });
         }

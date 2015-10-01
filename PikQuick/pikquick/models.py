@@ -12,20 +12,26 @@ class Entrada(models.Model):
     fecha = models.DateTimeField(u'Fecha del Post',auto_now_add=True)
     img1 = models.FileField(u'Imagen de portada',upload_to = 'img_public', default='null')
     img2 = models.FileField(u'Imagen de portada',upload_to = 'img_public', default='null')
-    desc1 = models.TextField(u'Epigrafe Imagen 1' , max_length = 100 , default='')
-    desc2 = models.TextField(u'Epigrafe Imagen 2' , max_length = 100 , default='')
-    descPub = models.TextField(u'Descripcion de la Publicacion' , max_length = 100 , default='Quien')
-    published = models.BooleanField(u'Publicado?', default=True)
+    desc1 = models.TextField(u'Descripcion Imagen 1' , max_length = 100 , default='')
+    desc2 = models.TextField(u'Descripcion Imagen 2' , max_length = 100 , default='')
+    descPub = models.TextField(u'Descripcion de la Publicacion' , max_length = 100 , default='Help')
 
     def __str__(self):
         return self.usuario.encode('utf8') + " / "+self.descPub.encode('utf8')
 
 class Coment(models.Model):
+<<<<<<< HEAD
     usuario = models.CharField(u'Usuario', max_length = 100, default=' ')
     fecha_pub = models.DateTimeField('date published', auto_now_add=True)
     coment_txt = models.TextField('Comentatrio', max_length=100)
     published = models.BooleanField(u'Publicado?', default=True)
     entrada = models.ForeignKey(Entrada)
+=======
+    nombre = models.CharField(u'Nombre', max_length=100)
+    mensaje = models.TextField(u'Mensaje')
+    postDelComent = models.ForeignKey(Entrada)
+    fecha = models.DateTimeField(u'Fecha del comentario',auto_now_add=True)
+>>>>>>> origin/master
 
     def __str__(self):
         return self.coment_txt.encode('utf8') + self.usuario.encode('utf8')
