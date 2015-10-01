@@ -23,9 +23,7 @@
                     <i class="fa fa-paper-plane right"></i>Ingresar
                 </button>
 
-                <button class="card-panel red lighten-1 waves-effect waves-orange btn-large" id="log-in1">
-                    Ingresar con GOOGLE
-                </button>
+
 
 
              <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
@@ -42,9 +40,6 @@
 
 {% endblock %}
 {% block scripts %}
-
-
-
 
 <script>
   // This is called with the results from from FB.getLoginStatus().
@@ -127,13 +122,6 @@
   }
 </script>
 
-
-
-
-
-
-
-
 <script>
   window.fbAsyncInit = function() {
     FB.init({
@@ -151,14 +139,6 @@
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 </script>
-
-
-
-
-
-
-
-
 
 
 
@@ -189,10 +169,6 @@
                     /* Reseteo de casillas */
                     $('#id_username').value("");
                     $('#id_password1').value("");
-                },
-
-                204: function(){
-                    Materialize.toast('Usuario ya existente', 2000);
                 },
             },
         });
