@@ -206,47 +206,24 @@
                 }
             }
 
-
             $.ajax({
                 type: "POST",
                 url: "{% url 'pikquick:nuevo_usuario' %}",
                 data: data,
-                success: function(result){
-                    $("#res").html(result);
-                    Materialize.toast('Registrado con éxito', 2000);
-                },
-                error: function(err){
-                    console.log("Hay Un Error");
-                    console.log(err.responseText);
+                statusCode: {
+                    200: function(){
+                        $("#res").html(result);
+                        Materialize.toast('Registrado con éxito', 2000);
+                        //window.location.assign("{% url 'pikquick:inicio' %}");
+                    },
+
+                    203: function(){
+                        Materialize.toast('Usuario ya existente', 2000);
+                    },
                 },
             });
         }
     });
 </script>
 {% endblock %}
-
-
-
-<div class="hiddendiv common"></div></body></html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</body></html>
