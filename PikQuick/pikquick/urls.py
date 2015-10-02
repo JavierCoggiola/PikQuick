@@ -10,4 +10,5 @@ urlpatterns = patterns('',
                        url(r'^ver_post/(?P<id_post>[0-9]+)/$', 'pikquick.views.ver_post', name='vermipost'),
                        url(r'^nuevapublic$','pikquick.views.nuevapublic', name='nuevapublic'),
                        url(r'^crear_public/$','pikquick.views.crear_public', name='crear_public'),
+                       url(r'^save_message/$', 'pikquick.views.save_message', name='save_message'),
                       )
