@@ -15,7 +15,7 @@ def inicio(request):
     context = RequestContext(request)
     posts = Entrada.objects.all
     return render_to_response('inicio.html',
-                              {'posts':posts},
+                              {'posts':posts,},
                               context)
 
 @login_required(login_url='/usuario/ingreso')
@@ -126,4 +126,22 @@ def crear_public(request):
         pub.save()
         return redirect("/")
     return render_to_response('nuevapublic.html',
+                              context)
+
+def save_message(request):
+    context = RequestContext(request)
+    coment_txt = None
+    if request.method == 'POST':
+        mi_post = Entrada.objects.get(id=request.POST['id'])
+        print(mi_post)
+        coment_txt= request.POST['coment_txt']
+        msje = Coment()
+        msje.coment_txt = coment_txt
+        msje.usuario = request.user.username
+        msje.entrada = mi_post
+        msje.save()
+        coments = Coment.objects.filter(entrada=mi_post, published = True)
+
+    return render_to_response('mensajes.html',
+                              {'coments':coments},
                               context)

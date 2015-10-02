@@ -47,9 +47,43 @@
                 <h3>{{post.descPub}}
             </div>
         </div>
-        Comentarios
+    </div>
+    {% csrf_token %}
+    Comentarios
+    <div id="mensajes_{{post.id}}">
+        {% include "mensajes.html" %}
+    </div>
+    <h3>Mensaje:</h3>
+    <textarea name="mensaje" rows="6" cols="60" style="color:black" id="message_{{post.id}}" required data-validation-required-message="Please enter a message."></textarea>
+    <button id="btn_enviar_{{post.id}}" name="enviar"> Comment </button>
     </div>
 </div>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+
+    $("#btn_enviar_{{post.id}}").click(function(){
+        console.log("VAMO");
+        var data={
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            id:'{{post.id}}',
+            coment_txt:$('#message_{{post.id}}').val(),
+        }
+        $.ajax({
+            type: "POST",
+            url: "{% url 'pikquick:save_message' %}",
+            data: data,
+            success: function(result){
+                $("#mensajes_{{post.id}}").html(result);
+                $("#message_{{post.id}}").val("");
+            },
+            error: function(err){
+                console.log("ERRRORRRR");
+                console.log(err.responseText);
+            },
+        });
+    });
+</script>
+
 {% endfor %}
 
 {% block scripts %}
