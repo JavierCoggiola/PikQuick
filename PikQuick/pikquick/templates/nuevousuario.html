@@ -85,10 +85,9 @@
           </div>
         </div>
 
-          <div class="input-field col">
-              <p class="margin left-align center-small"><a href="{% url 'pikquick:ingreso_usuario' %}">Ya tiene una cuenta ?</a></p>
+          <div class="input-field col s8 83 l8">
+              <p class="margin center-small"><a href="{% url 'pikquick:ingreso_usuario' %}">Ya tiene una cuenta ?</a></p>
           </div>
-
         </div>
 
       </form>
@@ -211,14 +210,12 @@
                 url: "{% url 'pikquick:nuevo_usuario' %}",
                 data: data,
                 statusCode: {
-                    200: function(){
-                        $("#res").html(result);
-                        Materialize.toast('Registrado con éxito', 2000);
-                        //window.location.assign("{% url 'pikquick:inicio' %}");
-                    },
-
                     203: function(){
                         Materialize.toast('Usuario ya existente', 2000);
+                    },
+
+                    204: function(){
+                        window.location.assign("{% url 'pikquick:inicio' %}");
                     },
                 },
             });
