@@ -141,7 +141,6 @@ def save_message(request):
         msje.entrada = mi_post
         msje.save()
         coments = Coment.objects.filter(entrada=mi_post, published = True)
-
     return render_to_response('mensajes.html',
                               {'coments':coments},
                               context)
