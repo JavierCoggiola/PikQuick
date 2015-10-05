@@ -21,7 +21,11 @@ def inicio(request):
 @login_required(login_url='/usuario/ingreso')
 def ajustes(request):
     context = RequestContext(request)
+    usuario = request.user.username
+    posts = Entrada.objects.filter(usuario = usuario)
+
     return render_to_response('ajustes.html',
+                              {'posts':posts},
                               context)
 
 @requires_csrf_token
