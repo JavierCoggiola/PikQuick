@@ -55,7 +55,8 @@ def nuevo_usuario(request):
             n_u.save()
             user = authenticate(username=username, password=password)
             login(request, user)
-        return redirect('/')
+            return HttpResponse(status=204)
+        #return redirect('/')
     return render_to_response('nuevousuario.html',
                               context)
 
@@ -145,7 +146,6 @@ def save_message(request):
         msje.entrada = mi_post
         msje.save()
         coments = Coment.objects.filter(entrada=mi_post, published = True)
-
     return render_to_response('mensajes.html',
                               {'coments':coments},
                               context)

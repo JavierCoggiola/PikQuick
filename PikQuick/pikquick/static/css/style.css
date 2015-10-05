@@ -27,8 +27,9 @@ body {
 }
 .posts {
     background-color: #F5F5F5;
-    margin-left: 90px;
-    margin-right: 90px;
-    padding: 20px 30px;
+    margin-left: 191px;
+    margin-right: 191px;
+    padding: 0px 0px;
     text-align: center;
     border: 5px solid #A9A9A9;
+}

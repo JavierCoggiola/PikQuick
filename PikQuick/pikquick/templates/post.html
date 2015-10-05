@@ -49,15 +49,17 @@
         </div>
     </div>
     {% csrf_token %}
-    Comentarios
     <button id="btn_ver_{{post.id}}" name="enviar"> Ver Comentarios </button>
     <div id="mensajes_{{post.id}}">
         {% include "mensajes.html" %}
     </div>
+
     <h3>Mensaje:</h3>
-    <textarea name="mensaje" rows="6" cols="60" style="color:black" id="message_{{post.id}}" required data-validation-required-message="Please enter a message."></textarea>
-    <button id="btn_enviar_{{post.id}}" name="enviar"> Comment </button>
-    </div>
+
+    <textarea class="materialize-textarea" sytle=" padding:-200px;" id="message_{{post.id}}" required data-validation-required-message="Please enter a message."></textarea>
+
+    <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Comment <i class="fa fa-paper-plane"></i>
+ </button>
 </div>
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script>
@@ -84,6 +86,7 @@
         });
     });
 
+
     $("#btn_ver_{{post.id}}").click(function(){
         console.log("FUNCIONA");
         var data={
@@ -105,8 +108,13 @@
             },
         });
     });
+
 </script>
 
+{% empty %}
+<p id="legal">
+    <h5 class="white-text"> No hay publicaciones en este momento</h5>
+</p>
 {% endfor %}
 
 {% block scripts %}
