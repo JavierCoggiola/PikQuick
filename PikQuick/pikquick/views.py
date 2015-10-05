@@ -144,3 +144,13 @@ def save_message(request):
     return render_to_response('mensajes.html',
                               {'coments':coments},
                               context)
+
+def ver_message(request):
+    context = RequestContext(request)
+    if request.method == 'POST':
+        mi_post = Entrada.objects.get(id=request.POST['id'])
+        coments = Coment.objects.filter(entrada=mi_post, published = True)
+
+    return render_to_response('mensajes.html',
+                              {'coments':coments},
+                              context)
