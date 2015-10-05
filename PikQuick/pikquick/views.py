@@ -14,13 +14,8 @@ from pikquick.models import Entrada, Coment
 def inicio(request):
     context = RequestContext(request)
     posts = Entrada.objects.all
-
-    mi_post = Entrada.objects.all
-    coments = Coment.objects.filter(entrada=mi_post, published = True)
-
     return render_to_response('inicio.html',
-                              {'posts':posts,
-                               'coments':coments},
+                              {'posts':posts,},
                               context)
 
 @login_required(login_url='/usuario/ingreso')
@@ -56,8 +51,8 @@ def nuevo_usuario(request):
             n_u.save()
             user = authenticate(username=username, password=password)
             login(request, user)
-            return HttpResponse(status=200)
-        return redirect('/')
+            return HttpResponse(status=204)
+        #return redirect('/')
     return render_to_response('nuevousuario.html',
                               context)
 
