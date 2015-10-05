@@ -50,6 +50,7 @@
     </div>
     {% csrf_token %}
     Comentarios
+    <button id="btn_ver_{{post.id}}" name="enviar"> Ver Comentarios </button>
     <div id="mensajes_{{post.id}}">
         {% include "mensajes.html" %}
     </div>
@@ -71,6 +72,28 @@
         $.ajax({
             type: "POST",
             url: "{% url 'pikquick:save_message' %}",
+            data: data,
+            success: function(result){
+                $("#mensajes_{{post.id}}").html(result);
+                $("#message_{{post.id}}").val("");
+            },
+            error: function(err){
+                console.log("ERRRORRRR");
+                console.log(err.responseText);
+            },
+        });
+    });
+
+    $("#btn_ver_{{post.id}}").click(function(){
+        console.log("FUNCIONA");
+        var data={
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            id:'{{post.id}}',
+
+        }
+        $.ajax({
+            type: "POST",
+            url: "{% url 'pikquick:ver_message' %}",
             data: data,
             success: function(result){
                 $("#mensajes_{{post.id}}").html(result);
