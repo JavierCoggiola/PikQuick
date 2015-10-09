@@ -12,7 +12,7 @@
                     </a>
 
                     {% if user.is_staff %}
-                    <a href=""><i class="fa fa-trash-o" style="margin-right:1%"></i>Eliminar</a>
+                    <a href="" id="delete"><i class="fa fa-trash-o" style="margin-right:1%"></i>Eliminar</a>
                     {% endif %}
 
                 </li>
@@ -45,6 +45,7 @@
                     </div>
                 </div>
                 <h3>{{post.descPub}}
+                    </div>
             </div>
         </div>
     </div>
@@ -53,37 +54,36 @@
     <div id="mensajes_{{post.id}}">
         {% include "mensajes.html" %}
     </div>
-    <h3>Mensaje:</h3>
-
+    {% csrf_token %}
     <textarea class="materialize-textarea" sytle=" padding:-200px;" id="message_{{post.id}}" required data-validation-required-message="Please enter a message."></textarea>
-
     <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Comment <i class="fa fa-paper-plane"></i>
  </button>
-</div>
+
 
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script>
-    $("#btn_enviar_{{post.id}}").click(function(){
-        var data={
-            csrfmiddlewaretoken: '{{ csrf_token }}',
-            id:'{{post.id}}',
-            coment_txt:$('#message_{{post.id}}').val(),
-        }
-        $.ajax({
-            type: "POST",
-            url: "{% url 'pikquick:save_message' %}",
-            data: data,
-            success: function(result){
-                $("#mensajes_{{post.id}}").html(result);
-                $("#message_{{post.id}}").val("");
-            },
-            error: function(err){
-                console.log("ERRRORRRR");
-                console.log(err.responseText);
-            },
-        });
-    });
 
+        $("#btn_enviar_{{post.id}}").click(function(){
+            console.log("VAMO");
+            var data={
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                id:'{{post.id}}',
+                coment_txt:$('#message_{{post.id}}').val(),
+            }
+            $.ajax({
+                type: "POST",
+                url: "{% url 'pikquick:save_message' %}",
+                data: data,
+                success: function(result){
+                    $("#mensajes_{{post.id}}").html(result);
+                    $("#message_{{post.id}}").val("");
+                },
+                error: function(err){
+                    console.log("ERRRORRRR");
+                    console.log(err.responseText);
+                },
+            });
+        });
 
     $("#btn_ver_{{post.id}}").click(function(){
 
@@ -114,17 +114,15 @@
                 },
             });
             boton.setAttribute('value', '-');
-
             document.getElementById('mensajes_{{post.id}}').style.display = 'block';
-        };
-        });
+        }
+    });
+    </script>
 
-</script>
-
-{% empty %}
-<p id="legal">
+    {% empty %}
+    <p id="legal">
     <h5 class="white-text"> No hay publicaciones en este momento</h5>
-</p>
+    </p>
 {% endfor %}
 
 {% block scripts %}
