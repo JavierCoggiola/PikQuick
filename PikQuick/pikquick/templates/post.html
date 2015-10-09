@@ -49,11 +49,10 @@
         </div>
     </div>
     {% csrf_token %}
-    <button id="btn_ver_{{post.id}}" name="enviar"> Ver Comentarios </button>
+    <input type="button" id="btn_ver_{{post.id}}" name="enviar" value="+"></button>
     <div id="mensajes_{{post.id}}">
         {% include "mensajes.html" %}
     </div>
-
     <h3>Mensaje:</h3>
 
     <textarea class="materialize-textarea" sytle=" padding:-200px;" id="message_{{post.id}}" required data-validation-required-message="Please enter a message."></textarea>
@@ -61,11 +60,10 @@
     <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Comment <i class="fa fa-paper-plane"></i>
  </button>
 </div>
+
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script>
-
     $("#btn_enviar_{{post.id}}").click(function(){
-        console.log("VAMO");
         var data={
             csrfmiddlewaretoken: '{{ csrf_token }}',
             id:'{{post.id}}',
@@ -88,26 +86,38 @@
 
 
     $("#btn_ver_{{post.id}}").click(function(){
-        console.log("FUNCIONA");
-        var data={
-            csrfmiddlewaretoken: '{{ csrf_token }}',
-            id:'{{post.id}}',
 
+        var boton = document.getElementById("btn_ver_{{post.id}}")
+        if (boton.value=="-"){
+            document.getElementById('mensajes_{{post.id}}').style.display = 'none';
+            boton.setAttribute('value', '+');
+            console.log("mostrar");
         }
-        $.ajax({
-            type: "POST",
-            url: "{% url 'pikquick:ver_message' %}",
-            data: data,
-            success: function(result){
-                $("#mensajes_{{post.id}}").html(result);
-                $("#message_{{post.id}}").val("");
-            },
-            error: function(err){
-                console.log("ERRRORRRR");
-                console.log(err.responseText);
-            },
+        else{
+            console.log("mostrar");
+            var data={
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                id:'{{post.id}}',
+
+            }
+            $.ajax({
+                type: "POST",
+                url: "{% url 'pikquick:ver_message' %}",
+                data: data,
+                success: function(result){
+                    $("#mensajes_{{post.id}}").html(result);
+                    $("#message_{{post.id}}").val("");
+                },
+                error: function(err){
+                    console.log("ERRRORRRR");
+                    console.log(err.responseText);
+                },
+            });
+            boton.setAttribute('value', '-');
+
+            document.getElementById('mensajes_{{post.id}}').style.display = 'block';
+        };
         });
-    });
 
 </script>
 
