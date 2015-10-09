@@ -21,12 +21,11 @@ def inicio(request):
                               context)
 
 @login_required(login_url='/usuario/ingreso')
-def ajustes(request):
+def perfil(request):
     context = RequestContext(request)
     usuario = request.user.username
     posts = Entrada.objects.filter(usuario = usuario)
-
-    return render_to_response('ajustes.html',
+    return render_to_response('perfil.html',
                               {'posts':posts},
                               context)
 
@@ -37,7 +36,7 @@ def enviar_mail(request):
     if request.method=='POST':
         send_mail(request.POST['asunto'], request.POST['mensaje'], 'pikquickcontact@gmail.com',
     [request.POST['mail']], fail_silently=False)
-    return render_to_response('ajustes.html',
+    return render_to_response('perfil.html',
                               context)
 
 @requires_csrf_token
@@ -100,8 +99,8 @@ def cambiar_pass(request):
             request.user.save()
             user= authenticate(username=request.user.username, password=request.POST['password2'])
             login(request, user)
-            return redirect("/ajustes")
-    return render_to_response('ajustes.html',
+            return redirect("/perfil")
+    return render_to_response('perfil.html',
                               context)
 
 @login_required(login_url='/usuario/ingreso')
