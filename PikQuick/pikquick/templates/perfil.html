@@ -101,12 +101,10 @@
     {% csrf_token %}
     <input type="button" id="btn_ver_{{post.id}}" value="+"></button>
     {% csrf_token %}
-    <button id="btn_ver_{{post.id}}" name="enviar"> Ver Comentarios </button>
     <div id="mensajes_{{post.id}}">
         {% include "mensajes.html" %}
     </div>
 
-    <h3>Mensaje:</h3>
 
     <textarea class="materialize-textarea" sytle=" padding:-200px;" id="message_{{post.id}}" required data-validation-required-message="Please enter a message."></textarea>
 
