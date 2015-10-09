@@ -12,7 +12,7 @@
                     </a>
 
                     {% if user.is_staff %}
-                    <a href="" id="delete"><i class="fa fa-trash-o" style="margin-right:1%"></i>Eliminar</a>
+                    <a href=""><i class="fa fa-trash-o" style="margin-right:1%"></i>Eliminar</a>
                     {% endif %}
 
                 </li>
@@ -27,7 +27,19 @@
                             <p>{{post.desc1}}</p>
                         </div>
                         <div class="card-action">
-                            <a href="#">Stars</a>
+
+
+
+       <a href="javascript:clickLink1({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
+        <p>Likes <span id="clicks-1{{post.id}}">0</span></p>
+
+
+
+
+
+
+
+
                         </div>
                     </div>
                 </div>
@@ -40,89 +52,158 @@
                             <p>{{post.desc2}}</p>
                         </div>
                         <div class="card-action">
-                            <a href="#">Stars</a>
-                        </div>
+
+
+
+
+
+
+
+
+                                <a href="javascript:clickLink({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
+        <p>Likes <span id="clicks-{{post.id}}">0</span></p>
+
+
+
+
+
+                          </div>
                     </div>
                 </div>
                 <h3>{{post.descPub}}
-                    </div>
             </div>
         </div>
     </div>
     {% csrf_token %}
-    <input type="button" id="btn_ver_{{post.id}}" name="enviar" value="+"></button>
+    <button id="btn_ver_{{post.id}}" name="enviar"> Ver Comentarios </button>
     <div id="mensajes_{{post.id}}">
         {% include "mensajes.html" %}
     </div>
-    {% csrf_token %}
+
+    <h3>Mensaje:</h3>
+
     <textarea class="materialize-textarea" sytle=" padding:-200px;" id="message_{{post.id}}" required data-validation-required-message="Please enter a message."></textarea>
+
     <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Comment <i class="fa fa-paper-plane"></i>
  </button>
+</div>
 
+
+        <script>
+
+        function clickLink1(idPost) {
+            var a = "#clicks-1" + idPost
+            console.log($().html());
+            if ($(a).html()=='1'){
+                $(a).html('0');
+            }
+            else
+            {
+                $(a).html('1');
+            }
+
+            /*i++;
+            if (i == 1) {
+                document.getElementById("clicks").innerHTML = i;
+            }
+            else
+            {
+                document.getElementById("clicks").innerHTML = i;
+                i=0
+
+            }*/
+        }
+
+        </script>
+
+
+
+
+
+        <script>
+
+        function clickLink(idPost) {
+            var a = "#clicks-" + idPost
+            console.log($().html());
+            if ($(a).html()=='1'){
+                $(a).html('0');
+            }
+            else
+            {
+                $(a).html('1');
+            }
+
+            /*i++;
+            if (i == 1) {
+                document.getElementById("clicks").innerHTML = i;
+            }
+            else
+            {
+                document.getElementById("clicks").innerHTML = i;
+                i=0
+
+            }*/
+        }
+        function Reset() {
+            i = 0;
+            document.getElementById("clicks").innerHTML = i;
+        }
+        </script>
 
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script>
 
-        $("#btn_enviar_{{post.id}}").click(function(){
-            console.log("VAMO");
-            var data={
-                csrfmiddlewaretoken: '{{ csrf_token }}',
-                id:'{{post.id}}',
-                coment_txt:$('#message_{{post.id}}').val(),
-            }
-            $.ajax({
-                type: "POST",
-                url: "{% url 'pikquick:save_message' %}",
-                data: data,
-                success: function(result){
-                    $("#mensajes_{{post.id}}").html(result);
-                    $("#message_{{post.id}}").val("");
-                },
-                error: function(err){
-                    console.log("ERRRORRRR");
-                    console.log(err.responseText);
-                },
-            });
+    $("#btn_enviar_{{post.id}}").click(function(){
+        console.log("VAMO");
+        var data={
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            id:'{{post.id}}',
+            coment_txt:$('#message_{{post.id}}').val(),
+        }
+        $.ajax({
+            type: "POST",
+            url: "{% url 'pikquick:save_message' %}",
+            data: data,
+            success: function(result){
+                $("#mensajes_{{post.id}}").html(result);
+                $("#message_{{post.id}}").val("");
+            },
+            error: function(err){
+                console.log("ERRRORRRR");
+                console.log(err.responseText);
+            },
         });
+    });
+
 
     $("#btn_ver_{{post.id}}").click(function(){
+        console.log("FUNCIONA");
+        var data={
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            id:'{{post.id}}',
 
-        var boton = document.getElementById("btn_ver_{{post.id}}")
-        if (boton.value=="-"){
-            document.getElementById('mensajes_{{post.id}}').style.display = 'none';
-            boton.setAttribute('value', '+');
-            console.log("mostrar");
         }
-        else{
-            console.log("mostrar");
-            var data={
-                csrfmiddlewaretoken: '{{ csrf_token }}',
-                id:'{{post.id}}',
-
-            }
-            $.ajax({
-                type: "POST",
-                url: "{% url 'pikquick:ver_message' %}",
-                data: data,
-                success: function(result){
-                    $("#mensajes_{{post.id}}").html(result);
-                    $("#message_{{post.id}}").val("");
-                },
-                error: function(err){
-                    console.log("ERRRORRRR");
-                    console.log(err.responseText);
-                },
-            });
-            boton.setAttribute('value', '-');
-            document.getElementById('mensajes_{{post.id}}').style.display = 'block';
-        }
+        $.ajax({
+            type: "POST",
+            url: "{% url 'pikquick:ver_message' %}",
+            data: data,
+            success: function(result){
+                $("#mensajes_{{post.id}}").html(result);
+                $("#message_{{post.id}}").val("");
+            },
+            error: function(err){
+                console.log("ERRRORRRR");
+                console.log(err.responseText);
+            },
+        });
     });
-    </script>
 
-    {% empty %}
-    <p id="legal">
+</script>
+
+{% empty %}
+<p id="legal">
     <h5 class="white-text"> No hay publicaciones en este momento</h5>
-    </p>
+</p>
 {% endfor %}
 
 {% block scripts %}
