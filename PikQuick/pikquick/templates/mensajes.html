@@ -1,8 +1,7 @@
 <div class="posts">
     {% for comentario in coments %}
-        <h4>{{comentario.fecha_pub}}</h4>
-        <p>{{comentario.coment_txt}}</p>
-        <p>{{comentario.usuario}}</p>
-        <hr>
-    {% endfor %}
+
+        <p style="float:right">{{comentario.fecha_pub}}</p>
+        <p class="flow-text" >.<span style="color:#1565c0;float:left; margin-left:5%">{{comentario.usuario}}</span><span style="float:left; margin-left:1%">{{comentario.coment_txt}}</span></p>
+        {% endfor %}
 </div>
