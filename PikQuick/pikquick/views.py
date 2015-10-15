@@ -8,6 +8,8 @@ from django.views.decorators.csrf import requires_csrf_token
 from django.core.mail import send_mail
 from django.http import HttpResponse
 from pikquick.models import Entrada, Coment
+from django.shortcuts import get_object_or_404
+from django.core.urlresolvers import reverse
 
 # Create your views here.
 @login_required(login_url='/usuario/ingreso')
