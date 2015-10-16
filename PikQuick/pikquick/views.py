@@ -160,3 +160,12 @@ def ver_message(request):
     return render_to_response('mensajes.html',
                               {'coments':coments},
                               context)
+
+def user_profile(request, username):
+    context = RequestContext(request)
+    posts = Entrada.objects.filter(usuario = username)
+
+    return render_to_response('profiles.html',
+                              {'posts':posts},
+                              context)
+

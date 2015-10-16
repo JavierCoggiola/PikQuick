@@ -12,4 +12,5 @@ urlpatterns = patterns('',
                        url(r'^crear_public/$','pikquick.views.crear_public', name='crear_public'),
                        url(r'^save_message/$', 'pikquick.views.save_message', name='save_message'),
                        url(r'^ver_message/$', 'pikquick.views.ver_message', name='ver_message'),
+                       url(r'^user_profile/(?P<username>\w+)/$', 'pikquick.views.user_profile', name='user_profile'),
                       )

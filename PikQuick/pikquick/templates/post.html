@@ -6,7 +6,7 @@
             <ul class='collection'>
                 <li class='collection-item avatar'>
                     <img src="{% static 'images/perfil.jpg' %}" alt='' class='circle'>
-                    <i class='material-icons' style="margin-right:95%">{{post.usuario}}</i>
+                    <a class='material-icons' style="margin-right:95%" href="{% url 'pikquick:user_profile' post.usuario %}">{{post.usuario}}</a>
                     <a class='secondary-content'>
                         <i class='material-icons'>{{post.fecha}}</i>
                     </a>
@@ -58,7 +58,7 @@
 
 
 
-
+-
 
                                 <a href="javascript:clickLink({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
         <p>Likes <span id="clicks-{{post.id}}">0</span></p>
@@ -165,14 +165,7 @@
             type: "POST",
             url: "{% url 'pikquick:save_message' %}",
             data: data,
-            success: function(result){
-                $("#mensajes_{{post.id}}").html(result);
-                $("#message_{{post.id}}").val("");
-            },
-            error: function(err){
-                console.log("ERRRORRRR");
-                console.log(err.responseText);
-            },
+            success: handleData
         });
     });
 
@@ -210,6 +203,9 @@
             document.getElementById('mensajes_{{post.id}}').style.display = 'block';
         };
         });
+
+
+
 
 </script>
 
