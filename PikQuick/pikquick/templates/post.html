@@ -27,7 +27,19 @@
                             <p>{{post.desc1}}</p>
                         </div>
                         <div class="card-action">
-                            <a href="#">Stars</a>
+
+
+
+       <a href="javascript:clickLink1({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
+        <p>Likes <span id="clicks-1{{post.id}}">0</span></p>
+
+
+
+
+
+
+
+
                         </div>
                     </div>
                 </div>
@@ -40,8 +52,22 @@
                             <p>{{post.desc2}}</p>
                         </div>
                         <div class="card-action">
-                            <a href="#">Stars</a>
-                        </div>
+
+
+
+
+
+
+
+
+                                <a href="javascript:clickLink({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
+        <p>Likes <span id="clicks-{{post.id}}">0</span></p>
+
+
+
+
+
+                          </div>
                     </div>
                 </div>
                 <h3>{{post.descPub}}
@@ -49,7 +75,7 @@
         </div>
     </div>
     {% csrf_token %}
-
+    <input type="button" id="btn_ver_{{post.id}}" name="enviar" value="+"></button>
     <div id="mensajes_{{post.id}}">
         {% include "mensajes.html" %}
     </div>
@@ -62,6 +88,69 @@
     <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Enviar <i class="fa fa-paper-plane"></i>
  </button>
 </div>
+
+
+        <script>
+
+        function clickLink1(idPost) {
+            var a = "#clicks-1" + idPost
+            console.log($().html());
+            if ($(a).html()=='1'){
+                $(a).html('0');
+            }
+            else
+            {
+                $(a).html('1');
+            }
+
+            /*i++;
+            if (i == 1) {
+                document.getElementById("clicks").innerHTML = i;
+            }
+            else
+            {
+                document.getElementById("clicks").innerHTML = i;
+                i=0
+
+            }*/
+        }
+
+        </script>
+
+
+
+
+
+        <script>
+
+        function clickLink(idPost) {
+            var a = "#clicks-" + idPost
+            console.log($().html());
+            if ($(a).html()=='1'){
+                $(a).html('0');
+            }
+            else
+            {
+                $(a).html('1');
+            }
+
+            /*i++;
+            if (i == 1) {
+                document.getElementById("clicks").innerHTML = i;
+            }
+            else
+            {
+                document.getElementById("clicks").innerHTML = i;
+                i=0
+
+            }*/
+        }
+        function Reset() {
+            i = 0;
+            document.getElementById("clicks").innerHTML = i;
+        }
+        </script>
+
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script>
 
@@ -89,26 +178,38 @@
 
 
     $("#btn_ver_{{post.id}}").click(function(){
-        console.log("FUNCIONA");
-        var data={
-            csrfmiddlewaretoken: '{{ csrf_token }}',
-            id:'{{post.id}}',
 
+        var boton = document.getElementById("btn_ver_{{post.id}}")
+        if (boton.value=="-"){
+            document.getElementById('mensajes_{{post.id}}').style.display = 'none';
+            boton.setAttribute('value', '+');
+            console.log("mostrar");
         }
-        $.ajax({
-            type: "POST",
-            url: "{% url 'pikquick:ver_message' %}",
-            data: data,
-            success: function(result){
-                $("#mensajes_{{post.id}}").html(result);
-                $("#message_{{post.id}}").val("");
-            },
-            error: function(err){
-                console.log("ERRRORRRR");
-                console.log(err.responseText);
-            },
+        else{
+            console.log("mostrar");
+            var data={
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                id:'{{post.id}}',
+
+            }
+            $.ajax({
+                type: "POST",
+                url: "{% url 'pikquick:ver_message' %}",
+                data: data,
+                success: function(result){
+                    $("#mensajes_{{post.id}}").html(result);
+                    $("#message_{{post.id}}").val("");
+                },
+                error: function(err){
+                    console.log("ERRRORRRR");
+                    console.log(err.responseText);
+                },
+            });
+            boton.setAttribute('value', '-');
+
+            document.getElementById('mensajes_{{post.id}}').style.display = 'block';
+        };
         });
-    });
 
 </script>
 
