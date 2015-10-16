@@ -99,7 +99,7 @@
         </div>-->
     </div>
     {% csrf_token %}
-    <input type="button" id="btn_ver_{{post.id}}" value="+"></button>
+    <button class="btn waves-effect waves-light" type="button" id="btn_ver_{{post.id}}" name="enviar" value="+"> Ver Comentarios </button>
     {% csrf_token %}
     <div id="mensajes_{{post.id}}">
         {% include "mensajes.html" %}

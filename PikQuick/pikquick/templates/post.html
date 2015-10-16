@@ -74,8 +74,7 @@
             </div>
         </div>
     </div>
-    {% csrf_token %}
-    <input type="button" id="btn_ver_{{post.id}}" name="enviar" value="+"></button>
+
     <div id="mensajes_{{post.id}}">
         {% include "mensajes.html" %}
     </div>
@@ -83,10 +82,14 @@
     <h3>Mensaje:</h3>
 
     <textarea class="materialize-textarea" sytle=" padding:20%;" id="message_{{post.id}}" required data-validation-required-message="Please enter a message."></textarea>
-        <button class="btn waves-effect waves-light" id="btn_ver_{{post.id}}" name="enviar"> Ver Comentarios </button>
+    <button class="btn waves-effect waves-light" type="button" id="btn_ver_{{post.id}}" name="enviar" value="+"> Ver Comentarios </button>
+
 
     <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Enviar <i class="fa fa-paper-plane"></i>
- </button>
+    </button>
+
+
+
 </div>
 
 
