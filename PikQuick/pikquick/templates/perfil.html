@@ -99,17 +99,20 @@
         </div>-->
     </div>
     {% csrf_token %}
-    <button class="btn waves-effect waves-light" type="button" id="btn_ver_{{post.id}}" name="enviar" value="+"> Ver Comentarios </button>
+
     {% csrf_token %}
-    <div id="mensajes_{{post.id}}">
+  <div id="mensajes_{{post.id}}">
         {% include "mensajes.html" %}
     </div>
 
 
-    <textarea class="materialize-textarea" sytle=" padding:-200px;" id="message_{{post.id}}" required data-validation-required-message="Please enter a message."></textarea>
+    <textarea class="materialize-textarea" sytle="    text-align: center;
+" id="message_{{post.id}}" required data-validation-required-message="Please enter a message."></textarea>
+    <button class="btn waves-effect waves-light" style="text-align: left" type="button" id="btn_ver_{{post.id}}" name="enviar" value="+"> Ver Comentarios </button>
 
-    <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Comment <i class="fa fa-paper-plane"></i>
- </button>-->
+
+    <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Enviar <i class="fa fa-paper-plane"></i>
+    </button>
 
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script>
