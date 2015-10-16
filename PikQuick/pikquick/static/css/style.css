@@ -29,7 +29,13 @@ body {
     background-color: #F5F5F5;
     margin-left: 191px;
     margin-right: 191px;
-    padding: 0px 0px;
+    margin-top: -20px;
+    padding: -5px 0px;
     text-align: center;
-    border: 5px solid #A9A9A9;
+    border-bottom: medium none;
+        border-bottom: medium none;
+        border-bottom-width: medium;
+        border-bottom-style: none;
+        border-bottom-color: -moz-use-text-color;
+}
 }
