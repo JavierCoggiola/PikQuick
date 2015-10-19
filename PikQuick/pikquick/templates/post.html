@@ -168,6 +168,14 @@
             type: "POST",
             url: "{% url 'pikquick:save_message' %}",
             data: data,
+            success: function(result){
+                $("#mensajes_{{post.id}}").html(result);
+                $("#message_{{post.id}}").val("");
+            },
+            error: function(err){
+                console.log("ERRRORRRR");
+                console.log(err.responseText);
+            },
         });
     });
 
