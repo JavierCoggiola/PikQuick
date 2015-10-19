@@ -8,6 +8,28 @@
             <div class="collapsible-header red darken-3"><i class="fa fa-user"></i>Ajustes</div>
             <div class="collapsible-body ">
                 <div class="row">
+                                        <div class="col s12">
+                                                                        <h4 class="center-align">Cambiar imagen de perfil</h4>
+
+
+                                             <div class="input-field file-field col s12">
+            <img id='blah' src="{% static 'images/up.png' %}" alt='your image' style='width:270px; height:320px;'/>
+                 <form action="#">
+<div class="file-field input-field">
+  <div class="btn">
+    <span>File</span>
+    <input type="file" multiple multiple accept='image/*'>
+  </div>
+  <div class="file-path-wrapper">
+    <input class="file-path validate" type="text" placeholder="Upload image" multiple accept='image/*'>
+  </div>
+</div>
+</form>
+                <input type='file' id='imgInp' name="img1" multiple accept='image/*'/>
+        </div>
+
+                    </div>
+
                     <div class="col s12">
 
 
@@ -253,6 +275,20 @@
         };
         });
 
+
+    /*Esto es la previsualisacion de imagenes*/
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#blah').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $('#imgInp').change(function(){
+        readURL(this);
+    });
 
 
 
