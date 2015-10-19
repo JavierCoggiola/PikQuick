@@ -29,7 +29,7 @@ class Imagen (models.Model):
     entrada = models.ForeignKey(Entrada)
 
     def __str__(self):
-        return self.descPub.encode('utf8')
+       return self.descPub.encode('utf8')
 
 class Coment(models.Model):
     usuario = models.CharField(u'Usuario', max_length = 100, default=' ')
