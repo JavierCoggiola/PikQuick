@@ -3,80 +3,225 @@
 {% block content %}
 <title>Perfil</title>
 {% for post in posts %}
-<div class="section">
-    <div class="container">
-        <div class="row" style="">
-            <div class="col s12 m4 l4">
-                <div class="col s12 m6">
-                    <div>
-                        <div class="card-image">
-                            <img class='activator' src='{{ MEDIA_URL }}{{post.img1}}' style='width:140px; height:170px; margin-top:4%;'>
-                        </div>
-                        <div class="card-action">
-                            <a href="#">Stars</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s12 m6">
-                    <div>
-                        <div class="card-image">
-                            <img class='activator' src='{{ MEDIA_URL }}{{post.img2}}' style='width:140px; height:170px; margin-top:4%;'>
-                        </div>
-                        <div class="card-action">
-                            <a href="#">Stars</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-        <!--<div class='container col s10 m6' style='background:#f5f5f5; width:30%'>
+<div class='section white center'>
+    <div class='container' style='background: #f5f5f5;'>
+        <div class='container' style='background:#f5f5f5; width:100%'>
             <ul class='collection'>
                 <li class='collection-item avatar'>
-                    <i class='material-icons'>{{post.fecha}}</i>
+                    <img src="{% static 'images/perfil.jpg' %}" alt='' class='circle'>
+                    <a class='material-icons' style="margin-right:95%" href="{% url 'pikquick:user_profile' post.usuario %}">{{post.usuario}}</a>
+                    <a class='secondary-content'>
+                        <i class='material-icons'>{{post.fecha}}</i>
+                    </a>
+
                     {% if user.is_staff %}
-                    <a href=""><i class="fa fa-trash-o" style="margin-right:1%"></i></a>
+                    <a href=""><i class="fa fa-trash-o" style="margin-right:1%"></i>Eliminar</a>
                     {% endif %}
+
                 </li>
             </ul>
             <div class='row'>
                 <div class="col s12 m6">
                     <div class="card">
                         <div class="card-image">
-                            <img class='activator' src='{{ MEDIA_URL }}{{post.img1}}' style='width:100px; height:120px; margin-top:4%;'>
+                            <img class='activator' src='{{ MEDIA_URL }}{{post.img1}}' style='width:400px; height:450px; margin-top:4%;'>
+                        </div>
+                        <div class="card-content">
+                            <p>{{post.desc1}}</p>
                         </div>
                         <div class="card-action">
-                            <a href="#">Stars</a>
+
+
+
+       <a href="javascript:clickLink1({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
+        <p>Likes <span id="clicks-1{{post.id}}">0</span></p>
+
+
+
+
+
+
+
+
                         </div>
                     </div>
                 </div>
                 <div class="col s12 m6">
                     <div class="card">
                         <div class="card-image">
-                            <img class='activator' src='{{ MEDIA_URL }}{{post.img2}}' style='width:100px; height:120px; margin-top:4%;'>
+                            <img class='activator' src='{{ MEDIA_URL }}{{post.img2}}' style='width:400px; height:450px; margin-top:4%;'>
+                        </div>
+                        <div class="card-content">
+                            <p>{{post.desc2}}</p>
                         </div>
                         <div class="card-action">
-                            <a href="#">Stars</a>
-                        </div>
+
+
+
+
+
+
+-
+
+                                <a href="javascript:clickLink({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
+        <p>Likes <span id="clicks-{{post.id}}">0</span></p>
+
+
+
+
+
+                          </div>
                     </div>
                 </div>
+                <h3>{{post.descPub}}
             </div>
-        </div>-->
+        </div>
     </div>
-    {% csrf_token %}
-    <input type="button" id="btn_ver_{{post.id}}" value="+"></button>
-    {% csrf_token %}
+
     <div id="mensajes_{{post.id}}">
         {% include "mensajes.html" %}
     </div>
 
+    <h3>Mensaje:</h3>
 
-    <textarea class="materialize-textarea" sytle=" padding:-200px;" id="message_{{post.id}}" required data-validation-required-message="Please enter a message."></textarea>
+    <textarea class="materialize-textarea" sytle=" padding:20%;" id="message_{{post.id}}" required data-validation-required-message="Please enter a message."></textarea>
+    <button class="btn waves-effect waves-light" type="button" id="btn_ver_{{post.id}}" name="enviar" value="+"> Ver Comentarios </button>
 
-    <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Comment <i class="fa fa-paper-plane"></i>
- </button>-->
 
+    <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Enviar <i class="fa fa-paper-plane"></i>
+    </button>
+
+
+
+</div>
+
+
+        <script>
+
+        function clickLink1(idPost) {
+            var a = "#clicks-1" + idPost
+            console.log($().html());
+            if ($(a).html()=='1'){
+                $(a).html('0');
+            }
+            else
+            {
+                $(a).html('1');
+            }
+
+            /*i++;
+            if (i == 1) {
+                document.getElementById("clicks").innerHTML = i;
+            }
+            else
+            {
+                document.getElementById("clicks").innerHTML = i;
+                i=0
+
+            }*/
+        }
+
+        </script>
+
+
+
+
+
+        <script>
+
+        function clickLink(idPost) {
+            var a = "#clicks-" + idPost
+            console.log($().html());
+            if ($(a).html()=='1'){
+                $(a).html('0');
+            }
+            else
+            {
+                $(a).html('1');
+            }
+
+            /*i++;
+            if (i == 1) {
+                document.getElementById("clicks").innerHTML = i;
+            }
+            else
+            {
+                document.getElementById("clicks").innerHTML = i;
+                i=0
+
+            }*/
+        }
+        function Reset() {
+            i = 0;
+            document.getElementById("clicks").innerHTML = i;
+        }
+        </script>
+
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+
+    $("#btn_enviar_{{post.id}}").click(function(){
+        console.log("VAMO");
+        var data={
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            id:'{{post.id}}',
+            coment_txt:$('#message_{{post.id}}').val(),
+        }
+        $.ajax({
+            type: "POST",
+            url: "{% url 'pikquick:save_message' %}",
+            data: data,
+        });
+    });
+
+
+    $("#btn_ver_{{post.id}}").click(function(){
+
+        var boton = document.getElementById("btn_ver_{{post.id}}")
+        if (boton.value=="-"){
+            document.getElementById('mensajes_{{post.id}}').style.display = 'none';
+            boton.setAttribute('value', '+');
+            console.log("mostrar");
+        }
+        else{
+            console.log("mostrar");
+            var data={
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                id:'{{post.id}}',
+
+            }
+            $.ajax({
+                type: "POST",
+                url: "{% url 'pikquick:ver_message' %}",
+                data: data,
+                success: function(result){
+                    $("#mensajes_{{post.id}}").html(result);
+                    $("#message_{{post.id}}").val("");
+                },
+                error: function(err){
+                    console.log("ERRRORRRR");
+                    console.log(err.responseText);
+                },
+            });
+            boton.setAttribute('value', '-');
+
+            document.getElementById('mensajes_{{post.id}}').style.display = 'block';
+        };
+        });
+
+
+
+
+</script>
+
+{% empty %}
+<p id="legal">
+    <h5 class="white-text"> No hay publicaciones en este momento</h5>
+</p>
 {% endfor %}
+
+{% block scripts %}
+<script>
+</script>
+{% endblock %}
 {% endblock %}
