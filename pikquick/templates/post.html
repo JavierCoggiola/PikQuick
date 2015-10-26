@@ -156,17 +156,47 @@
 
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script>
-
     $("#btn_enviar_{{post.id}}").click(function(){
-        console.log("VAMO");
+    console.log("VAMO");
+    var data={
+        csrfmiddlewaretoken: '{{ csrf_token }}',
+        id:'{{post.id}}',
+        coment_txt:$('#message_{{post.id}}').val(),
+    }
+    $.ajax({
+        type: "POST",
+        url: "{% url 'pikquick:save_message' %}",
+        data: data,
+        success: function(result){
+            $("#mensajes_{{post.id}}").html(result);
+            $("#message_{{post.id}}").val("");
+        },
+        error: function(err){
+            console.log("ERRRORRRR");
+            console.log(err.responseText);
+        },
+    });
+
+});
+
+$("#btn_ver_{{post.id}}").click(function(){
+
+    var boton = document.getElementById("btn_ver_{{post.id}}")
+    if (boton.value=="-"){
+        document.getElementById('mensajes_{{post.id}}').style.display = 'none';
+        boton.setAttribute('value', '+');
+        console.log("mostrar");
+    }
+    else{
+        console.log("mostrar");
         var data={
             csrfmiddlewaretoken: '{{ csrf_token }}',
             id:'{{post.id}}',
-            coment_txt:$('#message_{{post.id}}').val(),
+
         }
         $.ajax({
             type: "POST",
-            url: "{% url 'pikquick:save_message' %}",
+            url: "{% url 'pikquick:ver_message' %}",
             data: data,
             success: function(result){
                 $("#mensajes_{{post.id}}").html(result);
@@ -177,47 +207,11 @@
                 console.log(err.responseText);
             },
         });
+        boton.setAttribute('value', '-');
 
-    });
-
-
-    $("#btn_ver_{{post.id}}").click(function(){
-
-        var boton = document.getElementById("btn_ver_{{post.id}}")
-        if (boton.value=="-"){
-            document.getElementById('mensajes_{{post.id}}').style.display = 'none';
-            boton.setAttribute('value', '+');
-            console.log("mostrar");
-        }
-        else{
-            console.log("mostrar");
-            var data={
-                csrfmiddlewaretoken: '{{ csrf_token }}',
-                id:'{{post.id}}',
-
-            }
-            $.ajax({
-                type: "POST",
-                url: "{% url 'pikquick:ver_message' %}",
-                data: data,
-                success: function(result){
-                    $("#mensajes_{{post.id}}").html(result);
-                    $("#message_{{post.id}}").val("");
-                },
-                error: function(err){
-                    console.log("ERRRORRRR");
-                    console.log(err.responseText);
-                },
-            });
-            boton.setAttribute('value', '-');
-
-            document.getElementById('mensajes_{{post.id}}').style.display = 'block';
-        };
-        });
-
-
-
-
+        document.getElementById('mensajes_{{post.id}}').style.display = 'block';
+    };
+});
 </script>
 
 {% empty %}
