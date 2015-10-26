@@ -151,7 +151,7 @@
     <h3>Mensaje:</h3>
 
     <textarea class="materialize-textarea" sytle=" padding:20%;" id="message_{{post.id}}" required data-validation-required-message="Please enter a message."></textarea>
-    <button class="btn waves-effect waves-light" type="button" id="btn_ver_{{post.id}}" name="enviar" value="-"> Ver Comentarios </button>
+    <button class="btn waves-effect waves-light" type="button" id="btn_ver_{{post.id}}" name="enviar" value="+"> Ver Comentarios </button>
 
 
     <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Enviar <i class="fa fa-paper-plane"></i>
@@ -227,34 +227,26 @@
 <script>
 
     $("#btn_enviar_{{post.id}}").click(function(){
-        var boton = document.getElementById("btn_ver_{{post.id}}")
         console.log("VAMO");
         var data={
-                csrfmiddlewaretoken: '{{ csrf_token }}',
-                id:'{{post.id}}',
-                coment_txt:$('#message_{{post.id}}').val(),
-            }
-            $.ajax({
-                type: "POST",
-                url: "{% url 'pikquick:save_message' %}",
-                data: data,
-                success: function(result){
-                    $("#mensajes_{{post.id}}").html(result);
-                    $("#message_{{post.id}}").val("");
-                },
-                error: function(err){
-                    console.log("ERRRORRRR");
-                    console.log(err.responseText);
-                },
-            });
-        if (boton.value=="-"){
-            boton.setAttribute('value', '+');
-            console.log("mostrar");
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            id:'{{post.id}}',
+            coment_txt:$('#message_{{post.id}}').val(),
         }
-        else{
-            boton.setAttribute('value', '-');
-            document.getElementById('mensajes_{{post.id}}').style.display = 'block';
-        }
+        $.ajax({
+            type: "POST",
+            url: "{% url 'pikquick:save_message' %}",
+            data: data,
+            success: function(result){
+                $("#mensajes_{{post.id}}").html(result);
+                $("#message_{{post.id}}").val("");
+            },
+            error: function(err){
+                console.log("ERRRORRRR");
+                console.log(err.responseText);
+            },
+        });
+
     });
 
 
