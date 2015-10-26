@@ -1,0 +1,11 @@
+{% for msj in msjs %}
+<p><DFN>Posteado por {{msj.nombre}} | {{msj.fecha}}</DFN></p>
+
+<p>{{msj.mensaje}} </p>
+<hr>
+
+{% empty %}
+<p id="legal">
+    <h5 class="white-text"> No hay comentarios </h5>
+</p>
+{% endfor %}

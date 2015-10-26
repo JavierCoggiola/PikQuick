@@ -1,0 +1,18 @@
+
+    {% for comentario in coments %}
+    <div class="card-panel" style="width:70%;margin-left:15%" >
+        <div class="row ">
+            <div class="col s1 cyan-text" style="text-align: left">
+                {{comentario.usuario}}
+            </div>
+            <div class="col s10" style="text-align: left">
+                {{comentario.coment_txt}}
+            </div>
+            <div class="col s1 cyan-text" style="text-align: rigth">
+                {{comentario.fecha_pub|timesince}}
+        </div>
+
+    </div>
+        </div>
+
+    {% endfor %}
