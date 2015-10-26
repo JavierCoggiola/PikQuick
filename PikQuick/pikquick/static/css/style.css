@@ -1,0 +1,41 @@
+body {
+}
+.title {
+  float:left
+}
+
+.input-field input[type=search] {
+  display: block;
+  line-height: inherit;
+  padding-left: 4rem;
+  width: calc(100% - 4rem);
+}
+.input-field {
+  position: relative;
+  min-width: 300px;
+	overflow: hidden;
+  margin-top: 1rem;
+}
+.input-field input[type=search] ~ .mdi-navigation-close {
+  position: absolute;
+  top: 0;
+  right: 1rem;
+  color: transparent;
+  cursor: pointer;
+  font-size: 2rem;
+  transition: .3s color;
+}
+.posts {
+    background-color: #F5F5F5;
+    margin-left: 191px;
+    margin-right: 191px;
+    margin-top: -29px;
+    padding: -5px 0px;
+    text-align: center;
+    border-bottom: medium none;
+        border-bottom: medium none;
+        border-bottom-width: medium;
+        border-bottom-style: none;
+        border-bottom-color: -moz-use-text-color;
+}
+}
