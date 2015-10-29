@@ -104,15 +104,6 @@ def cambiar_pass(request):
                               context)
 
 @login_required(login_url='/usuario/ingreso')
-def ver_post(request,id_post):
-    context = RequestContext(request)
-    mi_post = Entrada.objects.get(id = id_post)
-    mensajes = Mensajes.objects.filter(published_in = mi_post)
-    return render_to_response('post.html',
-                              {'post':mi_post,},
-                              context)
-
-@login_required(login_url='/usuario/ingreso')
 def nuevapublic(request):
     context = RequestContext(request)
     return render_to_response('nuevapublic.html',
@@ -134,6 +125,7 @@ def crear_public(request):
     return render_to_response('nuevapublic.html',
                               context)
 
+@login_required(login_url='/usuario/ingreso')
 def save_message(request):
     context = RequestContext(request)
     coment_txt = None
@@ -161,10 +153,18 @@ def ver_message(request):
                               {'coments':coments},
                               context)
 
+@login_required(login_url='/usuario/ingreso')
+def deletePost(request):
+    context = RequestContext(request)
+    if request.method == 'POST':
+        post = Entrada.objects.get(id=request.POST['id'])
+        post.delete()
+    Entrada.objects.all()
+    return redirect('/')
+
 def user_profile(request, username):
     context = RequestContext(request)
     posts = Entrada.objects.filter(usuario = username)
-
     return render_to_response('profiles.html',
                               {'posts':posts},
                               context)
