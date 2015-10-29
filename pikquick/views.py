@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import requires_csrf_token
 from django.core.mail import send_mail
 from django.http import HttpResponse
-from pikquick.models import Entrada, Coment
+from pikquick.models import Entrada, Coment #, Imagen
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 
