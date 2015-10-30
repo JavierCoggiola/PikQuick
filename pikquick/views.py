@@ -169,3 +169,7 @@ def user_profile(request, username):
                               {'posts':posts},
                               context)
 
+def follow(request):
+    context = RequestContext(request)
+    return render_to_response()
+

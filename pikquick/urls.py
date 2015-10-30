@@ -13,4 +13,5 @@ urlpatterns = patterns('',
                        url(r'^ver_message/$', 'pikquick.views.ver_message', name='ver_message'),
                        url(r'^user_profile/(?P<username>\w+)/$', 'pikquick.views.user_profile', name='user_profile'),
                        url(r'^deletePost/$', 'pikquick.views.deletePost', name='deletePost'),
+                       url(r'^seguir/$', 'pikquick.views.follow', name='follow'),
                       )
