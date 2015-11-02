@@ -46,18 +46,10 @@
                         </div>
                         <div class="card-action">
 
-<<<<<<< HEAD
 
 
-
-
-
-
-
-                                <a href="javascript:clickLink({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
-=======
                             <a href="javascript:clickLink({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
->>>>>>> origin/master
+
         <p>Likes <span id="clicks-{{post.id}}">0</span></p>
                         </div>
                     </div>
@@ -73,21 +65,28 @@
 <div  style="width:70%;margin-left:15%; " >
 
               <div class="input-field col s12" >
-            <input name="username" id="message_{{post.id}}" type="text">
-              <label id="message_{{post.id}}" class="center-align"><i class="fa fa-comment-o"></i>Agrega un comentario...</label>
+            <input name="username" id="message_{{post.id}}" type="text" placeholder="Agrege su comentario...">
+            <label id="message_{{post.id}}" class="center-align"></label>
           </div>
 
     <button class="btn waves-effect waves-light" type="button" id="btn_ver_{{post.id}}" name="enviar" value="+"> Ver Comentarios <i class="fa fa-eye"></i></button>
 
     <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Enviar <i class="fa fa-paper-plane"></i>
     </button>
-<<<<<<< HEAD
 
 </div>
 
-=======
->>>>>>> origin/master
 </div>
+
+{% empty %}
+<p id="legal">
+    <h5 class="white-text"> No hay publicaciones en este momento</h5>
+</p>
+
+{% endfor %}
+
+{% block scripts %}
+
 
         <script>
         function clickLink1(idPost) {
@@ -144,7 +143,12 @@
         }
         </script>
 
+
+
+
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+
 <script>
 
 $("#btn_enviar_{{post.id}}").click(function(){
@@ -217,17 +221,8 @@ $("#btn_enviar_{{post.id}}").click(function(){
         });
     });
 
-</script>
 
-{% empty %}
-<p id="legal">
-    <h5 class="white-text"> No hay publicaciones en este momento</h5>
-</p>
 
-{% endfor %}
-
-{% block scripts %}
-<script>
 
     function resizeTextAreasOnFocus() {
 
@@ -276,8 +271,3 @@ $("#btn_enviar_{{post.id}}").click(function(){
 </script>
 
 {% endblock %}
-
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
