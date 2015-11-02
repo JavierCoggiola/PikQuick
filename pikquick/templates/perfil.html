@@ -1,73 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block content %}
-<title>Perfil</title>
-<div class="minA">
-    <ul class="collapsible popout" data-collapsible="accordion">
-        <li>
-            <div class="collapsible-header red darken-3"><i class="fa fa-user"></i>Ajustes</div>
-            <div class="collapsible-body ">
-                <div class="row">
-                                        <div class="col s12">
-                                                                        <h4 class="center-align">Cambiar imagen de perfil</h4>
-
-
-                                             <div class="input-field file-field col s12">
-            <img id='blah' src="{% static 'images/up.png' %}" alt='your image' style='width:270px; height:320px;'/>
-                 <form action="#">
-<div class="file-field input-field">
-  <div class="btn">
-    <span>File</span>
-    <input type="file" multiple multiple accept='image/*'>
-  </div>
-  <div class="file-path-wrapper">
-    <input class="file-path validate" type="text" placeholder="Upload image" multiple accept='image/*'>
-  </div>
-</div>
-</form>
-                <input type='file' id='imgInp' name="img1" multiple accept='image/*'/>
-        </div>
-
-                    </div>
-
-                    <div class="col s12">
-
-
-                        <div class="row">
-    <form class="col s12" action="{% url 'pikquick:cambiar_pass' %}" method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
-                            <h4 class="center-align">Cambiar contraseña</h4>
-
-      <div class="row">
-        <div class="input-field col s12">
-          <input placeholder="Contraseña antigua" name="password1" id="id_password1" type="password"  value="">
-          <label for="password">Contraseña antigua</label>
-        </div>
-      </div>
-
-
-        <div class="row">
-        <div class="input-field col s12">
-          <input placeholder="Contraseña nueva" name="password2" id="id_password2" type="password" value="">
-          <label for="password">Contraseña nueva</label>
-        </div>
-      </div>
-
-           <div class="right-align">
-                                <button class="card-panel red lighten-1 waves-effect waves-orange btn-large" id="crear" type="submit">
-                                    Cambiar contraseña
-                                </button>
-                            </div>
-    </form>
-  </div>
-
-                    </div>
-
-                </div>
-            </div>
-        </li>
-    </ul>
-</div>
+{% load staticfiles %}
 {% for post in posts %}
 <div class='section white center'>
     <div class='container' style='background: #f5f5f5;'>
@@ -77,13 +11,17 @@
                     <img src="{% static 'images/perfil.jpg' %}" alt='' class='circle'>
                     <a class='material-icons' style="margin-right:95%" href="{% url 'pikquick:user_profile' post.usuario %}">{{post.usuario}}</a>
                     <a class='secondary-content'>
-                        <i class='material-icons'>{{post.fecha|timesince}}</i>
+                        <i class='material-icons'>{{post.fecha}}</i>
                     </a>
 
-                    {% if user.is_staff %}
-                    <a href=""><i class="fa fa-trash-o" style="margin-right:1%"></i>Eliminar</a>
+                    {% if user.is_staff or post.usuario == user.username %}
+                    <a href="{% url 'pikquick:deletePost' %}" id="btn_delete_{{post.id}}"><i class="fa fa-trash-o" style="margin-right:1%"></i>Eliminar</a>
                     {% endif %}
 
+                    {% if post.usuario == user.username %}
+                    {% else %}
+                    <a href="{% url 'pikquick:follow' %}"><i class="fa fa-user-plus" style="margin-right:20%"></i>Eliminar</a>
+                    {% endif %}
                 </li>
             </ul>
             <div class='row'>
@@ -96,19 +34,8 @@
                             <p>{{post.desc1}}</p>
                         </div>
                         <div class="card-action">
-
-
-
-       <a href="javascript:clickLink1({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
-        <p>Likes <span id="clicks-1{{post.id}}">0</span></p>
-
-
-
-
-
-
-
-
+                            <a href="javascript:clickLink1({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
+                            <p>Likes <span id="clicks-1{{post.id}}">0</span></p>
                         </div>
                     </div>
                 </div>
@@ -122,21 +49,9 @@
                         </div>
                         <div class="card-action">
 
-
-
-
-
-
--
-
-                                <a href="javascript:clickLink({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
+                            <a href="javascript:clickLink({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
         <p>Likes <span id="clicks-{{post.id}}">0</span></p>
-
-
-
-
-
-                          </div>
+                        </div>
                     </div>
                 </div>
                 <h3>{{post.descPub}}
@@ -156,14 +71,9 @@
 
     <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Enviar <i class="fa fa-paper-plane"></i>
     </button>
-
-
-
 </div>
 
-
         <script>
-
         function clickLink1(idPost) {
             var a = "#clicks-1" + idPost
             console.log($().html());
@@ -186,12 +96,7 @@
 
             }*/
         }
-
         </script>
-
-
-
-
 
         <script>
 
@@ -226,8 +131,10 @@
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script>
 
-    $("#btn_enviar_{{post.id}}").click(function(){
+$("#btn_enviar_{{post.id}}").click(function(){
         console.log("VAMO");
+        var boton = document.getElementById("btn_ver_{{post.id}}")
+        boton.setAttribute('value', '-');
         var data={
             csrfmiddlewaretoken: '{{ csrf_token }}',
             id:'{{post.id}}',
@@ -246,9 +153,7 @@
                 console.log(err.responseText);
             },
         });
-
     });
-
 
     $("#btn_ver_{{post.id}}").click(function(){
 
@@ -284,22 +189,17 @@
         };
         });
 
-
-    /*Esto es la previsualisacion de imagenes*/
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#blah').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(input.files[0]);
+    $("#btn_delete_{{post.id}}").click(function(){
+        var data={
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            id:'{{post.id}}',
         }
-    }
-    $('#imgInp').change(function(){
-        readURL(this);
+        $.ajax({
+            type: "POST",
+            url: "{% url 'pikquick:deletePost' %}",
+            data: data,
+        });
     });
-
-
 
 </script>
 
@@ -309,8 +209,7 @@
 </p>
 {% endfor %}
 
-{% block scripts %}
 <script>
 </script>
 {% endblock %}
-{% endblock %}
+

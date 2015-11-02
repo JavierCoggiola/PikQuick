@@ -8,13 +8,17 @@
                     <img src="{% static 'images/perfil.jpg' %}" alt='' class='circle'>
                     <a class='material-icons' style="margin-right:95%" href="{% url 'pikquick:user_profile' post.usuario %}">{{post.usuario}}</a>
                     <a class='secondary-content'>
-                        <i class='material-icons'>{{post.fecha|timesince}}</i>
+                        <i class='material-icons'>{{post.fecha}}</i>
                     </a>
 
-                    {% if user.is_staff %}
-                    <a href=""><i class="fa fa-trash-o" style="margin-right:1%"></i>Eliminar</a>
+                    {% if user.is_staff or post.usuario == user.username %}
+                    <a href="{% url 'pikquick:deletePost' %}" id="btn_delete_{{post.id}}"><i class="fa fa-trash-o" style="margin-right:1%"></i>Eliminar</a>
                     {% endif %}
 
+                    {% if post.usuario == user.username %}
+                    {% else %}
+                    <a href="{% url 'pikquick:follow' %}"><i class="fa fa-user-plus" style="margin-right:20%"></i>Eliminar</a>
+                    {% endif %}
                 </li>
             </ul>
             <div class='row'>
@@ -27,19 +31,8 @@
                             <p>{{post.desc1}}</p>
                         </div>
                         <div class="card-action">
-
-
-
-       <a href="javascript:clickLink1({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
-        <p>Likes <span id="clicks-1{{post.id}}">0</span></p>
-
-
-
-
-
-
-
-
+                            <a href="javascript:clickLink1({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
+                            <p>Likes <span id="clicks-1{{post.id}}">0</span></p>
                         </div>
                     </div>
                 </div>
@@ -53,6 +46,7 @@
                         </div>
                         <div class="card-action">
 
+<<<<<<< HEAD
 
 
 
@@ -61,13 +55,11 @@
 
 
                                 <a href="javascript:clickLink({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
+=======
+                            <a href="javascript:clickLink({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
+>>>>>>> origin/master
         <p>Likes <span id="clicks-{{post.id}}">0</span></p>
-
-
-
-
-
-                          </div>
+                        </div>
                     </div>
                 </div>
                 <h3>{{post.descPub}}
@@ -89,14 +81,15 @@
 
     <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Enviar <i class="fa fa-paper-plane"></i>
     </button>
+<<<<<<< HEAD
 
 </div>
 
+=======
+>>>>>>> origin/master
 </div>
-
 
         <script>
-
         function clickLink1(idPost) {
             var a = "#clicks-1" + idPost
             console.log($().html());
@@ -119,12 +112,7 @@
 
             }*/
         }
-
         </script>
-
-
-
-
 
         <script>
 
@@ -159,8 +147,10 @@
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script>
 
-    $("#btn_enviar_{{post.id}}").click(function(){
+$("#btn_enviar_{{post.id}}").click(function(){
         console.log("VAMO");
+        var boton = document.getElementById("btn_ver_{{post.id}}")
+        boton.setAttribute('value', '-');
         var data={
             csrfmiddlewaretoken: '{{ csrf_token }}',
             id:'{{post.id}}',
@@ -179,9 +169,7 @@
                 console.log(err.responseText);
             },
         });
-
     });
-
 
     $("#btn_ver_{{post.id}}").click(function(){
 
@@ -217,8 +205,17 @@
         };
         });
 
-
-
+    $("#btn_delete_{{post.id}}").click(function(){
+        var data={
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            id:'{{post.id}}',
+        }
+        $.ajax({
+            type: "POST",
+            url: "{% url 'pikquick:deletePost' %}",
+            data: data,
+        });
+    });
 
 </script>
 
@@ -277,6 +274,10 @@
     }
 
 </script>
+
 {% endblock %}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master

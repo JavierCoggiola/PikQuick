@@ -17,7 +17,7 @@ class Entrada(models.Model):
     descPub = models.TextField(u'Descripcion de la Publicacion' , max_length = 100 , default='Help')
 
     def __str__(self):
-        return self.usuario.encode('utf8') + " / "+self.descPub.encode('utf8')
+        return self.usuario.encode('utf8')+" / "+self.descPub.encode('utf8')
 
 #class Imagen (models.Model):
 #    class Meta:
@@ -39,4 +39,4 @@ class Coment(models.Model):
     entrada = models.ForeignKey(Entrada)
 
     def __str__(self):
-        return self.coment_txt.encode('utf8') + self.usuario.encode('utf8')
+        return self.coment_txt.encode('utf8') +" / "+self.usuario.encode('utf8')
