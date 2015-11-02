@@ -58,7 +58,7 @@
 
 
 
--
+
 
                                 <a href="javascript:clickLink({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
         <p>Likes <span id="clicks-{{post.id}}">0</span></p>
@@ -78,17 +78,19 @@
     <div id="mensajes_{{post.id}}">
         {% include "mensajes.html" %}
     </div>
+<div  style="width:70%;margin-left:15%; " >
 
-    <h3>Mensaje:</h3>
+              <div class="input-field col s12" >
+            <input name="username" id="message_{{post.id}}" type="text">
+              <label id="message_{{post.id}}" class="center-align"><i class="fa fa-comment-o"></i>Agrega un comentario...</label>
+          </div>
 
-    <textarea class="materialize-textarea" sytle=" padding:20%;" id="message_{{post.id}}" required data-validation-required-message="Please enter a message."></textarea>
-    <button class="btn waves-effect waves-light" type="button" id="btn_ver_{{post.id}}" name="enviar" value="+"> Ver Comentarios </button>
-
+    <button class="btn waves-effect waves-light" type="button" id="btn_ver_{{post.id}}" name="enviar" value="+"> Ver Comentarios <i class="fa fa-eye"></i></button>
 
     <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Enviar <i class="fa fa-paper-plane"></i>
     </button>
 
-
+</div>
 
 </div>
 
@@ -224,9 +226,57 @@
 <p id="legal">
     <h5 class="white-text"> No hay publicaciones en este momento</h5>
 </p>
+
 {% endfor %}
 
 {% block scripts %}
 <script>
+
+    function resizeTextAreasOnFocus() {
+
+        function resizeTextArea($textarea){
+
+            var hiddenDiv = $('.hiddendiv').first();
+            if (!hiddenDiv.length) {
+                hiddenDiv = $('<div class="hiddendiv common"></div>');
+                $('body').append(hiddenDiv);
+            }
+
+            var fontFamily = $textarea.css('font-family');
+            var fontSize = $textarea.css('font-size');
+
+            if (fontSize) { hiddenDiv.css('font-size', fontSize); }
+            if (fontFamily) { hiddenDiv.css('font-family', fontFamily); }
+
+            if ($textarea.attr('wrap') === "off") {
+                hiddenDiv.css('overflow-wrap', "normal")
+                    .css('white-space', "pre");
+            }
+
+            hiddenDiv.text($textarea.val() + '\n');
+            var content = hiddenDiv.html().replace(/\n/g, '<br>');
+            hiddenDiv.html(content);
+
+
+            // When textarea is hidden, width goes crazy.
+            // Approximate with half of window size
+
+            if ($textarea.is(':visible')) {
+                hiddenDiv.css('width', $textarea.width());
+            }
+            else {
+                hiddenDiv.css('width', $(window).width()/2);
+            }
+
+            $textarea.css('height', hiddenDiv.height());
+        }
+
+        $('body').on('focus', '.materialize-textarea', function () {
+            resizeTextArea($(this));
+        })
+    }
+
 </script>
 {% endblock %}
+
+
