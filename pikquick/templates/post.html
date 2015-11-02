@@ -128,8 +128,10 @@
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script>
 
-    $("#btn_enviar_{{post.id}}").click(function(){
+$("#btn_enviar_{{post.id}}").click(function(){
         console.log("VAMO");
+        var boton = document.getElementById("btn_ver_{{post.id}}")
+        boton.setAttribute('value', '-');
         var data={
             csrfmiddlewaretoken: '{{ csrf_token }}',
             id:'{{post.id}}',
@@ -139,10 +141,16 @@
             type: "POST",
             url: "{% url 'pikquick:save_message' %}",
             data: data,
-            success: handleData
+            success: function(result){
+                $("#mensajes_{{post.id}}").html(result);
+                $("#message_{{post.id}}").val("");
+            },
+            error: function(err){
+                console.log("ERRRORRRR");
+                console.log(err.responseText);
+            },
         });
     });
-
 
     $("#btn_ver_{{post.id}}").click(function(){
 
@@ -201,4 +209,6 @@
 {% block scripts %}
 <script>
 </script>
+
 {% endblock %}
+
