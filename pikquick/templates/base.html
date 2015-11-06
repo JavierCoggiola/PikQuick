@@ -25,7 +25,7 @@
                 <ul class="right hide-on-med-and-down">
                     <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Nueva Publicacion" href="{% url 'pikquick:nuevapublic' %}"><i class="fa fa-plus"></i></a></li>
 
-                    <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Ver todas las publicaciones" href="{% url 'pikquick:inicioAll' %}"><i class="fa fa-clone"></i></a></li>
+                    <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Ver todas las publicaciones de Pikquick" href="{% url 'pikquick:inicioAll' %}"><i class="fa fa-clone"></i></a></li>
 
                     <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Ajustes" href="{% if user.is_authenticated %}{% url 'pikquick:inicio' %}{% else %}#!{% endif %}"><i class="fa fa-cogs"></i></a></li>
 
