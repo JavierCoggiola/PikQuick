@@ -27,6 +27,8 @@
 
                     <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Ver todas las publicaciones" href="{% url 'pikquick:inicioAll' %}"><i class="fa fa-clone"></i></a></li>
 
+                    <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Ajustes" href="{% if user.is_authenticated %}{% url 'pikquick:inicio' %}{% else %}#!{% endif %}"><i class="fa fa-cogs"></i></a></li>
+
                     <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Perfil" href="{% if user.is_authenticated %}{% url 'pikquick:perfil' %}{% else %}#!{% endif %}"><i class="fa fa-user"> {{user.username}}</i></a></li>
 
                     <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Salir" href="{% if user.is_authenticated %}{% url 'pikquick:salir_usuario' %}{% else %}#!{% endif %}"><i class="fa fa-sign-out fa-fw"></i></a></li>
