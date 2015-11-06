@@ -100,8 +100,10 @@
         document.getElementById("clicks").innerHTML = i;
     }
 
-    $("#btn_enviar_{{post.id}}").click(function(){
+$("#btn_enviar_{{post.id}}").click(function(){
         console.log("VAMO");
+        var boton = document.getElementById("btn_ver_{{post.id}}")
+        boton.setAttribute('value', '-');
         var data={
             csrfmiddlewaretoken: '{{ csrf_token }}',
             id:'{{post.id}}',
@@ -120,9 +122,7 @@
                 console.log(err.responseText);
             },
         });
-
     });
-
 
     $("#btn_ver_{{post.id}}").click(function(){
 
@@ -156,7 +156,7 @@
 
             document.getElementById('mensajes_{{post.id}}').style.display = 'block';
         };
-    });
+        });
 
      $("#btn_delete_{{post.id}}").click(function(){
         var data={
