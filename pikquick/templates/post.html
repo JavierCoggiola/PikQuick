@@ -9,7 +9,7 @@
                     <img src="{% static 'images/perfil.jpg' %}" alt='' class='circle'>
                     <a class='material-icons' style="margin-right:95%" href="{% url 'pikquick:user_profile' post.usuario %}">{{post.usuario}}</a>
 
-                    <a class='secondary-content'><i class='material-icons'>{{post.fecha}}</i></a>
+                    <a class='secondary-content'><i class='material-icons'>{{post.fecha|timesince}}</i></a>
 
                     {% if post.usuario == user.username %}
                     {% else %}
@@ -32,7 +32,7 @@
                             <p>{{img.desc1}}</p>
                         </div>
                         <div class="card-action">
-                            <a href="javascript:clickLink1({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
+                               <a href="javascript:clickLink({{post.id}},1);"><i class="fa fa-heart fa-3x"></i></a>
                             <p>Likes <span id="clicks-1{{post.id}}">0</span></p>
                         </div>
                     </div>
@@ -46,8 +46,8 @@
                             <p>{{img.desc2}}</p>
                         </div>
                         <div class="card-action">
-                            <a href="javascript:clickLink({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
-                            <p>Likes <span id="clicks-{{post.id}}">0</span></p>
+                                      <a href="javascript:clickLink({{post.id}},2);"><i class="fa fa-heart fa-3x"></i></a>
+                            <p>Likes <span id="clicks-2{{post.id}}">0</span></p>
                         </div>
                     </div>
                 </div>
@@ -69,29 +69,31 @@
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
 <script>
-    function clickLink1(idPost) {
-        var a = "#clicks-1" + idPost
-        console.log($().html());
-        if ($(a).html()=='1'){
-            $(a).html('0');
-        }
-        else
-        {
-            $(a).html('1');
-        }
-    }
 
-    function clickLink(idPost) {
-        var a = "#clicks-" + idPost
-        console.log($().html());
-        if ($(a).html()=='1'){
-            $(a).html('0');
-        }
-        else
-        {
-            $(a).html('1');
-        }
-    }
+     function clickLink(idPost, value) {
+            var uno = "#clicks-1" + idPost
+            var dos = "#clicks-2" + idPost
+            if (value==1){
+                if ($(uno).html()=='1'){
+                    $(uno).html('0');
+                }
+                else
+                {
+                    $(uno).html('1');
+                    $(dos).html('0');
+                }
+            }else{
+                if ($(dos).html()=='1'){
+                    $(dos).html('0');
+                }
+                else
+                {
+                    $(dos).html('1');
+                    $(uno).html('0');
+                }
+            }
+                        }
+
 
     function Reset() {
         i = 0;
