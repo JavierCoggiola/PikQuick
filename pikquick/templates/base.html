@@ -23,22 +23,22 @@
                     <a id="logo-container" style="left: 100px;" href="{% url 'pikquick:inicio' %}" class="truncate brand-logo"><img src="{% static 'images/logo.png' %}"></img></a>
 
                 <ul class="right hide-on-med-and-down">
+                    <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Nueva Publicacion" href="{% url 'pikquick:nuevapublic' %}"><i class="fa fa-plus"></i></a></li>
 
-                    <!--<li><a  style="height: 62px;width:400px"><div class="input-field">
-          <input id="search" type="search"  placeholder="Buscar" required>
-          <label for="search"><i class="fa fa-search"></i></label>
-                        </div></li></a>-->
-
-                    <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Salir" href="{% if user.is_authenticated %}{% url 'pikquick:salir_usuario' %}{% else %}#!{% endif %}"><i class="fa fa-sign-out fa-fw"></i></a></li>
+                    <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Ver todas las publicaciones" href="{% url 'pikquick:inicioAll' %}"><i class="fa fa-clone"></i></a></li>
 
                     <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Perfil" href="{% if user.is_authenticated %}{% url 'pikquick:perfil' %}{% else %}#!{% endif %}"><i class="fa fa-user"> {{user.username}}</i></a></li>
 
-                    <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Nueva Publicacion" href="{% url 'pikquick:nuevapublic' %}"><i class="fa fa-plus"></i></a></li>
+                    <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Salir" href="{% if user.is_authenticated %}{% url 'pikquick:salir_usuario' %}{% else %}#!{% endif %}"><i class="fa fa-sign-out fa-fw"></i></a></li>
                 </ul>
 
+                <!-- Para celular -->
+
                 <ul class="side-nav" style="left: -250px;" id="nav-mobile">
-                    <li><a class="modal-trigger" href="{% url 'pikquick:nuevapublic' %}"><i class="fa fa-plus"></i></a></li>
-                </ul>
+                    <li><a class="modal-trigger" href="{% url 'pikquick:inicioAll' %}"><i class="fa fa-plus"></i></a></li></ul>
+
+                <ul class="side-nav" style="left: -250px;" id="nav-mobile">
+                    <li><a class="modal-trigger" href="{% url 'pikquick:nuevapublic' %}"><i class="fa fa-plus"></i></a></li></ul>
 
                 <ul class="side-nav" style="left: -250px;" id="nav-mobile">
                     <li><a class="modal-trigger" href="{% if user.is_authenticated %}{% url 'pikquick:perfil' %}{% else %}#!{% endif %}}"><i class="fa fa-user"> {{user.username}}</i></a></li>

@@ -40,3 +40,11 @@ class Coment(models.Model):
 
     def __str__(self):
         return self.coment_txt.encode('utf8') +" / "+self.usuario.encode('utf8')
+
+class Follow(models.Model):
+    following = models.ForeignKey(User, related_name="who_follows")
+    follower = models.ForeignKey(User, related_name="who_is_followed")
+    follow_time = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return str(self.follow_time)

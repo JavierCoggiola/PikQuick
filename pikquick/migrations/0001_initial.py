@@ -2,11 +2,13 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
@@ -26,6 +28,10 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('usuario', models.CharField(max_length=100, verbose_name='Usuario')),
                 ('fecha', models.DateTimeField(auto_now_add=True, verbose_name='Fecha del Post')),
+                ('img1', models.FileField(default=b'null', upload_to=b'img_public', verbose_name='Imagen de portada')),
+                ('img2', models.FileField(default=b'null', upload_to=b'img_public', verbose_name='Imagen de portada')),
+                ('desc1', models.TextField(default=b'', max_length=100, verbose_name='Descripcion Imagen 1')),
+                ('desc2', models.TextField(default=b'', max_length=100, verbose_name='Descripcion Imagen 2')),
                 ('descPub', models.TextField(default=b'Help', max_length=100, verbose_name='Descripcion de la Publicacion')),
             ],
             options={
@@ -35,17 +41,13 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='Imagen',
+            name='Follow',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('img', models.FileField(default=b'null', upload_to=b'img_public', verbose_name='Imagen de portada')),
-                ('desc', models.TextField(default=b' ', max_length=100, verbose_name='Descripcion Imagen')),
-                ('entrada', models.ForeignKey(to='pikquick.Entrada')),
+                ('follow_time', models.DateTimeField(auto_now=True)),
+                ('follower', models.ForeignKey(related_name='who_is_followed', to=settings.AUTH_USER_MODEL)),
+                ('following', models.ForeignKey(related_name='who_follows', to=settings.AUTH_USER_MODEL)),
             ],
-            options={
-                'verbose_name': 'Imagen',
-                'verbose_name_plural': 'Imagenes',
-            },
         ),
         migrations.AddField(
             model_name='coment',

@@ -17,8 +17,9 @@
 
                     {% if post.usuario == user.username %}
                     {% else %}
-                    <a href="{% url 'pikquick:follow' %}"><i class="fa fa-user-plus" style="margin-right:20%"></i>Eliminar</a>
+                    <a href="{% url 'pikquick:follow' post.usuario %}" id="btn_follow_{{post.usuario}}"><i class="fa fa-user-plus" style="margin-right:1%"></i>Seguir</a>
                     {% endif %}
+
                 </li>
             </ul>
             <div class='row'>
@@ -51,7 +52,7 @@
                         </div>
                     </div>
                 </div>
-                <h3>{{post.descPub}}
+                <h4>{{post.descPub}}
             </div>
         </div>
     </div>
@@ -82,16 +83,8 @@
                 $(a).html('1');
             }
 
-            /*i++;
-            if (i == 1) {
-                document.getElementById("clicks").innerHTML = i;
-            }
-            else
-            {
-                document.getElementById("clicks").innerHTML = i;
-                i=0
+            /*i++;if (i == 1) {document.getElementById("clicks").innerHTML = i;}else{document.getElementById("clicks").innerHTML = i;i=0}*/
 
-            }*/
         }
         </script>
 
@@ -108,16 +101,8 @@
                 $(a).html('1');
             }
 
-            /*i++;
-            if (i == 1) {
-                document.getElementById("clicks").innerHTML = i;
-            }
-            else
-            {
-                document.getElementById("clicks").innerHTML = i;
-                i=0
+            /*i++;if (i == 1) {document.getElementById("clicks").innerHTML = i;}else{document.getElementById("clicks").innerHTML = i;i=0}*/
 
-            }*/
         }
         function Reset() {
             i = 0;
@@ -186,6 +171,18 @@
         $.ajax({
             type: "POST",
             url: "{% url 'pikquick:deletePost' %}",
+            data: data,
+        });
+    });
+
+    $("#btn_follow_{{post.usuario}}").click(function(){
+        var data={
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            usuario:'{{post.usuario}}',
+        }
+        $.ajax({
+            type: "POST",
+            url: "{% url 'pikquick:followUnfollow' %}",
             data: data,
         });
     });
