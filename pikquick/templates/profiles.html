@@ -20,7 +20,7 @@
 
                     {% if post.usuario == user.username %}
                     {% else %}
-                    <a href="{% url 'pikquick:follow' %}"><i class="fa fa-user-plus" style="margin-right:20%"></i>Eliminar</a>
+                    <a href="{% url 'pikquick:follow' post.usuario %}"><i class="fa fa-user-plus" style="margin-right:20%"></i>Eliminar</a>
                     {% endif %}
                 </li>
             </ul>
