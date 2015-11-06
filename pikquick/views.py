@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import requires_csrf_token
 from django.core.mail import send_mail
 from django.http import HttpResponse
-from pikquick.models import Entrada, Coment, Follow #, Imagen
+from pikquick.models import Entrada, Coment, Follow , Imagen
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 
@@ -70,6 +70,7 @@ def nuevo_usuario(request):
             n_u.save()
             user = authenticate(username=username, password=password)
             login(request, user)
+
             ####AUTOSEGUIRSE
             toFollow = request.user
             seguir = Follow()
@@ -136,12 +137,14 @@ def crear_public(request):
     if request.method=='POST':
         pub=Entrada()
         pub.usuario=request.user.username
-        pub.img1=request.FILES['img1']
-        pub.img2=request.FILES['img2']
-        pub.desc1=request.POST['desc1']
-        pub.desc2=request.POST['desc2']
         pub.descPub=request.POST['descPub']
         pub.save()
+        for i in range(1,3):
+            key_img = 'img' + str(i)
+            key_desc = 'desc' + str(i)
+            if request.POST.get(key_img, True):
+                img = Imagen(entrada=pub, img=request.FILES[key_img], desc=request.POST[key_desc])
+                img.save()
         return redirect("/")
     return render_to_response('nuevapublic.html',
                               context)

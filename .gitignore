@@ -68,3 +68,6 @@ target/
 =======
 /PikQuick/documents/
 >>>>>>> PikQuick/master
+/db.sqlite3
+/documents/
+/pikquick/migrations/

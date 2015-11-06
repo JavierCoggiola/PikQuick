@@ -1,124 +1,199 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block content %}
-<title>Perfil</title>
-<div class="minA">
-    <ul class="collapsible popout" data-collapsible="accordion">
-        <li>
-            <div class="collapsible-header red darken-3"><i class="fa fa-user"></i>Ajustes</div>
-            <div class="collapsible-body ">
-                <div class="row">
-                    <div class="col s6">
-                        <form action="{% url 'pikquick:cambiar_pass' %}" method="POST" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <h4 class="center-align">Cambiar contraseña</h4>
-                            <div class="input-field">
-                                <input placeholder="Contraseña antigua" name="password1" id="id_password1" type="password"  value="">
-                            </div>
-                            <div class="input-field">
-                                <input placeholder="Contraseña nueva" name="password2" id="id_password2" type="password" value="">
-                            </div>
-                            <div class="right-align">
-                                <button class="card-panel red lighten-1 waves-effect waves-orange btn-large" id="crear" type="submit">
-                                    Cambiar contraseña
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col s6">
-                        <a class="card-panel red lighten-1 waves-effect waves-orange btn-large" href="{% url 'pikquick:salir_usuario' %}">
-                            Salir
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </li>
-    </ul>
-</div>
+{% load staticfiles %}
 {% for post in posts %}
-<div class="section">
-    <div class="container">
-        <div class="row" style="">
-            <div class="col s12 m4 l4">
-                <div class="col s12 m6">
-                    <div>
-                        <div class="card-image">
-                            <img class='activator' src='{{ MEDIA_URL }}{{post.img1}}' style='width:140px; height:170px; margin-top:4%;'>
+
+
+        <div class="section white center">
+
+
+                <div class="row">
+        <div class="s10 offset-s1 col">
+                                    <div class="m12 col">
+                            <div class="card">
+                                <div class="card-content row">
+                                    <div class="s12 l3 col">
+                                        <img src="{% url 'pikquick:user_profile' post.usuario %}}" class="align-right circle">
+                                    </div>
+                                    <div class="col s2 center-align">
+                                        <h4>{{user.username}}</h4>
+                                        </div>
+                                    <div class="col s2 center-align">
+                                        <label>Publicaciones</label> {{u.user.email}}{{u.user.email}} <br>
+                                        </div>
+                                    <div class="col s2 center-align">
+                                        <label>Seguidores</label> {{u.user.password}} <br>
+                                        </div>
+                                    <div class="col s2 center-align">
+                                        <label>Seguidos</label> {{u.user.phone}} <br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-action">
-                            <a href="#">Stars</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s12 m6">
-                    <div>
-                        <div class="card-image">
-                            <img class='activator' src='{{ MEDIA_URL }}{{post.img2}}' style='width:140px; height:170px; margin-top:4%;'>
-                        </div>
-                        <div class="card-action">
-                            <a href="#">Stars</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
-</div>
 
-        <!--<div class='container col s10 m6' style='background:#f5f5f5; width:30%'>
+  </div>
+
+
+<div class='section white center'>
+    <div class='container' style='background: #f5f5f5;'>
+        <div class='container' style='background:#f5f5f5; width:100%'>
             <ul class='collection'>
                 <li class='collection-item avatar'>
-                    <i class='material-icons'>{{post.fecha}}</i>
+                    <img src="{% static 'images/perfil.jpg' %}" alt='' class='circle'>
+                    <a class='material-icons' style="margin-right:95%" href="{% url 'pikquick:user_profile' post.usuario %}">{{post.usuario}}</a>
+                    <a class='secondary-content'>
+                        <i class='material-icons'>{{post.fecha|timesince}}</i>
+                    </a>
+
                     {% if user.is_staff %}
-                    <a href=""><i class="fa fa-trash-o" style="margin-right:1%"></i></a>
+                    <a href=""><i class="fa fa-trash-o" style="margin-right:1%"></i>Eliminar</a>
                     {% endif %}
+
                 </li>
             </ul>
             <div class='row'>
                 <div class="col s12 m6">
                     <div class="card">
                         <div class="card-image">
-                            <img class='activator' src='{{ MEDIA_URL }}{{post.img1}}' style='width:100px; height:120px; margin-top:4%;'>
+                            <img class='activator' src='{{ MEDIA_URL }}{{post.img1}}' style='width:400px; height:450px; margin-top:4%;'>
+                        </div>
+                        <div class="card-content">
+                            <p>{{post.desc1}}</p>
                         </div>
                         <div class="card-action">
-                            <a href="#">Stars</a>
+
+
+
+       <a href="javascript:clickLink1({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
+        <p>Likes <span id="clicks-1{{post.id}}">0</span></p>
+
+
+
+
+
+
+
+
                         </div>
                     </div>
                 </div>
                 <div class="col s12 m6">
                     <div class="card">
                         <div class="card-image">
-                            <img class='activator' src='{{ MEDIA_URL }}{{post.img2}}' style='width:100px; height:120px; margin-top:4%;'>
+                            <img class='activator' src='{{ MEDIA_URL }}{{post.img2}}' style='width:400px; height:450px; margin-top:4%;'>
+                        </div>
+                        <div class="card-content">
+                            <p>{{post.desc2}}</p>
                         </div>
                         <div class="card-action">
-                            <a href="#">Stars</a>
-                        </div>
+
+
+
+
+
+
+
+
+                                <a href="javascript:clickLink({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
+        <p>Likes <span id="clicks-{{post.id}}">0</span></p>
+
+
+
+
+
+                          </div>
                     </div>
                 </div>
+                <h3>{{post.descPub}}
             </div>
-        </div>-->
+        </div>
     </div>
-    {% csrf_token %}
 
-    {% csrf_token %}
-  <div id="mensajes_{{post.id}}">
+    <div id="mensajes_{{post.id}}">
         {% include "mensajes.html" %}
     </div>
+<div  style="width:70%;margin-left:15%; " >
 
+              <div class="input-field col s12" >
+            <input name="username" id="message_{{post.id}}" type="text">
+              <label id="message_{{post.id}}" class="center-align"><i class="fa fa-comment-o"></i>Agrega un comentario...</label>
+          </div>
 
-    <textarea class="materialize-textarea" sytle="    text-align: center;
-" id="message_{{post.id}}" required data-validation-required-message="Please enter a message."></textarea>
-    <button class="btn waves-effect waves-light" style="text-align: left" type="button" id="btn_ver_{{post.id}}" name="enviar" value="+"> Ver Comentarios </button>
-
+    <button class="btn waves-effect waves-light" type="button" id="btn_ver_{{post.id}}" name="enviar" value="+"> Ver Comentarios <i class="fa fa-eye"></i></button>
 
     <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Enviar <i class="fa fa-paper-plane"></i>
     </button>
 
+</div>
+
+</div>
+
+        <script>
+        function clickLink1(idPost) {
+            var a = "#clicks-1" + idPost
+            console.log($().html());
+            if ($(a).html()=='1'){
+                $(a).html('0');
+            }
+            else
+            {
+                $(a).html('1');
+            }
+
+            /*i++;
+            if (i == 1) {
+                document.getElementById("clicks").innerHTML = i;
+            }
+            else
+            {
+                document.getElementById("clicks").innerHTML = i;
+                i=0
+
+            }*/
+        }
+        </script>
+
+        <script>
+
+        function clickLink(idPost) {
+            var a = "#clicks-" + idPost
+            console.log($().html());
+            if ($(a).html()=='1'){
+                $(a).html('0');
+            }
+            else
+            {
+                $(a).html('1');
+            }
+
+            /*i++;
+            if (i == 1) {
+                document.getElementById("clicks").innerHTML = i;
+            }
+            else
+            {
+                document.getElementById("clicks").innerHTML = i;
+                i=0
+
+            }*/
+        }
+        function Reset() {
+            i = 0;
+            document.getElementById("clicks").innerHTML = i;
+        }
+        </script>
+
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script>
 
-    $("#btn_enviar_{{post.id}}").click(function(){
+$("#btn_enviar_{{post.id}}").click(function(){
         console.log("VAMO");
+        var boton = document.getElementById("btn_ver_{{post.id}}")
+        boton.setAttribute('value', '-');
         var data={
             csrfmiddlewaretoken: '{{ csrf_token }}',
             id:'{{post.id}}',
@@ -173,6 +248,27 @@
         };
         });
 
+    $("#btn_delete_{{post.id}}").click(function(){
+        var data={
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            id:'{{post.id}}',
+        }
+        $.ajax({
+            type: "POST",
+            url: "{% url 'pikquick:deletePost' %}",
+            data: data,
+        });
+    });
+
 </script>
+
+{% empty %}
+<p id="legal">
+    <h5 class="white-text"> No hay publicaciones en este momento</h5>
+</p>
 {% endfor %}
+
+<script>
+</script>
 {% endblock %}
+
