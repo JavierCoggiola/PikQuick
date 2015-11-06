@@ -29,9 +29,11 @@ def inicio(request):
 @login_required(login_url='/usuario/ingreso')
 def inicioAll(request):
     context = RequestContext(request)
-    posts = Entrada.objects.all
+    posts = Entrada.objects.all()
+    imagenes = Imagen.objects.all()
     return render_to_response('inicio.html',
-                              {'posts':posts,},
+                              {'posts':posts,
+                              'imagenes': imagenes},
                               context)
 
 @login_required(login_url='/usuario/ingreso')
