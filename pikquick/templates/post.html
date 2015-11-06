@@ -16,7 +16,7 @@
                     {% endif %}
 
                     {% if user.is_staff or post.usuario == user.username %}
-                                        <a href=""><i class="fa fa-trash-o" style="margin-right:1%"></i>Eliminar</a>
+                    <a href=""><i class="fa fa-trash-o" style="margin-right:1%"></i>Eliminar</a>
                     {% endif %}
 
                 </li>
@@ -34,8 +34,8 @@
 
 
 
-       <a href="javascript:clickLink1({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
-        <p>Likes <span id="clicks-1{{post.id}}">0</span></p>
+                            <a href="javascript:clickLink({{post.id}},1);">---<i class="fa fa-heart fa-3x"></i>---</a>
+                            <p>Likes <span id="clicks-1{{post.id}}">0</span></p>
 
 
 
@@ -62,53 +62,66 @@
 
 
 
--
+                            -
 
-                                <a href="javascript:clickLink({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
-        <p>Likes <span id="clicks-{{post.id}}">0</span></p>
-
-
+                            <a href="javascript:clickLink({{post.id}},2);">---<i class="fa fa-heart fa-3x"></i>---</a>
+                            <p>Likes <span id="clicks-2{{post.id}}">0</span></p>
 
 
 
-                          </div>
+
+
+                        </div>
                     </div>
                 </div>
                 <h3>{{post.descPub}}
+                    </div>
             </div>
         </div>
+
+        <div id="mensajes_{{post.id}}">
+            {% include "mensajes.html" %}
+        </div>
+
+        <h3>Mensaje:</h3>
+
+        <textarea class="materialize-textarea" sytle=" padding:20%;" id="message_{{post.id}}" required data-validation-required-message="Please enter a message."></textarea>
+        <button class="btn waves-effect waves-light" type="button" id="btn_ver_{{post.id}}" name="enviar" value="+"> Ver Comentarios </button>
+
+
+        <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Enviar <i class="fa fa-paper-plane"></i>
+        </button>
+
+
+
     </div>
 
-    <div id="mensajes_{{post.id}}">
-        {% include "mensajes.html" %}
-    </div>
 
-    <h3>Mensaje:</h3>
+    <script>
 
-    <textarea class="materialize-textarea" sytle=" padding:20%;" id="message_{{post.id}}" required data-validation-required-message="Please enter a message."></textarea>
-    <button class="btn waves-effect waves-light" type="button" id="btn_ver_{{post.id}}" name="enviar" value="+"> Ver Comentarios </button>
-
-
-    <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Enviar <i class="fa fa-paper-plane"></i>
-    </button>
-
-
-
-</div>
-
-
-        <script>
-
-        function clickLink1(idPost) {
-            var a = "#clicks-1" + idPost
-            console.log($().html());
-            if ($(a).html()=='1'){
-                $(a).html('0');
+        function clickLink(idPost, value) {
+            var uno = "#clicks-1" + idPost
+            var dos = "#clicks-2" + idPost
+            if (value==1){
+                if ($(uno).html()=='1'){
+                    $(uno).html('0');
+                }
+                else
+                {
+                    $(uno).html('1');
+                    $(dos).html('0');
+                }
+            }else{
+                if ($(dos).html()=='1'){
+                    $(dos).html('0');
+                }
+                else
+                {
+                    $(dos).html('1');
+                    $(uno).html('0');
+                }
             }
-            else
-            {
-                $(a).html('1');
-            }
+
 
             /*i++;
             if (i == 1) {
@@ -122,87 +135,25 @@
             }*/
         }
 
-        </script>
-
-
-
-
-
-        <script>
-
-        function clickLink(idPost) {
-            var a = "#clicks-" + idPost
-            console.log($().html());
-            if ($(a).html()=='1'){
-                $(a).html('0');
-            }
-            else
-            {
-                $(a).html('1');
-            }
-
-            /*i++;
-            if (i == 1) {
-                document.getElementById("clicks").innerHTML = i;
-            }
-            else
-            {
-                document.getElementById("clicks").innerHTML = i;
-                i=0
-
-            }*/
-        }
         function Reset() {
             i = 0;
             document.getElementById("clicks").innerHTML = i;
         }
-        </script>
+    </script>
 
-<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script>
 
-    $("#btn_enviar_{{post.id}}").click(function(){
-        console.log("VAMO");
-        var data={
-            csrfmiddlewaretoken: '{{ csrf_token }}',
-            id:'{{post.id}}',
-            coment_txt:$('#message_{{post.id}}').val(),
-        }
-        $.ajax({
-            type: "POST",
-            url: "{% url 'pikquick:save_message' %}",
-            data: data,
-            success: function(result){
-                $("#mensajes_{{post.id}}").html(result);
-                $("#message_{{post.id}}").val("");
-            },
-            error: function(err){
-                console.log("ERRRORRRR");
-                console.log(err.responseText);
-            },
-        });
-
-    });
-
-
-    $("#btn_ver_{{post.id}}").click(function(){
-
-        var boton = document.getElementById("btn_ver_{{post.id}}")
-        if (boton.value=="-"){
-            document.getElementById('mensajes_{{post.id}}').style.display = 'none';
-            boton.setAttribute('value', '+');
-            console.log("mostrar");
-        }
-        else{
-            console.log("mostrar");
+        $("#btn_enviar_{{post.id}}").click(function(){
+            console.log("VAMO");
             var data={
                 csrfmiddlewaretoken: '{{ csrf_token }}',
                 id:'{{post.id}}',
-
+                coment_txt:$('#message_{{post.id}}').val(),
             }
             $.ajax({
                 type: "POST",
-                url: "{% url 'pikquick:ver_message' %}",
+                url: "{% url 'pikquick:save_message' %}",
                 data: data,
                 success: function(result){
                     $("#mensajes_{{post.id}}").html(result);
@@ -213,21 +164,53 @@
                     console.log(err.responseText);
                 },
             });
-            boton.setAttribute('value', '-');
 
-            document.getElementById('mensajes_{{post.id}}').style.display = 'block';
-        };
+        });
+
+
+        $("#btn_ver_{{post.id}}").click(function(){
+
+            var boton = document.getElementById("btn_ver_{{post.id}}")
+            if (boton.value=="-"){
+                document.getElementById('mensajes_{{post.id}}').style.display = 'none';
+                boton.setAttribute('value', '+');
+                console.log("mostrar");
+            }
+            else{
+                console.log("mostrar");
+                var data={
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    id:'{{post.id}}',
+
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'pikquick:ver_message' %}",
+                    data: data,
+                    success: function(result){
+                        $("#mensajes_{{post.id}}").html(result);
+                        $("#message_{{post.id}}").val("");
+                    },
+                    error: function(err){
+                        console.log("ERRRORRRR");
+                        console.log(err.responseText);
+                    },
+                });
+                boton.setAttribute('value', '-');
+
+                document.getElementById('mensajes_{{post.id}}').style.display = 'block';
+            };
         });
 
 
 
 
-</script>
+    </script>
 
-{% empty %}
-<p id="legal">
+    {% empty %}
+    <p id="legal">
     <h5 class="white-text"> No hay publicaciones en este momento</h5>
-</p>
+    </p>
 {% endfor %}
 
 {% block scripts %}
