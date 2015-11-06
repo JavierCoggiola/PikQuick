@@ -17,7 +17,7 @@
                     {% endif %}
 
                     {% if user.is_staff or post.usuario == user.username %}
-                    <a href=""><i class="fa fa-trash-o" style="margin-right:1%"></i>Eliminar</a>
+                    <a href="{% url 'pikquick:deletePost' %}" id="btn_delete_{{post.id}}"><i class="fa fa-trash-o" style="margin-right:1%"></i>Eliminar</a>
                     {% endif %}
 
                 </li>
@@ -155,6 +155,19 @@
             document.getElementById('mensajes_{{post.id}}').style.display = 'block';
         };
     });
+
+     $("#btn_delete_{{post.id}}").click(function(){
+        var data={
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            id:'{{post.id}}',
+        }
+        $.ajax({
+            type: "POST",
+            url: "{% url 'pikquick:deletePost' %}",
+            data: data,
+        });
+    });
+
 
     $("#btn_follow_{{post.usuario}}").click(function(){
         var data={
