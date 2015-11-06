@@ -18,12 +18,14 @@ def inicio(request):
 
     user_reg = request.user
     users_follow=[]
+    imagenes = Imagen.objects.all()
     for followers in user_reg.who_follows.all():
         users_follow.append(followers.follower)
     posts = Entrada.objects.filter(usuario__in=users_follow)
 
     return render_to_response('inicio.html',
-                              {'posts':posts,},
+                              {'posts':posts,
+                              'imagenes': imagenes},
                               context)
 
 @login_required(login_url='/usuario/ingreso')
@@ -40,9 +42,11 @@ def inicioAll(request):
 def perfil(request):
     context = RequestContext(request)
     usuario = request.user.username
+    imagenes = Imagen.objects.all()
     posts = Entrada.objects.filter(usuario = usuario)
     return render_to_response('perfil.html',
-                              {'posts':posts},
+                              {'imagenes': imagenes,
+                              'posts':posts},
                               context)
 
 @requires_csrf_token
@@ -191,9 +195,11 @@ def deletePost(request):
 
 def user_profile(request, username):
     context = RequestContext(request)
+    imagenes = Imagen.objects.all()
     posts = Entrada.objects.filter(usuario = username)
     return render_to_response('profiles.html',
-                              {'posts':posts},
+                              {'posts':posts,
+                              'imagenes': imagenes},
                               context)
 
 @login_required(login_url='/usuario/ingreso')
@@ -221,7 +227,9 @@ def followUnfollow(request):
 
 def buscador(request, busqueda):
     context = RequestContext(request)
+    imagenes = Imagen.objects.all()
     posts = Entrada.objects.filter(usuario = busqueda)
     return render_to_response('profiles.html',
-                              {'posts':posts},
+                              {'posts':posts,
+                              'imagenes': imagenes},
                               context)
