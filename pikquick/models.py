@@ -25,7 +25,7 @@ class Imagen (models.Model):
         verbose_name_plural = "Imagenes"
 
     img = models.FileField(u'Imagen de portada',upload_to = 'img_public', default='null')
-    desc = models.TextField(u'Descripcion Imagen' , max_length = 100 , default='')
+    desc = models.TextField(u'Descripcion Imagen' , max_length = 100 , default=' ')
     entrada = models.ForeignKey(Entrada, related_name="imagenes")
 
     def __str__(self):
