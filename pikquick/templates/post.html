@@ -10,13 +10,9 @@
                     <a class='secondary-content'>
                         <i class='material-icons'>{{post.fecha|timesince}}</i>
                     </a>
-                    {% if post.usuario == user.username %}
-                    {% else %}
-                    <a href="{% url 'pikquick:follow' %}"><i class="fa fa-user-plus" style="margin-right:20%"></i>Seguir</a>
-                    {% endif %}
 
-                    {% if user.is_staff or post.usuario == user.username %}
-                                        <a href=""><i class="fa fa-trash-o" style="margin-right:1%"></i>Eliminar</a>
+                    {% if user.is_staff %}
+                    <a href=""><i class="fa fa-trash-o" style="margin-right:1%"></i>Eliminar</a>
                     {% endif %}
 
                 </li>
@@ -25,10 +21,10 @@
                 <div class="col s12 m6">
                     <div class="card">
                         <div class="card-image">
-                            <img class='activator' src='{{ MEDIA_URL }}{{img.img1}}' style='width:400px; height:450px; margin-top:4%;'>
+                            <img class='activator' src='{{ MEDIA_URL }}{{post.img1}}' style='width:400px; height:450px; margin-top:4%;'>
                         </div>
                         <div class="card-content">
-                            <p>{{img.desc1}}</p>
+                            <p>{{post.desc1}}</p>
                         </div>
                         <div class="card-action">
 
@@ -50,10 +46,10 @@
                 <div class="col s12 m6">
                     <div class="card">
                         <div class="card-image">
-                            <img class='activator' src='{{ MEDIA_URL }}{{img.img2}}' style='width:400px; height:450px; margin-top:4%;'>
+                            <img class='activator' src='{{ MEDIA_URL }}{{post.img2}}' style='width:400px; height:450px; margin-top:4%;'>
                         </div>
                         <div class="card-content">
-                            <p>{{img.desc2}}</p>
+                            <p>{{post.desc2}}</p>
                         </div>
                         <div class="card-action">
 
@@ -62,7 +58,7 @@
 
 
 
--
+
 
                                 <a href="javascript:clickLink({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
         <p>Likes <span id="clicks-{{post.id}}">0</span></p>
@@ -82,17 +78,19 @@
     <div id="mensajes_{{post.id}}">
         {% include "mensajes.html" %}
     </div>
+<div  style="width:70%;margin-left:15%; " >
 
-    <h3>Mensaje:</h3>
+              <div class="input-field col s12" >
+            <input name="username" id="message_{{post.id}}" type="text">
+              <label id="message_{{post.id}}" class="center-align"><i class="fa fa-comment-o"></i>Agrega un comentario...</label>
+          </div>
 
-    <textarea class="materialize-textarea" sytle=" padding:20%;" id="message_{{post.id}}" required data-validation-required-message="Please enter a message."></textarea>
-    <button class="btn waves-effect waves-light" type="button" id="btn_ver_{{post.id}}" name="enviar" value="+"> Ver Comentarios </button>
-
+    <button class="btn waves-effect waves-light" type="button" id="btn_ver_{{post.id}}" name="enviar" value="+"> Ver Comentarios <i class="fa fa-eye"></i></button>
 
     <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Enviar <i class="fa fa-paper-plane"></i>
     </button>
 
-
+</div>
 
 </div>
 
