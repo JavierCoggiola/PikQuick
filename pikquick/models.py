@@ -10,10 +10,10 @@ class Entrada(models.Model):
 
     usuario = models.CharField(u'Usuario', max_length = 100)
     fecha = models.DateTimeField(u'Fecha del Post',auto_now_add=True)
-    img1 = models.FileField(u'Imagen de portada',upload_to = 'img_public', default='null')
-    img2 = models.FileField(u'Imagen de portada',upload_to = 'img_public', default='null')
-    desc1 = models.TextField(u'Descripcion Imagen 1' , max_length = 100 , default='')
-    desc2 = models.TextField(u'Descripcion Imagen 2' , max_length = 100 , default='')
+    #img1 = models.FileField(u'Imagen de portada',upload_to = 'img_public', default='null')
+    #img2 = models.FileField(u'Imagen de portada',upload_to = 'img_public', default='null')
+    #desc1 = models.TextField(u'Descripcion Imagen 1' , max_length = 100 , default='')
+    #desc2 = models.TextField(u'Descripcion Imagen 2' , max_length = 100 , default='')
     descPub = models.TextField(u'Descripcion de la Publicacion' , max_length = 100 , default='Help')
 
     def __str__(self):
