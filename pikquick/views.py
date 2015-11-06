@@ -216,3 +216,10 @@ def followUnfollow(request):
 
 
     return redirect('/')
+
+def buscador(request, busqueda):
+    context = RequestContext(request)
+    posts = Entrada.objects.filter(usuario = busqueda)
+    return render_to_response('profiles.html',
+                              {'posts':posts},
+                              context)
