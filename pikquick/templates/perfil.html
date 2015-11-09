@@ -98,7 +98,7 @@
         </div>
 
         <textarea class="materialize-textarea" sytle=" padding:20%;" id="message_{{post.id}}" required data-validation-required-message="Please enter a message."></textarea>
-        <input class="btn waves-effect waves-light" type="button" id="btn_ver_{{post.id}}" name="enviar" value="Ver Comentarios"></input>
+        <button class="btn waves-effect waves-light" type="button" id="btn_ver_{{post.id}}" name="enviar" value="+"> Ver Comentarios </button>
         <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Enviar <i class="fa fa-paper-plane"></i></button>
 
     </div>
@@ -165,7 +165,7 @@
 $("#btn_enviar_{{post.id}}").click(function(){
         console.log("VAMO");
         var boton = document.getElementById("btn_ver_{{post.id}}")
-        boton.setAttribute('value', 'Esconder Comentarios');
+        boton.setAttribute('value', '-');
         var data={
             csrfmiddlewaretoken: '{{ csrf_token }}',
             id:'{{post.id}}',
@@ -189,9 +189,9 @@ $("#btn_enviar_{{post.id}}").click(function(){
     $("#btn_ver_{{post.id}}").click(function(){
 
         var boton = document.getElementById("btn_ver_{{post.id}}")
-        if (boton.value=="Esconder Comentarios"){
+        if (boton.value=="-"){
             document.getElementById('mensajes_{{post.id}}').style.display = 'none';
-            boton.setAttribute('value', 'Ver Comentarios');
+            boton.setAttribute('value', '+');
             console.log("mostrar");
         }
         else{
@@ -214,7 +214,7 @@ $("#btn_enviar_{{post.id}}").click(function(){
                     console.log(err.responseText);
                 },
             });
-            boton.setAttribute('value', 'Esconder Comentarios');
+            boton.setAttribute('value', '-');
 
             document.getElementById('mensajes_{{post.id}}').style.display = 'block';
         };
