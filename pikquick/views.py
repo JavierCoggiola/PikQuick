@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import requires_csrf_token
 from django.core.mail import send_mail
 from django.http import HttpResponse
-from pikquick.models import Entrada, Coment , Imagen
+from pikquick.models import Entrada, Coment, Follow , Imagen
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 
@@ -15,18 +15,38 @@ from django.core.urlresolvers import reverse
 @login_required(login_url='/usuario/ingreso')
 def inicio(request):
     context = RequestContext(request)
-    posts = Entrada.objects.all
+
+    user_reg = request.user
+    users_follow=[]
+    imagenes = Imagen.objects.all()
+    for followers in user_reg.who_follows.all():
+        users_follow.append(followers.follower)
+    posts = Entrada.objects.filter(usuario__in=users_follow)
+
     return render_to_response('inicio.html',
-                              {'posts':posts,},
+                              {'posts':posts,
+                              'imagenes': imagenes},
+                              context)
+
+@login_required(login_url='/usuario/ingreso')
+def inicioAll(request):
+    context = RequestContext(request)
+    posts = Entrada.objects.all()
+    imagenes = Imagen.objects.all()
+    return render_to_response('inicio.html',
+                              {'posts':posts,
+                              'imagenes': imagenes},
                               context)
 
 @login_required(login_url='/usuario/ingreso')
 def perfil(request):
     context = RequestContext(request)
     usuario = request.user.username
+    imagenes = Imagen.objects.all()
     posts = Entrada.objects.filter(usuario = usuario)
     return render_to_response('perfil.html',
-                              {'posts':posts},
+                              {'imagenes': imagenes,
+                              'posts':posts},
                               context)
 
 @requires_csrf_token
@@ -56,6 +76,14 @@ def nuevo_usuario(request):
             n_u.save()
             user = authenticate(username=username, password=password)
             login(request, user)
+
+            ####AUTOSEGUIRSE
+            toFollow = request.user
+            seguir = Follow()
+            seguir.following = request.user #YO
+            seguir.follower = toFollow #YO
+            seguir.save()
+
             return HttpResponse(status=204)
         #return redirect('/')
     return render_to_response('nuevousuario.html',
@@ -145,6 +173,7 @@ def save_message(request):
                               {'coments':coments},
                               context)
 
+@login_required(login_url='/usuario/ingreso')
 def ver_message(request):
     context = RequestContext(request)
     if request.method == 'POST':
@@ -166,12 +195,41 @@ def deletePost(request):
 
 def user_profile(request, username):
     context = RequestContext(request)
+    imagenes = Imagen.objects.all()
     posts = Entrada.objects.filter(usuario = username)
     return render_to_response('profiles.html',
-                              {'posts':posts},
+                              {'posts':posts,
+                              'imagenes': imagenes},
                               context)
 
-def follow(request):
+@login_required(login_url='/usuario/ingreso')
+def follow(request, toFollow_un):
     context = RequestContext(request)
-    return render_to_response()
+    toFollow = User.objects.get(username=toFollow_un)
+    seguir = Follow()
+    seguir.following = request.user #YO
+    seguir.follower = toFollow #El Otro
+    seguir.save()
 
+    return redirect('/')
+
+#boton dejar de seguir / no anda todavia
+@login_required(login_url='/usuario/ingreso')
+def followUnfollow(request):
+    context = RequestContext(request)
+
+    user = request.POST['usuario']
+    posts = Entrada.objects.filter(usuario__in=users_follow)
+
+
+
+    return redirect('/')
+
+def buscador(request, busqueda):
+    context = RequestContext(request)
+    imagenes = Imagen.objects.all()
+    posts = Entrada.objects.filter(usuario = busqueda)
+    return render_to_response('profiles.html',
+                              {'posts':posts,
+                              'imagenes': imagenes},
+                              context)
