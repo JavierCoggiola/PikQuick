@@ -64,17 +64,11 @@
             {% include "mensajes.html" %}
         </div>
 
-        <div  style="width:70%;margin-left:15%; " >
+        <textarea class="materialize-textarea" sytle=" padding:20%;" id="message_{{post.id}}" required data-validation-required-message="Please enter a message."></textarea>
+        <button class="btn waves-effect waves-light" type="button" id="btn_ver_{{post.id}}" name="enviar" value="+"> Ver Comentarios </button>
+        <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Enviar <i class="fa fa-paper-plane"></i></button>
 
-                <div class="input-field col s12" >
-                    <input name="username" id="message_{{post.id}}" type="text">
-                    <label id="message_{{post.id}}" class="center-align"><i class="fa fa-comment-o"></i>Agrega un comentario...</label>
-                </div>
-                <button class="btn waves-effect waves-light" type="button" id="btn_ver_{{post.id}}" name="enviar" value="+"> Ver Comentarios <i      class="fa fa-eye"></i></button>
-                <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Enviar <i class="fa fa-paper-plane"></i>
-                </button>
-        </div>
-</div>
+    </div>
 </div>
 
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>

@@ -16,27 +16,17 @@
                                     <div class="s12 l3 col">
                                         <img src="{% url 'pikquick:user_profile' post.usuario %}}" class="align-right circle">
                                     </div>
-                                    <div class="s12 l3 col center-align">
+                                    <div class="col s2 center-align">
                                         <h4>{{user.username}}</h4>
                                         </div>
-                                        <div class="col s12 m4 l2 center-align">
-                                        <label>Publicaciones</label>
-                                        <div class="sction">
-                                        <p>12</p>
+                                    <div class="col s2 center-align">
+                                        <label>Publicaciones</label> {{u.user.email}}{{u.user.email}} <br>
                                         </div>
+                                    <div class="col s2 center-align">
+                                        <label>Seguidores</label> {{u.user.password}} <br>
                                         </div>
-                                        <div class="col s12 m4 l2 center-align">
-                                        <label>Publicaciones</label>
-                                        <div class="sction">
-                                        <p>12</p>
-                                        </div>
-                                        </div>
-                                        <div class="col s12 m4 l2 center-align">
-                                        <label>Publicaciones</label>
-                                        <div class="sction">
-                                        <p>12</p>
-                                        </div>
-                                        </div>
+                                    <div class="col s2 center-align">
+                                        <label>Seguidos</label> {{u.user.phone}} <br>
                                         </div>
                                     </div>
                                 </div>
