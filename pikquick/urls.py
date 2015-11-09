@@ -17,4 +17,5 @@ urlpatterns = patterns('',
                        url(r'^seguir/(?P<toFollow_un>\w+)/$', 'pikquick.views.follow', name='follow'),
                        url(r'^todo/$', 'pikquick.views.inicioAll', name='inicioAll'),
                        url(r'^buscador/(?P<busqueda>\w+)/$', 'pikquick.views.buscador', name='buscador'),
+                       url(r'^notificaciones/$', 'pikquick.views.notificaciones', name='notificaciones'),
                       )

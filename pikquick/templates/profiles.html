@@ -1,5 +1,7 @@
+{% extends 'base.html' %}
 {% load staticfiles %}
-
+{% block content %}
+{% load staticfiles %}
 {% for post in posts %}
 <div class='section white center'>
     <div class='container' style='background: #f5f5f5;'>
@@ -7,34 +9,58 @@
             <ul class='collection'>
                 <li class='collection-item avatar'>
                     <img src="{% static 'images/perfil.jpg' %}" alt='' class='circle'>
-
-                    <a class='material-icons' style="margin-right:95%" href="{% url 'pikquick:perfil' post.usuario %}">{{post.usuario}}</a>
-
-                    <a class='secondary-content'><i class='material-icons'>{{post.fecha|timesince}}</i></a>
-                    {% if not post.usuario == user.username %}
-                        {% if post.usuario in lista_followers %}
-                        <a href="{% url 'pikquick:unFollow' post.usuario %}"><i class="fa fa-user-times" style="margin-right:1%"></i>Dejar de Seguir</a>
-                        {% else %}
-                        <a href="{% url 'pikquick:follow' post.usuario %}"><i class="fa fa-user-plus" style="margin-right:1%"></i>Seguir</a>
-                        {% endif %}
-                    {% endif %}
+                    <a class='material-icons' style="margin-right:95%" href="{% url 'pikquick:user_profile' post.usuario %}">{{post.usuario}}</a>
+                    <a class='secondary-content'>
+                        <i class='material-icons'>{{post.fecha|timesince}}</i>
+                    </a>
 
                     {% if user.is_staff or post.usuario == user.username %}
                     <a href="{% url 'pikquick:deletePost' %}" id="btn_delete_{{post.id}}"><i class="fa fa-trash-o" style="margin-right:1%"></i>Eliminar</a>
                     {% endif %}
 
+                    {% if post.usuario == user.username %}
+                    {% else %}
+                    <a href="{% url 'pikquick:follow' post.usuario %}"><i class="fa fa-user-plus" style="margin-right:20%"></i>Eliminar</a>
+                    {% endif %}
                 </li>
             </ul>
             <div class='row'>
-            {% for img in imagenes %}
-            {% if img.entrada == post %}
-            {% include "imagenes.html" %}
-            {% endif %}
-            {% endfor %}
+                {% for img in imagenes %}
+                {% if img.entrada == post %}
+                {% include "imagenes.html" %}
+                {% endif %}
+                {% endfor %}
+                <!--<div class="col s12 m6">
+                    <div class="card">
+                        <div class="card-image">
+                            <img class='activator' src='{{ MEDIA_URL }}{{img.img}}' style='width:400px; height:450px; margin-top:4%;'>
+                        </div>
+                        <div class="card-content">
+                            <p>{{img.desc}}</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="javascript:clickLink({{post.id}},1);"><i class="fa fa-heart fa-3x"></i></a>
+                            <p>Likes <span id="clicks-1{{post.id}}">0</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m6">
+                    <div class="card">
+                        <div class="card-image">
+                            <img class='activator' src='{{ MEDIA_URL }}{{img.img}}' style='width:400px; height:450px; margin-top:4%;'>
+                        </div>
+                        <div class="card-content">
+                            <p>{{img.desc}}</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="javascript:clickLink({{post.id}},2);"><i class="fa fa-heart fa-3x"></i></a>
+                            <p>Likes <span id="clicks-2{{post.id}}">0</span></p>
+                        </div>
+                    </div>-->
+                </div>
+                <h4>{{post.descPub}}</h4>
             </div>
-            <h4>{{post.descPub}}</h4>
         </div>
-    </div>
         <div id="mensajes_{{post.id}}">
             <h3>Mensaje:</h3>
             {% include "mensajes.html" %}
@@ -44,41 +70,66 @@
         <input class="btn waves-effect waves-light" type="button" id="btn_ver_{{post.id}}" name="enviar" value="Ver Comentarios"></input>
         <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Enviar <i class="fa fa-paper-plane"></i></button>
 
+    </div>
 </div>
 
-<script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
-
-<script>
-
-    function clickLink(idPost, value) {
-        var uno = "#clicks-1" + idPost
-        var dos = "#clicks-2" + idPost
-        if (value==1){
-            if ($(uno).html()=='1'){
-                $(uno).html('0');
+        <script>
+        function clickLink1(idPost) {
+            var a = "#clicks-1" + idPost
+            console.log($().html());
+            if ($(a).html()=='1'){
+                $(a).html('0');
             }
             else
             {
-                $(uno).html('1');
-                $(dos).html('0');
+                $(a).html('1');
             }
-        }else{
-            if ($(dos).html()=='1'){
-                $(dos).html('0');
+
+            /*i++;
+            if (i == 1) {
+                document.getElementById("clicks").innerHTML = i;
             }
             else
             {
-                $(dos).html('1');
-                $(uno).html('0');
-            }
+                document.getElementById("clicks").innerHTML = i;
+                i=0
+
+            }*/
         }
-    }
+        </script>
 
+        <script>
 
-    function Reset() {
-        i = 0;
-        document.getElementById("clicks").innerHTML = i;
-    }
+        function clickLink(idPost) {
+            var a = "#clicks-" + idPost
+            console.log($().html());
+            if ($(a).html()=='1'){
+                $(a).html('0');
+            }
+            else
+            {
+                $(a).html('1');
+            }
+
+            /*i++;
+            if (i == 1) {
+                document.getElementById("clicks").innerHTML = i;
+            }
+            else
+            {
+                document.getElementById("clicks").innerHTML = i;
+                i=0
+
+            }*/
+        }
+        function Reset() {
+            i = 0;
+            document.getElementById("clicks").innerHTML = i;
+        }
+        </script>
+
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
 
 $("#btn_enviar_{{post.id}}").click(function(){
         console.log("VAMO");
@@ -153,11 +204,12 @@ $("#btn_enviar_{{post.id}}").click(function(){
 
 </script>
 
-{% block scripts %}
+{% empty %}
+<p id="legal">
+    <h5 class="white-text"> No hay publicaciones en este momento</h5>
+</p>
+{% endfor %}
+
 <script>
 </script>
 {% endblock %}
-
-{% empty %}
-<p id="legal"><h5 class="black-text"> No hay publicaciones en este momento</h5></p>
-{% endfor %}

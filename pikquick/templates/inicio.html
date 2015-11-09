@@ -8,15 +8,6 @@
 
 <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 
-<script>
-
-    function enviar(){
-        search = $('#buscador').val();
-        search = search.split(' ').join("");
-        window.location.href= "/buscador/"+search+"/";
-    }
-
-</script>
 {% endblock %}
 
 {% block scripts %}

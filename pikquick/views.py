@@ -181,7 +181,7 @@ def crear_public(request):
         pub.usuario=request.user.username
         pub.descPub=request.POST['descPub']
         pub.save()
-        for i in range(1,3):
+        for i in range(1,5):
             key_img = 'img' + str(i)
             key_desc = 'desc' + str(i)
             if request.POST.get(key_img, True):
@@ -264,4 +264,17 @@ def buscador(request, busqueda):
     return render_to_response('profiles.html',
                               {'posts':posts,
                               'imagenes': imagenes},
+                              context)
+
+def notificaciones(request):
+    context = RequestContext(request)
+    user_reg = request.user
+    users_follow=[]
+    for followers in user_reg.who_follows.all():
+        users_follow.append(followers.follower)
+    posts = Entrada.objects.filter(usuario__in=users_follow)
+    coments = Coment.objects.filter(usuario__in=users_follow)
+    return render_to_response('notificaciones.html',
+                              {'posts':posts,
+                               'coments':coments},
                               context)
