@@ -11,42 +11,79 @@ from pikquick.models import Entrada, Coment, Follow , Imagen
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 
-# Create your views here.
 @login_required(login_url='/usuario/ingreso')
 def inicio(request):
     context = RequestContext(request)
 
-    user_reg = request.user
-    users_follow=[]
     imagenes = Imagen.objects.all()
+    user_reg = request.user
+    who_follows = user_reg.who_follows.values('follower__username')
+    users_follow=[]
+    lista_followers = []
+
     for followers in user_reg.who_follows.all():
         users_follow.append(followers.follower)
+
+    for v in who_follows:
+        lista_followers.append(v['follower__username'])
+
     posts = Entrada.objects.filter(usuario__in=users_follow)
 
     return render_to_response('inicio.html',
                               {'posts':posts,
-                              'imagenes': imagenes},
+                              'imagenes': imagenes,
+                              'lista_followers':lista_followers},
                               context)
 
 @login_required(login_url='/usuario/ingreso')
 def inicioAll(request):
     context = RequestContext(request)
+
+    user_reg = request.user
+    who_follows = user_reg.who_follows.values('follower__username')
+
+    lista_followers = []
+    for v in who_follows:
+        lista_followers.append(v['follower__username'])
+
     posts = Entrada.objects.all()
     imagenes = Imagen.objects.all()
     return render_to_response('inicio.html',
                               {'posts':posts,
-                              'imagenes': imagenes},
+                              'imagenes': imagenes,
+                              'lista_followers':lista_followers},
                               context)
 
 @login_required(login_url='/usuario/ingreso')
-def perfil(request):
+def perfil(request, usuario):
     context = RequestContext(request)
-    usuario = request.user.username
+    nombreusuario = usuario
+
+    ###
+
+    user_reg = request.user
+    who_follows = user_reg.who_follows.values('follower__username')
+
+    lista_followers = []
+    for v in who_follows:
+        lista_followers.append(v['follower__username'])
+
+    user2view = User.objects.get(username=usuario)
+    siguiendo=len(user2view.who_follows.values('follower__username'))
+    seguidores=len(user2view.who_is_followed.values('follower__username'))
+
+    ###
+
     imagenes = Imagen.objects.all()
     posts = Entrada.objects.filter(usuario = usuario)
     return render_to_response('perfil.html',
                               {'imagenes': imagenes,
-                              'posts':posts},
+                              'posts':posts,
+                              'seguidores':seguidores,
+                              'siguiendo':siguiendo,
+                              'usuario':nombreusuario,
+                              'lista_followers':lista_followers
+                              },
                               context)
 
 @requires_csrf_token
@@ -85,7 +122,6 @@ def nuevo_usuario(request):
             seguir.save()
 
             return HttpResponse(status=204)
-        #return redirect('/')
     return render_to_response('nuevousuario.html',
                               context)
 
@@ -185,6 +221,12 @@ def ver_message(request):
                               context)
 
 @login_required(login_url='/usuario/ingreso')
+def ajustes(request):
+    context = RequestContext(request)
+    return render_to_response('ajustes.html',
+                              context)
+
+@login_required(login_url='/usuario/ingreso')
 def deletePost(request):
     context = RequestContext(request)
     if request.method == 'POST':
@@ -192,15 +234,6 @@ def deletePost(request):
         post.delete()
     Entrada.objects.all()
     return redirect('/')
-
-def user_profile(request, username):
-    context = RequestContext(request)
-    imagenes = Imagen.objects.all()
-    posts = Entrada.objects.filter(usuario = username)
-    return render_to_response('profiles.html',
-                              {'posts':posts,
-                              'imagenes': imagenes},
-                              context)
 
 @login_required(login_url='/usuario/ingreso')
 def follow(request, toFollow_un):
@@ -213,16 +246,15 @@ def follow(request, toFollow_un):
 
     return redirect('/')
 
-#boton dejar de seguir / no anda todavia
 @login_required(login_url='/usuario/ingreso')
-def followUnfollow(request):
+def unFollow(request, toUnFollow_un):
     context = RequestContext(request)
-
-    user = request.POST['usuario']
-    posts = Entrada.objects.filter(usuario__in=users_follow)
-
-
-
+    user = request.user
+    toUnFollow = User.objects.get(username=toUnFollow_un) # user to unfollow
+    try:
+        Follow.objects.get(follower=toUnFollow, following=user).delete()
+    except:
+        print("No es posible dejar de seguir")
     return redirect('/')
 
 def buscador(request, busqueda):

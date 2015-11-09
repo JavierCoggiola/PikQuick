@@ -7,13 +7,16 @@
             <ul class='collection'>
                 <li class='collection-item avatar'>
                     <img src="{% static 'images/perfil.jpg' %}" alt='' class='circle'>
-                    <a class='material-icons' style="margin-right:95%" href="{% url 'pikquick:user_profile' post.usuario %}">{{post.usuario}}</a>
+
+                    <a class='material-icons' style="margin-right:95%" href="{% url 'pikquick:perfil' post.usuario %}">{{post.usuario}}</a>
 
                     <a class='secondary-content'><i class='material-icons'>{{post.fecha|timesince}}</i></a>
-
-                    {% if post.usuario == user.username %}
-                    {% else %}
-                    <a href="{% url 'pikquick:follow' post.usuario %}" id="btn_follow_{{post.usuario}}"><i class="fa fa-user-plus" style="margin-right:1%"></i>Seguir</a>
+                    {% if not post.usuario == user.username %}
+                        {% if post.usuario in lista_followers %}
+                        <a href="{% url 'pikquick:unFollow' post.usuario %}"><i class="fa fa-user-times" style="margin-right:1%"></i>Dejar de Seguir</a>
+                        {% else %}
+                        <a href="{% url 'pikquick:follow' post.usuario %}"><i class="fa fa-user-plus" style="margin-right:1%"></i>Seguir</a>
+                        {% endif %}
                     {% endif %}
 
                     {% if user.is_staff or post.usuario == user.username %}
@@ -23,38 +26,13 @@
                 </li>
             </ul>
             <div class='row'>
+
                 {% for img in imagenes %}
                 {% if img.entrada == post %}
                 {% include "imagenes.html" %}
                 {% endif %}
                 {% endfor %}
-                <!--<div class="col s12 m6">
-                    <div class="card">
-                        <div class="card-image">
-                            <img class='activator' src='{{ MEDIA_URL }}{{img.img}}' style='width:400px; height:450px; margin-top:4%;'>
-                        </div>
-                        <div class="card-content">
-                            <p>{{img.desc}}</p>
-                        </div>
-                        <div class="card-action">
-                            <a href="javascript:clickLink({{post.id}},1);"><i class="fa fa-heart fa-3x"></i></a>
-                            <p>Likes <span id="clicks-1{{post.id}}">0</span></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s12 m6">
-                    <div class="card">
-                        <div class="card-image">
-                            <img class='activator' src='{{ MEDIA_URL }}{{img.img}}' style='width:400px; height:450px; margin-top:4%;'>
-                        </div>
-                        <div class="card-content">
-                            <p>{{img.desc}}</p>
-                        </div>
-                        <div class="card-action">
-                            <a href="javascript:clickLink({{post.id}},2);"><i class="fa fa-heart fa-3x"></i></a>
-                            <p>Likes <span id="clicks-2{{post.id}}">0</span></p>
-                        </div>
-                    </div>-->
+
                 </div>
                 <h4>{{post.descPub}}</h4>
             </div>
@@ -71,7 +49,7 @@
     </div>
 </div>
 
-<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 
 <script>
 
@@ -175,28 +153,13 @@ $("#btn_enviar_{{post.id}}").click(function(){
         });
     });
 
-
-    $("#btn_follow_{{post.usuario}}").click(function(){
-        var data={
-            csrfmiddlewaretoken: '{{ csrf_token }}',
-            usuario:'{{post.usuario}}',
-        }
-        $.ajax({
-            type: "POST",
-            url: "{% url 'pikquick:followUnfollow' %}",
-            data: data,
-        });
-    });
-
 </script>
-
-
-{% empty %}
-<p id="legal"><h5 class="white-text"> No hay publicaciones en este momento</h5></p>
 
 {% block scripts %}
 <script>
 </script>
 {% endblock %}
 
+{% empty %}
+<p id="legal"><h5 class="black-text"> No hay publicaciones en este momento</h5></p>
 {% endfor %}
