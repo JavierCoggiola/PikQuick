@@ -236,7 +236,7 @@ def buscador(request, busqueda):
 
 def notificaciones(request):
     context = RequestContext(request)
-    entradas = Entrada.objects.all()
+    posts = Entrada.objects.all()
     coments = Coment.objects.all()
     return render_to_response('notificaciones.html',
                               {'posts':posts,

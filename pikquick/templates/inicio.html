@@ -3,28 +3,10 @@
 {% block post %}
 <title>PikQuick</title>
 
-<textarea class="materialize-textarea" sytle=" padding:20%;" id="buscador" required data-validation-required-message="Please enter a message."></textarea>
-<!--<button class="btn waves-effect waves-light" type="button" id="btn_buscar" name="enviar" value="+"> Enviar </button>-->
-<button class="btn waves-effect waves-light" id="btn_buscar" name="enviar" onclick="enviar()"> Enviar <i class="fa fa-paper-plane"></i></button>
-
 <div id="containLib" class="container center" style="width:100%">{% include 'post.html' %}</div>
 
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
-<script>
-
-    function enviar(){
-        search = $('#buscador').val();
-        search = search.split(' ').join("");
-
-        window.location.href= "/buscador/"+search+"/";
-
-
-    }
-
-
-
-</script>
 {% endblock %}
 
 {% block scripts %}
