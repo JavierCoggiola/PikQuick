@@ -59,12 +59,10 @@
                         <input placeholder="Comentario de la Imagen" maxlength="100" name="desc2" type="text" value="">
                     </div>
                 </div>
-
-
             </div>
 
 
-            <div><a href="#" class="card-panel teal lighten-1 waves-effect waves-orange btn col s2 offset-s10" id="addImg">Añadir Imagen</a></div>
+            <div><a href="#" class="card-panel teal lighten-1 waves-effect waves-orange btn col s2 offset-s10" id="addImg">Añadir Campo</a></div>
 
         </div>
         <a href="#" class="card-panel teal lighten-1 waves-effect waves-orange btn col s2 offset-s10" id="crear">Subir Publicacion</a>
@@ -116,14 +114,15 @@
         console.log(n);
         var div = document.createElement('div');
         div.className = 'col s6';
-        div.innerHTML = "<div class='input-field file-field col s2 m6'><img id='blah"+n+"'src='{% static 'images/up.png' %}' alt='your image' style='width:270px; height:320px;margin-left:3%;'/><form action='#'><div class='file-field input-field'><div class='btn'><span>File</span><input type='file' multiple multiple accept='image/*'></div><div class='file-path-wrapper'><input class='file-path validate' type='text' placeholder='Upload image' multiple accept='image/*'></div></div></form><input type='file' id='imgInp"+n+"' name='img"+n+"' multiple accept='image/*'/></div><div class='input-field col s6'><input placeholder='Comentario de la Imagen' maxlength='100' name='desc"+n+"' type='text' value=''></div>";
+        div.innerHTML = "<div class='input-field file-field col s2 m6'><img id='blah"+n+"'src='{% static 'images/up.png' %}' alt='your image' style='width:270px; height:320px;margin-left:3%;'/><form action='#'><div class='file-field input-field'><div class='btn'><span>File</span><input type='file' multiple multiple accept='image/*'></div><div class='file-path-wrapper'><input class='file-path validate' type='text' placeholder='Upload image' multiple accept='image/*'></div></div></form><input type='file' id='imgInp"+n+"' name='img"+n+"' multiple accept='image/*'/></div><div class='input-field col s6'><input placeholder='Comentario de la Imagen' maxlength='100' name='desc"+n+"' type='text' value=''><a href='#' class='card-panel red darken-3 waves-effect waves-orange btn col s4 offset-s2' id='remImg'>Eliminar</a></div>";
         document.getElementById('aca').appendChild(div);
         n=n+1;
     })
 
-    /*function removeRow(input) {
-        document.getElementById('content').removeChild( input.parentNode );
-    }*/
+    $('#remImg').click(function() {
+        console.log("borranding");
+        document.getElementById('aca').removeChild(input.parentNode);
+    })
 
 </script>
 {% endblock %}
