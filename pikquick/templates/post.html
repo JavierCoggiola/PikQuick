@@ -9,30 +9,35 @@
                     <img src="{% static 'images/perfil.jpg' %}" alt='' class='circle'>
                     <a class='material-icons' style="margin-right:95%" href="{% url 'pikquick:user_profile' post.usuario %}">{{post.usuario}}</a>
 
-                    <a class='secondary-content'><i class='material-icons'>{{post.fecha}}</i></a>
+                    <a class='secondary-content'><i class='material-icons'>{{post.fecha|timesince}}</i></a>
 
                     {% if post.usuario == user.username %}
                     {% else %}
-                    <a href="{% url 'pikquick:follow' %}"><i class="fa fa-user-plus" style="margin-right:20%"></i>Seguir</a>
+                    <a href="{% url 'pikquick:follow' post.usuario %}" id="btn_follow_{{post.usuario}}"><i class="fa fa-user-plus" style="margin-right:1%"></i>Seguir</a>
                     {% endif %}
 
                     {% if user.is_staff or post.usuario == user.username %}
-                    <a href=""><i class="fa fa-trash-o" style="margin-right:1%"></i>Eliminar</a>
+                    <a href="{% url 'pikquick:deletePost' %}" id="btn_delete_{{post.id}}"><i class="fa fa-trash-o" style="margin-right:1%"></i>Eliminar</a>
                     {% endif %}
 
                 </li>
             </ul>
             <div class='row'>
-                <div class="col s12 m6">
+                {% for img in imagenes %}
+                {% if img.entrada == post %}
+                {% include "imagenes.html" %}
+                {% endif %}
+                {% endfor %}
+                <!--<div class="col s12 m6">
                     <div class="card">
                         <div class="card-image">
-                            <img class='activator' src='{{ MEDIA_URL }}{{img.img1}}' style='width:400px; height:450px; margin-top:4%;'>
+                            <img class='activator' src='{{ MEDIA_URL }}{{img.img}}' style='width:400px; height:450px; margin-top:4%;'>
                         </div>
                         <div class="card-content">
-                            <p>{{img.desc1}}</p>
+                            <p>{{img.desc}}</p>
                         </div>
                         <div class="card-action">
-                            <a href="javascript:clickLink1({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
+                            <a href="javascript:clickLink({{post.id}},1);"><i class="fa fa-heart fa-3x"></i></a>
                             <p>Likes <span id="clicks-1{{post.id}}">0</span></p>
                         </div>
                     </div>
@@ -40,18 +45,18 @@
                 <div class="col s12 m6">
                     <div class="card">
                         <div class="card-image">
-                            <img class='activator' src='{{ MEDIA_URL }}{{img.img2}}' style='width:400px; height:450px; margin-top:4%;'>
+                            <img class='activator' src='{{ MEDIA_URL }}{{img.img}}' style='width:400px; height:450px; margin-top:4%;'>
                         </div>
                         <div class="card-content">
-                            <p>{{img.desc2}}</p>
+                            <p>{{img.desc}}</p>
                         </div>
                         <div class="card-action">
-                            <a href="javascript:clickLink({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
-                            <p>Likes <span id="clicks-{{post.id}}">0</span></p>
+                            <a href="javascript:clickLink({{post.id}},2);"><i class="fa fa-heart fa-3x"></i></a>
+                            <p>Likes <span id="clicks-2{{post.id}}">0</span></p>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
-                <h3>{{post.descPub}}</h3>
+                <h4>{{post.descPub}}</h4>
             </div>
         </div>
         <div id="mensajes_{{post.id}}">
@@ -69,37 +74,41 @@
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
 <script>
-    function clickLink1(idPost) {
-        var a = "#clicks-1" + idPost
-        console.log($().html());
-        if ($(a).html()=='1'){
-            $(a).html('0');
-        }
-        else
-        {
-            $(a).html('1');
+
+    function clickLink(idPost, value) {
+        var uno = "#clicks-1" + idPost
+        var dos = "#clicks-2" + idPost
+        if (value==1){
+            if ($(uno).html()=='1'){
+                $(uno).html('0');
+            }
+            else
+            {
+                $(uno).html('1');
+                $(dos).html('0');
+            }
+        }else{
+            if ($(dos).html()=='1'){
+                $(dos).html('0');
+            }
+            else
+            {
+                $(dos).html('1');
+                $(uno).html('0');
+            }
         }
     }
 
-    function clickLink(idPost) {
-        var a = "#clicks-" + idPost
-        console.log($().html());
-        if ($(a).html()=='1'){
-            $(a).html('0');
-        }
-        else
-        {
-            $(a).html('1');
-        }
-    }
 
     function Reset() {
         i = 0;
         document.getElementById("clicks").innerHTML = i;
     }
 
-    $("#btn_enviar_{{post.id}}").click(function(){
+$("#btn_enviar_{{post.id}}").click(function(){
         console.log("VAMO");
+        var boton = document.getElementById("btn_ver_{{post.id}}")
+        boton.setAttribute('value', '-');
         var data={
             csrfmiddlewaretoken: '{{ csrf_token }}',
             id:'{{post.id}}',
@@ -118,9 +127,7 @@
                 console.log(err.responseText);
             },
         });
-
     });
-
 
     $("#btn_ver_{{post.id}}").click(function(){
 
@@ -154,7 +161,33 @@
 
             document.getElementById('mensajes_{{post.id}}').style.display = 'block';
         };
+        });
+
+    $("#btn_delete_{{post.id}}").click(function(){
+        var data={
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            id:'{{post.id}}',
+        }
+        $.ajax({
+            type: "POST",
+            url: "{% url 'pikquick:deletePost' %}",
+            data: data,
+        });
     });
+
+
+    $("#btn_follow_{{post.usuario}}").click(function(){
+        var data={
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            usuario:'{{post.usuario}}',
+        }
+        $.ajax({
+            type: "POST",
+            url: "{% url 'pikquick:followUnfollow' %}",
+            data: data,
+        });
+    });
+
 </script>
 
 

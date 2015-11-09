@@ -27,9 +27,10 @@ class Imagen (models.Model):
     img = models.FileField(u'Imagen de portada',upload_to = 'img_public', default='null')
     desc = models.TextField(u'Descripcion Imagen' , max_length = 100 , default=' ')
     entrada = models.ForeignKey(Entrada, related_name="imagenes")
+    like = models.IntegerField(u'Likes', default='0')
 
     def __str__(self):
-       return self.desc.encode('utf8')
+        return self.desc.encode('utf8')
 
 
 class Coment(models.Model):
@@ -41,3 +42,11 @@ class Coment(models.Model):
 
     def __str__(self):
         return self.coment_txt.encode('utf8') +" / "+self.usuario.encode('utf8')
+
+class Follow(models.Model):
+    following = models.ForeignKey(User, related_name="who_follows")
+    follower = models.ForeignKey(User, related_name="who_is_followed")
+    follow_time = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return str(self.follow_time)

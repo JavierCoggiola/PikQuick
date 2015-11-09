@@ -20,21 +20,26 @@
 
                     {% if post.usuario == user.username %}
                     {% else %}
-                    <a href="{% url 'pikquick:follow' %}"><i class="fa fa-user-plus" style="margin-right:20%"></i>Eliminar</a>
+                    <a href="{% url 'pikquick:follow' post.usuario %}"><i class="fa fa-user-plus" style="margin-right:20%"></i>Eliminar</a>
                     {% endif %}
                 </li>
             </ul>
             <div class='row'>
-                <div class="col s12 m6">
+                {% for img in imagenes %}
+                {% if img.entrada == post %}
+                {% include "imagenes.html" %}
+                {% endif %}
+                {% endfor %}
+                <!--<div class="col s12 m6">
                     <div class="card">
                         <div class="card-image">
-                            <img class='activator' src='{{ MEDIA_URL }}{{post.img1}}' style='width:400px; height:450px; margin-top:4%;'>
+                            <img class='activator' src='{{ MEDIA_URL }}{{img.img}}' style='width:400px; height:450px; margin-top:4%;'>
                         </div>
                         <div class="card-content">
-                            <p>{{post.desc1}}</p>
+                            <p>{{img.desc}}</p>
                         </div>
                         <div class="card-action">
-                            <a href="javascript:clickLink1({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
+                            <a href="javascript:clickLink({{post.id}},1);"><i class="fa fa-heart fa-3x"></i></a>
                             <p>Likes <span id="clicks-1{{post.id}}">0</span></p>
                         </div>
                     </div>
@@ -42,35 +47,30 @@
                 <div class="col s12 m6">
                     <div class="card">
                         <div class="card-image">
-                            <img class='activator' src='{{ MEDIA_URL }}{{post.img2}}' style='width:400px; height:450px; margin-top:4%;'>
+                            <img class='activator' src='{{ MEDIA_URL }}{{img.img}}' style='width:400px; height:450px; margin-top:4%;'>
                         </div>
                         <div class="card-content">
-                            <p>{{post.desc2}}</p>
+                            <p>{{img.desc}}</p>
                         </div>
                         <div class="card-action">
-
-                            <a href="javascript:clickLink({{post.id}});">---<i class="fa fa-heart fa-3x"></i>---</a>
-        <p>Likes <span id="clicks-{{post.id}}">0</span></p>
+                            <a href="javascript:clickLink({{post.id}},2);"><i class="fa fa-heart fa-3x"></i></a>
+                            <p>Likes <span id="clicks-2{{post.id}}">0</span></p>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
-                <h3>{{post.descPub}}
+                <h4>{{post.descPub}}</h4>
             </div>
         </div>
+        <div id="mensajes_{{post.id}}">
+            <h3>Mensaje:</h3>
+            {% include "mensajes.html" %}
+        </div>
+
+        <textarea class="materialize-textarea" sytle=" padding:20%;" id="message_{{post.id}}" required data-validation-required-message="Please enter a message."></textarea>
+        <button class="btn waves-effect waves-light" type="button" id="btn_ver_{{post.id}}" name="enviar" value="+"> Ver Comentarios </button>
+        <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Enviar <i class="fa fa-paper-plane"></i></button>
+
     </div>
-
-    <div id="mensajes_{{post.id}}">
-        {% include "mensajes.html" %}
-    </div>
-
-    <h3>Mensaje:</h3>
-
-    <textarea class="materialize-textarea" sytle=" padding:20%;" id="message_{{post.id}}" required data-validation-required-message="Please enter a message."></textarea>
-    <button class="btn waves-effect waves-light" type="button" id="btn_ver_{{post.id}}" name="enviar" value="+"> Ver Comentarios </button>
-
-
-    <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Enviar <i class="fa fa-paper-plane"></i>
-    </button>
 </div>
 
         <script>
