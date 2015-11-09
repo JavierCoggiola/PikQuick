@@ -236,8 +236,12 @@ def buscador(request, busqueda):
 
 def notificaciones(request):
     context = RequestContext(request)
-    posts = Entrada.objects.all()
-    coments = Coment.objects.all()
+    user_reg = request.user
+    users_follow=[]
+    for followers in user_reg.who_follows.all():
+        users_follow.append(followers.follower)
+    posts = Entrada.objects.filter(usuario__in=users_follow)
+    coments = Coment.objects.filter(usuario__in=users_follow)
     return render_to_response('notificaciones.html',
                               {'posts':posts,
                                'coments':coments},
