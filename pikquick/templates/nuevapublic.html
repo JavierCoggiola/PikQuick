@@ -16,21 +16,23 @@
 
 
             <div class="row" style="margin-left:7%;" id="aca">
+
+
                 <div class="col s6">
                     <div class="input-field file-field col s2 m6">
-                        <img id='blah' src="{% static 'images/up.png' %}" alt='your image' style='width:270px; height:320px;margin-left:3%;'/>
+                        <img id="blah1" src="{% static 'images/up.png' %}" alt="your image" style="width:270px; height:320px;margin-left:3%;"/>
                         <form action="#">
                             <div class="file-field input-field">
                                 <div class="btn">
                                     <span>File</span>
-                                    <input type="file" multiple multiple accept='image/*'>
+                                    <input type="file" multiple multiple accept="image/*">
                                 </div>
                                 <div class="file-path-wrapper">
-                                    <input class="file-path validate" type="text" placeholder="Upload image" multiple accept='image/*'>
+                                    <input class="file-path validate" type="text" placeholder="Upload image" multiple accept="image/*">
                                 </div>
                             </div>
                         </form>
-                        <input type='file' id='imgInp' name="img1" multiple accept='image/*'/>
+                        <input type="file" id="imgInp1" name="img1" multiple accept="image/*"/>
                     </div>
                     <div class="input-field col s6">
                         <input placeholder="Comentario de la Imagen" maxlength="100" name="desc1" type="text" value="">
@@ -39,24 +41,26 @@
 
                 <div class="col s6">
                     <div class="input-field file-field col s2 m6">
-                        <img id='blah' src="{% static 'images/up.png' %}" alt='your image' style='width:270px; height:320px;margin-left:3%;'/>
+                        <img id="blah2" src="{% static 'images/up.png' %}" alt="your image" style="width:270px; height:320px;margin-left:3%;"/>
                         <form action="#">
                             <div class="file-field input-field">
                                 <div class="btn">
                                     <span>File</span>
-                                    <input type="file" multiple multiple accept='image/*'>
+                                    <input type="file" multiple multiple accept="image/*">
                                 </div>
                                 <div class="file-path-wrapper">
-                                    <input class="file-path validate" type="text" placeholder="Upload image" multiple accept='image/*'>
+                                    <input class="file-path validate" type="text" placeholder="Upload image" multiple accept="image/*">
                                 </div>
                             </div>
                         </form>
-                        <input type='file' id='imgInp' name="img2" multiple accept='image/*'/>
+                        <input type="file" id="imgInp2" name="img2" multiple accept="image/*"/>
                     </div>
                     <div class="input-field col s6">
                         <input placeholder="Comentario de la Imagen" maxlength="100" name="desc2" type="text" value="">
                     </div>
                 </div>
+
+
             </div>
 
 
@@ -84,12 +88,12 @@
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
-                $('#blah').attr('src', e.target.result);
+                $('#blah1').attr('src', e.target.result);
             }
             reader.readAsDataURL(input.files[0]);
         }
     }
-    $('#imgInp').change(function(){
+    $('#imgInp1').change(function(){
         readURL(this);
     });
 
@@ -97,22 +101,22 @@
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
-                $('#blah1').attr('src', e.target.result);
+                $('#blah2').attr('src', e.target.result);
             }
             reader.readAsDataURL(input.files[0]);
         }
     }
 
-    $('#imgInp1').change(function(){
+    $('#imgInp2').change(function(){
         readURL1(this);
     });
 
-    var n = 2;
+    var n = 3;
     $('#addImg').click(function() {
         console.log(n);
         var div = document.createElement('div');
         div.className = 'col s6';
-        div.innerHTML = n;
+        div.innerHTML = "<div class='input-field file-field col s2 m6'><img id='blah"+n+"'src='{% static 'images/up.png' %}' alt='your image' style='width:270px; height:320px;margin-left:3%;'/><form action='#'><div class='file-field input-field'><div class='btn'><span>File</span><input type='file' multiple multiple accept='image/*'></div><div class='file-path-wrapper'><input class='file-path validate' type='text' placeholder='Upload image' multiple accept='image/*'></div></div></form><input type='file' id='imgInp"+n+"' name='img"+n+"' multiple accept='image/*'/></div><div class='input-field col s6'><input placeholder='Comentario de la Imagen' maxlength='100' name='desc"+n+"' type='text' value=''></div>";
         document.getElementById('aca').appendChild(div);
         n=n+1;
     })
