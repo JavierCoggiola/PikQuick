@@ -2,29 +2,30 @@
 
 {% block post %}
 <div class='section white center'>
+    Publicaciones:
 {% for post in posts %}
+    {% if not post.usuario == user.username %}
     <div class="col s1 cyan-text" style="text-align: left">
         {{post.usuario}} Subio una publicacion
     </div>
     <div class="col s1 cyan-text" style="text-align: rigth">
         Hace  {{post.fecha|timesince}}
+    </div>
+    {% endif %}
+    <br>
 {% endfor %}
 <hr>
+    Comentarios:
 {% for comentario in coments %}
-    <div class="row ">
+    {% if not comentario.usuario == user.username %}
     <div class="col s1 cyan-text" style="text-align: left">
-        {{comentario.usuario}}
-    </div>
-    <div class="col s1 cyan-text" style="text-align: left">
-        Comento
-    </div>
-    <div class="col s10" style="text-align: left">
-        {{comentario.coment_txt}}
+        {{comentario.usuario}} Comento
     </div>
     <div class="col s1 cyan-text" style="text-align: rigth">
-        {{comentario.fecha_pub|timesince}}
+        {{comentario.coment_txt}} hola {{comentario.fecha_pub|timesince}}
     </div>
-<hr>
+    {% endif %}
+    <br>
 {% endfor %}
 </div>
 {% endblock %}
