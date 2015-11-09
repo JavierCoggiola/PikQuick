@@ -233,3 +233,12 @@ def buscador(request, busqueda):
                               {'posts':posts,
                               'imagenes': imagenes},
                               context)
+
+def notificaciones(request):
+    context = RequestContext(request)
+    posts = Entrada.objects.all()
+    coments = Coment.objects.all()
+    return render_to_response('notificaciones.html',
+                              {'posts':posts,
+                               'coments':coments},
+                              context)
