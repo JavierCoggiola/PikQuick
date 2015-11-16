@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<title>Perfil</title>
+<div class="minA">
+    <ul class="collapsible popout" data-collapsible="accordion">
+        <li>
+            <div class="collapsible-header red darken-3"><i class="fa fa-user"></i>Ajustes</div>
+            <div class="collapsible-body ">
+                <div class="row">
+                    <div class="col s12">
+                        <h4 class="center-align">Cambiar imagen de perfil</h4>
+
+
+                        <div class="input-field file-field col s12">
+                            <img id='blah' src="{% static 'images/up.png' %}" alt='your image' style='width:270px; height:320px;'/>
+                            <form action="#">
+                                <div class="file-field input-field">
+                                    <div class="btn">
+                                        <span>File</span>
+                                        <input type="file" multiple multiple accept='image/*'>
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input class="file-path validate" type="text" placeholder="Upload image" multiple accept='image/*'>
+                                    </div>
+                                </div>
+                            </form>
+                            <input type='file' id='imgInp' name="img1" multiple accept='image/*'/>
+                        </div>
+
+                    </div>
+
+                    <div class="col s12">
+
+
+                        <div class="row">
+                            <form class="col s12" action="{% url 'pikquick:cambiar_pass' %}" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <h4 class="center-align">Cambiar contraseña</h4>
+
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input placeholder="Contraseña antigua" name="password1" id="id_password1" type="password"  value="">
+                                        <label for="password">Contraseña antigua</label>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input placeholder="Contraseña nueva" name="password2" id="id_password2" type="password" value="">
+                                        <label for="password">Contraseña nueva</label>
+                                    </div>
+                                </div>
+
+                                <div class="right-align">
+                                    <button class="card-panel red lighten-1 waves-effect waves-orange btn-large" id="crear" type="submit">
+                                        Cambiar contraseña
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+{% block scripts %}
+<script>
+</script>
+{% endblock %}
+{% endblock %}

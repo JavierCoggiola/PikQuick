@@ -1,256 +1,35 @@
 {% extends 'base.html' %}
-{% load staticfiles %}
 {% block content %}
 {% load staticfiles %}
-{% for post in posts %}
 
-
-<div class="section white center">
-
-
-    <div class="row">
-        <div class="s10 offset-s1 col">
-            <div class="m12 col">
-                <div class="card">
-                    <div class="card-content row">
+        <div class="section white center">
+        <div class="row">
+            <div class="s10 offset-s1 col">
+                <div class="m12 col">
+                    <div class="card">
+                        <div class="card-content row">
                         <div class="s12 l3 col">
-                            <img src="{% url 'pikquick:user_profile' post.usuario %}}" class="align-right circle">
+                            <img src="{% static 'images/perfil.jpg' %}" class="align-right circle">
                         </div>
-                        <div class="s12 l3 col center-align">
-                            <h4>{{user.username}}</h4>
-                        </div>
-                        <div class="col s12 m4 l2 center-align">
-                            <label>Publicaciones</label>
-                            <div class="sction">
-                                <p>12</p>
+                        <div class="col s2 center-align">
+                            <h4>{{usuario}}</h4>
                             </div>
-                        </div>
-                        <div class="col s12 m4 l2 center-align">
-                            <label>Publicaciones</label>
-                            <div class="sction">
-                                <p>12</p>
+                        <div class="col s2 center-align">
+                            <label>Publicaciones</label> (nose) <br>
                             </div>
-                        </div>
-                        <div class="col s12 m4 l2 center-align">
-                            <label>Publicaciones</label>
-                            <div class="sction">
-                                <p>12</p>
+                        <div class="col s2 center-align">
+                            <label>Seguidores</label> {{seguidores}} <br>
+                            </div>
+                        <div class="col s2 center-align">
+                            <label>Seguidos</label> {{siguiendo}} <br>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-</div>
-
-
-<div class='section white center'>
-    <div class='container' style='background: #f5f5f5;'>
-        <div class='container' style='background:#f5f5f5; width:100%'>
-            <ul class='collection'>
-                <li class='collection-item avatar'>
-                    <img src="{% static 'images/perfil.jpg' %}" alt='' class='circle'>
-                    <a class='material-icons' style="margin-right:95%" href="{% url 'pikquick:user_profile' post.usuario %}">{{post.usuario}}</a>
-                    <a class='secondary-content'>
-                        <i class='material-icons'>{{post.fecha|timesince}}</i>
-                    </a>
-
-                    {% if user.is_staff %}
-                    <a href=""><i class="fa fa-trash-o" style="margin-right:1%"></i>Eliminar</a>
-                    {% endif %}
-
-                </li>
-            </ul>
-            <div class='row'>
-                {% for img in imagenes %}
-                {% if img.entrada == post %}
-                {% include "imagenes.html" %}
-                {% endif %}
-                {% endfor %}
-                <!--<div class="col s12 m6">
-<div class="card">
-<div class="card-image">
-<img class='activator' src='{{ MEDIA_URL }}{{img.img}}' style='width:400px; height:450px; margin-top:4%;'>
-</div>
-<div class="card-content">
-<p>{{img.desc}}</p>
-</div>
-<div class="card-action">
-<a href="javascript:clickLink({{post.id}},1);"><i class="fa fa-heart fa-3x"></i></a>
-<p>Likes <span id="clicks-1{{post.id}}">0</span></p>
-</div>
-</div>
-</div>
-<div class="col s12 m6">
-<div class="card">
-<div class="card-image">
-<img class='activator' src='{{ MEDIA_URL }}{{img.img}}' style='width:400px; height:450px; margin-top:4%;'>
-</div>
-<div class="card-content">
-<p>{{img.desc}}</p>
-</div>
-<div class="card-action">
-<a href="javascript:clickLink({{post.id}},2);"><i class="fa fa-heart fa-3x"></i></a>
-<p>Likes <span id="clicks-2{{post.id}}">0</span></p>
-</div>
-</div>-->
-            </div>
-            <h4>{{post.descPub}}</h4>
         </div>
-    </div>
-    <div id="mensajes_{{post.id}}">
-        <h3>Mensaje:</h3>
-        {% include "mensajes.html" %}
-    </div>
 
-    <textarea class="materialize-textarea" sytle=" padding:20%;" id="message_{{post.id}}" required data-validation-required-message="Please enter a message."></textarea>
-    <input class="btn waves-effect waves-light" type="button" id="btn_ver_{{post.id}}" name="enviar" value="Ver Comentarios"></input>
-<button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Enviar <i class="fa fa-paper-plane"></i></button>
+<div id="containLib" class="container center" style="width:100%">{% include 'post.html' %}</div>
 
-</div>
-</div>
-
-<script>
-    function clickLink1(idPost) {
-        var a = "#clicks-1" + idPost
-        console.log($().html());
-        if ($(a).html()=='1'){
-            $(a).html('0');
-        }
-        else
-        {
-            $(a).html('1');
-        }
-
-        /*i++;
-            if (i == 1) {
-                document.getElementById("clicks").innerHTML = i;
-            }
-            else
-            {
-                document.getElementById("clicks").innerHTML = i;
-                i=0
-
-            }*/
-    }
-</script>
-
-<script>
-
-    function clickLink(idPost) {
-        var a = "#clicks-" + idPost
-        console.log($().html());
-        if ($(a).html()=='1'){
-            $(a).html('0');
-        }
-        else
-        {
-            $(a).html('1');
-        }
-
-        /*i++;
-            if (i == 1) {
-                document.getElementById("clicks").innerHTML = i;
-            }
-            else
-            {
-                document.getElementById("clicks").innerHTML = i;
-                i=0
-
-            }*/
-    }
-    function Reset() {
-        i = 0;
-        document.getElementById("clicks").innerHTML = i;
-    }
-</script>
-
-<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script>
-
-    $("#btn_enviar_{{post.id}}").click(function(){
-        console.log("VAMO");
-        document.getElementById('mensajes_{{post.id}}').style.display = 'block';
-        var boton = document.getElementById("btn_ver_{{post.id}}")
-        boton.setAttribute('value', 'Esconder Comentarios');
-        var data={
-            csrfmiddlewaretoken: '{{ csrf_token }}',
-            id:'{{post.id}}',
-            coment_txt:$('#message_{{post.id}}').val(),
-        }
-        $.ajax({
-            type: "POST",
-            url: "{% url 'pikquick:save_message' %}",
-            data: data,
-            success: function(result){
-                $("#mensajes_{{post.id}}").html(result);
-                $("#message_{{post.id}}").val("");
-            },
-            error: function(err){
-                console.log("ERRRORRRR");
-                console.log(err.responseText);
-            },
-        });
-    });
-
-    $("#btn_ver_{{post.id}}").click(function(){
-
-        var boton = document.getElementById("btn_ver_{{post.id}}")
-        if (boton.value=="Esconder Comentarios"){
-            document.getElementById('mensajes_{{post.id}}').style.display = 'none';
-            boton.setAttribute('value', 'Ver Comentarios');
-            console.log("mostrar");
-        }
-        else{
-            console.log("mostrar");
-            var data={
-                csrfmiddlewaretoken: '{{ csrf_token }}',
-                id:'{{post.id}}',
-
-            }
-            $.ajax({
-                type: "POST",
-                url: "{% url 'pikquick:ver_message' %}",
-                data: data,
-                success: function(result){
-                    $("#mensajes_{{post.id}}").html(result);
-                    $("#message_{{post.id}}").val("");
-                },
-                error: function(err){
-                    console.log("ERRRORRRR");
-                    console.log(err.responseText);
-                },
-            });
-            boton.setAttribute('value', 'Esconder Comentarios');
-
-            document.getElementById('mensajes_{{post.id}}').style.display = 'block';
-        };
-    });
-
-    $("#btn_delete_{{post.id}}").click(function(){
-        var data={
-            csrfmiddlewaretoken: '{{ csrf_token }}',
-            id:'{{post.id}}',
-        }
-        $.ajax({
-            type: "POST",
-            url: "{% url 'pikquick:deletePost' %}",
-            data: data,
-        });
-    });
-
-</script>
-
-{% empty %}
-<p id="legal">
-<h5 class="white-text"> No hay publicaciones en este momento</h5>
-</p>
-{% endfor %}
-
-<script>
-</script>
 {% endblock %}
-
