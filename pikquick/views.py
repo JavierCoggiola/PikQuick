@@ -73,16 +73,19 @@ def perfil(request, usuario):
     seguidores=len(user2view.who_is_followed.values('follower__username'))
 
     ###
+    posts = Entrada.objects.filter(usuario = usuario)
+    entradas = posts.count()
 
     imagenes = Imagen.objects.all()
-    posts = Entrada.objects.filter(usuario = usuario)
+
     return render_to_response('perfil.html',
                               {'imagenes': imagenes,
                               'posts':posts,
                               'seguidores':seguidores,
                               'siguiendo':siguiendo,
                               'usuario':nombreusuario,
-                              'lista_followers':lista_followers
+                              'lista_followers':lista_followers,
+                              'entradas':entradas
                               },
                               context)
 
