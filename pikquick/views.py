@@ -69,8 +69,8 @@ def perfil(request, usuario):
         lista_followers.append(v['follower__username'])
 
     user2view = User.objects.get(username=usuario)
-    siguiendo=len(user2view.who_follows.values('follower__username'))
-    seguidores=len(user2view.who_is_followed.values('follower__username'))
+    siguiendo=len(user2view.who_follows.values('follower__username'))-1
+    seguidores=len(user2view.who_is_followed.values('follower__username'))-1
 
     ###
 
@@ -136,6 +136,12 @@ def ingreso_usuario(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
+                    if not Follow.objects.filter(follower=request.user, following=request.user).exists():
+                        toFollow = request.user
+                        seguir = Follow()
+                        seguir.following = request.user #YO
+                        seguir.follower = toFollow #YO
+                        seguir.save()
                     return HttpResponse("");
                 else:
                     return HttpResponse(status=203)
