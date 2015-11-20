@@ -9,7 +9,7 @@
             <ul class='collection'>
                 <li class='collection-item avatar'>
                     <img src="{% static 'images/perfil.jpg' %}" alt='' class='circle'>
-                    <a class='material-icons' style="margin-right:95%" href="{% url 'pikquick:user_profile' post.usuario %}">{{post.usuario}}</a>
+                    <a class='material-icons' style="margin-right:95%" href="{% url 'pikquick:perfil' post.usuario %}">{{post.usuario}}</a>
                     <a class='secondary-content'>
                         <i class='material-icons'>{{post.fecha|timesince}}</i>
                     </a>
