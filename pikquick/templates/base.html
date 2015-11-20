@@ -23,6 +23,9 @@
                     <a id="logo-container" style="left: 100px;" href="{% url 'pikquick:inicio' %}" class="truncate brand-logo"><img src="{% static 'images/logo.png' %}"></img></a>
 
                 <ul class="right hide-on-med-and-down">
+
+                    <li><button class="btn waves-effect waves-light" id="btn_buscar" name="enviar" onclick="enviar()"> Buscar </button></li>
+
                     <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Nueva Publicacion" href="{% url 'pikquick:nuevapublic' %}"><i class="fa fa-plus"></i></a></li>
 
                     <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Ver todas las publicaciones" href="{% url 'pikquick:inicioAll' %}"><i class="fa fa-clone"></i></a></li>
@@ -32,6 +35,9 @@
                     <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Perfil" href="{% if user.is_authenticated %}{% url 'pikquick:perfil' user.username %}{% else %}#!{% endif %}"><i class="fa fa-user"> {{user.username}}</i></a></li>
 
                     <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Salir" href="{% if user.is_authenticated %}{% url 'pikquick:salir_usuario' %}{% else %}#!{% endif %}"><i class="fa fa-sign-out fa-fw"></i></a></li>
+
+
+
                 </ul>
 
                 <!-- Para celular -->
@@ -49,29 +55,22 @@
                     <li><a class="modal-trigger" href="{% if user.is_authenticated %}{% url 'pikquick:salir_usuario' %}{% else %}#!{% endif %}}"><i class="fa fa-sign-out fa-fw left"></i>Salir</a></li>
                 </ul>
 
+                <div class="right">
+                    <form action="search">
+                        <div class="input-field">
 
-
-                			<div class="right">
-				<form>
-					<div class="input-field">
-						<input type="search" id="search-field" class="field" required maxlength="">
-						<label for="search-field"><i class="mdi-action-search"></i></label>
-						<i class="mdi-navigation-close close"></i>
-					</div>
-				</form>
-			</div>
-
-
-
+                            <input type="search" id="buscador">
+                            <label for="search-field" ><i class="mdi-action-search"></i></label>
+                            <i class="mdi-navigation-close close"></i>
+                        </div>
+                    </form>
+			     </div>
 
                 <a class="waves-effect circle button-collapse" style="margin:0 0 0 -50px;" href="#" data-activates="nav-mobile"><i class="mdi-navigation-menu"></i></a></div>
             </nav>
         </div>
 
     <a href="{% url 'pikquick:notificaciones' %}">Noti</a>
-
-    <textarea class="materialize-textarea" sytle=" padding:20%;" id="buscador" required data-validation-required-message="Please enter a message."></textarea>
-    <button class="btn waves-effect waves-light" id="btn_buscar" name="enviar" onclick="enviar()"> Enviar <i class="fa fa-paper-plane"></i></button>
 
     {% block post %}
     {% endblock %}
