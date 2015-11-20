@@ -268,12 +268,34 @@ def unFollow(request, toUnFollow_un):
 
 def buscador(request, busqueda):
     context = RequestContext(request)
-    imagenes = Imagen.objects.all()
-    posts = Entrada.objects.filter(usuario = busqueda)
-    return render_to_response('perfil.html',
-                              {'posts':posts,
-                              'imagenes': imagenes},
-                              context)
+    try:
+        imagenes = Imagen.objects.all()
+        posts = Entrada.objects.filter(usuario = busqueda)
+        nombreusuario = busqueda
+        user_reg = request.user
+        who_follows = user_reg.who_follows.values('follower__username')
+        lista_followers = []
+        for v in who_follows:
+            lista_followers.append(v['follower__username'])
+        user2view = User.objects.get(username=busqueda)
+        siguiendo=len(user2view.who_follows.values('follower__username'))-1
+        seguidores=len(user2view.who_is_followed.values('follower__username'))-1
+        entradas = posts.count()
+        imagenes = Imagen.objects.all()
+        return render_to_response('perfil.html',
+                                  {'imagenes': imagenes,
+                                  'posts':posts,
+                                  'seguidores':seguidores,
+                                  'siguiendo':siguiendo,
+                                  'usuario':nombreusuario,
+                                  'lista_followers':lista_followers,
+                                  'entradas':entradas
+                                  },
+                                  context)
+    except Exception as e:
+        print "No hay usuario"
+        return render_to_response('post.html',
+                                  context)
 
 def notificaciones(request):
     context = RequestContext(request)
