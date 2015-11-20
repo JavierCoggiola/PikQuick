@@ -14,55 +14,47 @@
                 <input placeholder="Pregunta de la publicacion" maxlength="100" name="descPub" type="text" value="">
             </div>
 
-
-            <div class="row" style="margin-left:7%;" id="aca">
-
-
-                <div class="col s6">
-                    <div class="input-field file-field col s2 m6">
-                        <img id="blah1" src="{% static 'images/up.png' %}" alt="your image" style="width:270px; height:320px;margin-left:3%;"/>
-                        <form action="#">
-                            <div class="file-field input-field">
-                                <div class="btn">
-                                    <span>File</span>
-                                    <input type="file" multiple multiple accept="image/*">
-                                </div>
-                                <div class="file-path-wrapper">
-                                    <input class="file-path validate" type="text" placeholder="Upload image" multiple accept="image/*">
-                                </div>
+            <div class="col s6">
+                <div class='input-field file-field col s6 m6'>
+                    <img id='blah1'src="{% static 'images/up.png' %}" alt='your image' style='width:270px; height:320px;margin-left:3%;'/>
+                    <form action='#'>
+                        <div class='file-field input-field'>
+                            <div class='btn'>
+                                <span>File</span>
+                                <input type='file' multiple multiple accept='image/*'>
                             </div>
-                        </form>
-                        <input type="file" id="imgInp1" name="img1" multiple accept="image/*"/>
-                    </div>
-                    <div class="input-field col s6">
-                        <input placeholder="Comentario de la Imagen" maxlength="100" name="desc1" type="text" value="">
-                    </div>
+                            <div class='file-path-wrapper'>
+                                <input class='file-path validate' type='text' placeholder='Upload image' multiple accept='image/*'>
+                            </div>
+                        </div>
+                    </form>
+                    <input type='file' id='imgInp1' name='img1' multiple accept='image/*'/>
                 </div>
-
-                <div class="col s6">
-                    <div class="input-field file-field col s2 m6">
-                        <img id="blah2" src="{% static 'images/up.png' %}" alt="your image" style="width:270px; height:320px;margin-left:3%;"/>
-                        <form action="#">
-                            <div class="file-field input-field">
-                                <div class="btn">
-                                    <span>File</span>
-                                    <input type="file" multiple multiple accept="image/*">
-                                </div>
-                                <div class="file-path-wrapper">
-                                    <input class="file-path validate" type="text" placeholder="Upload image" multiple accept="image/*">
-                                </div>
-                            </div>
-                        </form>
-                        <input type="file" id="imgInp2" name="img2" multiple accept="image/*"/>
-                    </div>
-                    <div class="input-field col s6">
-                        <input placeholder="Comentario de la Imagen" maxlength="100" name="desc2" type="text" value="">
-                    </div>
+                <div class='input-field col s5'>
+                    <input placeholder='Comentario de la Imagen' maxlength='100' name='desc1' type='text' value=''>
                 </div>
             </div>
 
-
-            <div><a href="#" class="card-panel teal lighten-1 waves-effect waves-orange btn col s2 offset-s10" id="addImg">Añadir Campo</a></div>
+            <div class="col s6">
+                <div class='input-field file-field col s6 m6'>
+                    <img id='blah2'src="{% static 'images/up.png' %}" alt='your image' style='width:270px; height:320px;margin-left:3%;'/>
+                    <form action='#'>
+                        <div class='file-field input-field'>
+                            <div class='btn'>
+                                <span>File</span>
+                                <input type='file' multiple multiple accept='image/*'>
+                            </div>
+                            <div class='file-path-wrapper'>
+                                <input class='file-path validate' type='text' placeholder='Upload image' multiple accept='image/*'>
+                            </div>
+                        </div>
+                    </form>
+                    <input type='file' id='imgInp2' name='img2' multiple accept='image/*'/>
+                </div>
+                <div class='input-field col s6'>
+                    <input placeholder='Comentario de la Imagen' maxlength='100' name='desc2' type='text' value=''>
+                </div>
+            </div>
 
         </div>
         <a href="#" class="card-panel teal lighten-1 waves-effect waves-orange btn col s2 offset-s10" id="crear">Subir Publicacion</a>

@@ -190,7 +190,7 @@ def crear_public(request):
         pub.usuario=request.user.username
         pub.descPub=request.POST['descPub']
         pub.save()
-        for i in range(1,5):
+        for i in range(1,3):
             key_img = 'img' + str(i)
             key_desc = 'desc' + str(i)
             if request.POST.get(key_img, True):
