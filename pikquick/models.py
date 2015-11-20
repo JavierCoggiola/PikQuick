@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import pre_delete
 
 class Entrada(models.Model):
     class Meta:
         verbose_name = "Publicacion"
-        verbose_name_plural = "Todas las Publicaciones"
+        verbose_name_plural = "Publicaciones"
         ordering = ['-fecha']
 
     usuario = models.CharField(u'Usuario', max_length = 100)
@@ -31,8 +32,8 @@ class Imagen (models.Model):
 
 class Coment(models.Model):
     class Meta:
-        verbose_name = "Publicacion"
-        verbose_name_plural = "Todas las Publicaciones"
+        verbose_name = "Comentario"
+        verbose_name_plural = "Comentarios"
         ordering = ['-fecha_pub']
     usuario = models.CharField(u'Usuario', max_length = 100, default=' ')
     fecha_pub = models.DateTimeField('date published', auto_now_add=True)
@@ -50,3 +51,10 @@ class Follow(models.Model):
 
     def __unicode__(self):
         return str(self.follow_time)
+
+def remove_images(sender, instance, **kwargs):
+    for imagen in instance.imagenes.all():
+        imagen.img.delete()
+        imagen.delete()
+
+pre_delete.connect(remove_images, sender=Entrada)
