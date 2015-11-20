@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block post %}
+<div id="containLib" class="container center" style="width:100%">
 <div class='section white center'>
     Publicaciones:
 {% for post in posts %}
@@ -27,5 +28,6 @@
     {% endif %}
     <br>
 {% endfor %}
+</div>
 </div>
 {% endblock %}
