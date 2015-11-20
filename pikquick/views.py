@@ -288,3 +288,31 @@ def notificaciones(request):
                               {'posts':posts,
                                'coments':coments},
                               context)
+
+def like(request, post, imge):
+    if request.method == 'POST':
+        for img in post.imagenes:
+            if img.id == imge:
+                img.liked.add(request.user)
+            else:
+                img.liked.remove(request.user)
+    return redirect("/")
+
+def countLike(request, post, imge):
+    post_obj = Entrada.objects.get(pk=post)
+    print post_obj
+    for img in post_obj.imagenes.all():
+        print img
+        print "{} - {} ".format(img.id, imge)
+        if int(img.id) == int(imge):
+            if request.user in img.liked.all():
+                img.liked.remove(request.user)
+            else:
+                img.liked.add(request.user)
+        else:
+            print "remove {}".format(request.user)
+            img.liked.remove(request.user)
+
+
+
+    return redirect("/")
