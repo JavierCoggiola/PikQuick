@@ -37,7 +37,6 @@
                     <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Salir" href="{% if user.is_authenticated %}{% url 'pikquick:salir_usuario' %}{% else %}#!{% endif %}"><i class="fa fa-sign-out fa-fw"></i></a></li>
 
 
-
                 </ul>
 
                 <!-- Para celular -->
@@ -58,7 +57,6 @@
                 <div class="right">
                     <form action="search">
                         <div class="input-field">
-
                             <input type="search" id="buscador">
                             <label for="search-field" ><i class="mdi-action-search"></i></label>
                             <i class="mdi-navigation-close close"></i>
@@ -71,6 +69,7 @@
         </div>
 
     <a href="{% url 'pikquick:notificaciones' %}">Noti</a>
+
 
     {% block post %}
     {% endblock %}
@@ -95,7 +94,6 @@
 <script>
 
 
-14
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script>
     function enviar(){

@@ -190,7 +190,7 @@ def crear_public(request):
         pub.usuario=request.user.username
         pub.descPub=request.POST['descPub']
         pub.save()
-        for i in range(1,5):
+        for i in range(1,3):
             key_img = 'img' + str(i)
             key_desc = 'desc' + str(i)
             if request.POST.get(key_img, True):
@@ -270,7 +270,7 @@ def buscador(request, busqueda):
     context = RequestContext(request)
     imagenes = Imagen.objects.all()
     posts = Entrada.objects.filter(usuario = busqueda)
-    return render_to_response('profiles.html',
+    return render_to_response('perfil.html',
                               {'posts':posts,
                               'imagenes': imagenes},
                               context)
@@ -283,6 +283,7 @@ def notificaciones(request):
         users_follow.append(followers.follower)
     posts = Entrada.objects.filter(usuario__in=users_follow)
     coments = Coment.objects.filter(usuario__in=users_follow)
+    coments = coments.order_by('fecha_pub')
     return render_to_response('notificaciones.html',
                               {'posts':posts,
                                'coments':coments},
