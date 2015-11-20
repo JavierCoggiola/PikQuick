@@ -33,7 +33,7 @@ class Coment(models.Model):
     class Meta:
         verbose_name = "Publicacion"
         verbose_name_plural = "Todas las Publicaciones"
-        ordering = ['-fecha_pub']
+        ordering = ['fecha_pub']
     usuario = models.CharField(u'Usuario', max_length = 100, default=' ')
     fecha_pub = models.DateTimeField('date published', auto_now_add=True)
     coment_txt = models.TextField('Comentatrio', max_length=100)
