@@ -270,7 +270,7 @@ def buscador(request, busqueda):
     context = RequestContext(request)
     imagenes = Imagen.objects.all()
     posts = Entrada.objects.filter(usuario = busqueda)
-    return render_to_response('profiles.html',
+    return render_to_response('perfil.html',
                               {'posts':posts,
                               'imagenes': imagenes},
                               context)
