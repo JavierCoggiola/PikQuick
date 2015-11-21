@@ -298,9 +298,14 @@ def like(request, post, imge):
                 img.liked.remove(request.user)
     return redirect("/")
 
-def countLike(request, post, imge):
+from django.http import JsonResponse
+from django.http import HttpResponse
+
+def countLike(request, post):
+    context = RequestContext(request)
+    imge = str(request.GET['imgid'])
     post_obj = Entrada.objects.get(pk=post)
-    print post_obj
+    cont=0
     for img in post_obj.imagenes.all():
         print img
         print "{} - {} ".format(img.id, imge)
@@ -312,7 +317,15 @@ def countLike(request, post, imge):
         else:
             print "remove {}".format(request.user)
             img.liked.remove(request.user)
+        if cont==0:
+            print "aa"
+            imagen1=img
+        else:
+            print "bb"
+            imagen2=img
+        cont+=1
 
-
-
-    return redirect("/")
+    likes1= str(imagen1.getLikes())
+    likes2= str(imagen2.getLikes())
+    data = {'image1': likes1, 'image2': likes2}
+    return JsonResponse(data)

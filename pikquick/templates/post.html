@@ -26,11 +26,54 @@
                 </li>
             </ul>
             <div class='row'>
+
                 {% for img in imagenes %}
-                {% if img.entrada == post %}
-                {% include "imagenes.html" %}
-                {% endif %}
+                    {% if img.entrada == post %}
+                        {% include "imagenes.html" %}
+                    {% endif %}
+
                 {% endfor %}
+                <script type="text/javascript" src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
+                <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+                <script>
+
+                    $('#{{post.id}}_1').click(function(){
+                        var value = $('#{{post.id}}_1').attr('imagenid');
+                          $.ajax({
+                                   type: "GET",
+                                   url: "{% url 'pikquick:countLike' post.id %}",
+                                   data: {'imgid':value,'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                                   success: function(response) {
+                                        $("#{{post.id}}_1").html(response['image1'])
+                                        $("#{{post.id}}_2").html(response['image2'])
+                                    },
+                                    error: function(rs, e) {
+                                        alert(e)
+                                    }
+                              });
+
+                        });
+                    $('#{{post.id}}_2').click(function(){
+                        var value = $('#{{post.id}}_2').attr('imagenid');
+                          $.ajax({
+                                   type: "GET",
+                                   url: "{% url 'pikquick:countLike' post.id %}",
+                                   data: {'imgid':value,'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                                   success: function(response) {
+                                        $("#{{post.id}}_1").html(response['image1'])
+                                        $("#{{post.id}}_2").html(response['image2'])
+                                    },
+                                    error: function(rs, e) {
+                                        alert(e)
+                                    }
+                              });
+
+                        });
+                    </script>
+
+
+
+
             </div>
             <h4 style="color:#616161;">{{post.descPub}}</h4>
         </div>
