@@ -57,7 +57,7 @@
                 <div class="right">
                     <form action="search">
                         <div class="input-field">
-                            <input type="search" id="buscador">
+                            <input type="search" id="buscador" class="noEnterSubmit">
                             <label for="search-field" ><i class="mdi-action-search"></i></label>
                             <i class="mdi-navigation-close close"></i>
                         </div>
@@ -90,16 +90,23 @@
 <!--Imports (jquery antes que materialize)-->
 <script type="text/javascript" src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
-<script>
 
 
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
 <script>
     function enviar(){
         search = $('#buscador').val();
         search = search.split(' ').join("");
         window.location.href= "/buscador/"+search+"/";
     }
+
+
+    $('.noEnterSubmit').keypress(function(e){
+    if ( e.which == 13 ) return false;
+    //or...
+    if ( e.which == 13 ) e.preventDefault();
+});
 </script>
 
 {% block scripts %}
