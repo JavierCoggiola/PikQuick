@@ -26,11 +26,54 @@
                 </li>
             </ul>
             <div class='row'>
+
                 {% for img in imagenes %}
-                {% if img.entrada == post %}
-                {% include "imagenes.html" %}
-                {% endif %}
+                    {% if img.entrada == post %}
+                        {% include "imagenes.html" %}
+                    {% endif %}
+
                 {% endfor %}
+                <script type="text/javascript" src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
+                <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+                <script>
+
+                    $('#{{post.id}}_1').click(function(){
+                        var value = $('#{{post.id}}_1').attr('imagenid');
+                          $.ajax({
+                                   type: "GET",
+                                   url: "{% url 'pikquick:countLike' post.id %}",
+                                   data: {'imgid':value,'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                                   success: function(response) {
+                                        $("#{{post.id}}_1").html(response['image1'])
+                                        $("#{{post.id}}_2").html(response['image2'])
+                                    },
+                                    error: function(rs, e) {
+                                        alert(e)
+                                    }
+                              });
+
+                        });
+                    $('#{{post.id}}_2').click(function(){
+                        var value = $('#{{post.id}}_2').attr('imagenid');
+                          $.ajax({
+                                   type: "GET",
+                                   url: "{% url 'pikquick:countLike' post.id %}",
+                                   data: {'imgid':value,'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                                   success: function(response) {
+                                        $("#{{post.id}}_1").html(response['image1'])
+                                        $("#{{post.id}}_2").html(response['image2'])
+                                    },
+                                    error: function(rs, e) {
+                                        alert(e)
+                                    }
+                              });
+
+                        });
+                    </script>
+
+
+
+
             </div>
             <h4 style="color:#616161;">{{post.descPub}}</h4>
         </div>
@@ -45,11 +88,13 @@
             <input name="username" id="message_{{post.id}}" type="text"></input>
             <label id="message_{{post.id}}" class="center-align"><i class="fa fa-comment-o"></i>Agrega un comentario...</label>
         </div>
-        <input type="button" id="btn_ver_{{post.id}}" style="background-color:transparent; border: none;margin: 0; padding: 0;" name="enviar" value="VER COMENTARIOS"></input>
-    <i class="fa fa-eye"></i>
+        <button class="btn waves-effect waves-light"> <input type="button" id="btn_ver_{{post.id}}" style="background-color:transparent; border: none;margin: 0; padding: 4%;padding-left:3%" name="enviar" value="VER COMENTARIOS"  ></input> <i class="fa fa-eye"></i>  </button>
+
     <button class="btn waves-effect waves-light" id="btn_enviar_{{post.id}}" name="enviar"> Enviar <i class="fa fa-paper-plane"></i></button>
     </div>
 </div>
+
+
 
 <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 <script>

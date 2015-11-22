@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <div class="col s12 m6">
     <div class="card">
         <div class="card-image">
@@ -8,8 +9,18 @@
         </div>
         <div class="card-action">
 
-             <a href="{% url 'pikquick:countLike' post.id img.id %}"><i id="btnmg" class="fa fa-heart-o" style="margin-right:1%" ></i>Like me {{img.getLikes}}</a>
+
+{% if forloop.counter|divisibleby:2 %}
+            <a id="{{post.id}}_2" imagenid="{{img.id}}"><i  class="fa fa-heart-o" style="margin-right:1%" ></i>Like me {{img.getLikes}}</a>
+
+{% else %}
+
+            <a id="{{post.id}}_1" imagenid="{{img.id}}"><i  class="fa fa-heart-o" style="margin-right:1%" ></i>Like me {{img.getLikes}}</a>
+
+            {% endif %}
+
 
         </div>
     </div>
 </div>
+
