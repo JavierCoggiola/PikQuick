@@ -7,8 +7,9 @@
             <p>{{img.desc}}</p>
         </div>
         <div class="card-action">
-            <a href="javascript:clickLink({{post.id}},1);"><i class="fa fa-heart fa-3x"></i></a>
-            <p>Likes <span id="clicks-1{{post.id}}">0</span></p>
+
+             <a href="{% url 'pikquick:countLike' post.id img.id %}"><i id="btnmg" class="fa fa-heart-o" style="margin-right:1%" ></i>Like me {{img.getLikes}}</a>
+
         </div>
     </div>
 </div>
