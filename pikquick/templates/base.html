@@ -26,6 +26,9 @@
 
                     <li><button class="btn waves-effect waves-light" id="btn_buscar" name="enviar" onclick="enviar()"> Buscar </button></li>
 
+                    <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Notificaciones" href="{% if user.is_authenticated %}{% url 'pikquick:notificaciones' %}{% else %}#!{% endif %}"><i class="fa fa-bell"></i></a></li>
+
+
                     <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Nueva Publicacion" href="{% url 'pikquick:nuevapublic' %}"><i class="fa fa-plus"></i></a></li>
 
                     <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Ver todas las publicaciones" href="{% url 'pikquick:inicioAll' %}"><i class="fa fa-clone"></i></a></li>
@@ -68,7 +71,6 @@
             </nav>
         </div>
 
-    <a href="{% url 'pikquick:notificaciones' %}">Noti</a>
 
     {% block post %}
     {% endblock %}
