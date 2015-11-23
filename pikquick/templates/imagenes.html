@@ -11,11 +11,13 @@
 
 
 {% if forloop.counter|divisibleby:2 %}
-            <a id="{{post.id}}_2" imagenid="{{img.id}}"><i  class="fa fa-heart-o" style="margin-right:1%" ></i>Like me {{img.getLikes}}</a>
+            <i  class="fa fa-heart-o" style="margin-right:1%" ></i>
+
+            <a id="{{post.id}}_2" imagenid="{{img.id}}"><i style="margin-right:1%" ></i>{{img.getLikes}} Me gusta</a>
 
 {% else %}
-
-            <a id="{{post.id}}_1" imagenid="{{img.id}}"><i  class="fa fa-heart-o" style="margin-right:1%" ></i>Like me {{img.getLikes}}</a>
+<i  class="fa fa-heart-o" style="margin-right:1%" ></i>
+            <a id="{{post.id}}_1" imagenid="{{img.id}}"><i style="margin-right:1%" ></i>{{img.getLikes}} Me gusta</a>
 
             {% endif %}
 

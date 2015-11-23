@@ -345,8 +345,9 @@ def countLike(request, post):
             print "bb"
             imagen2=img
         cont+=1
-
+    corazon= "fa fa-heart-o"
+    mg= " Me gusta"
     likes1= str(imagen1.getLikes())
     likes2= str(imagen2.getLikes())
-    data = {'image1': likes1, 'image2': likes2}
+    data = {'image1': likes1 + mg, 'image2': likes2 + mg}
     return JsonResponse(data)

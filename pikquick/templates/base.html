@@ -26,6 +26,9 @@
 
                     <li><button class="btn waves-effect waves-light" id="btn_buscar" name="enviar" onclick="enviar()"> Buscar </button></li>
 
+                    <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Notificaciones" href="{% if user.is_authenticated %}{% url 'pikquick:notificaciones' %}{% else %}#!{% endif %}"><i class="fa fa-bell"></i></a></li>
+
+
                     <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Nueva Publicacion" href="{% url 'pikquick:nuevapublic' %}"><i class="fa fa-plus"></i></a></li>
 
                     <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Ver todas las publicaciones" href="{% url 'pikquick:inicioAll' %}"><i class="fa fa-clone"></i></a></li>
@@ -57,7 +60,7 @@
                 <div class="right">
                     <form action="search">
                         <div class="input-field">
-                            <input type="search" id="buscador">
+                            <input type="search" id="buscador" class="noEnterSubmit">
                             <label for="search-field" ><i class="mdi-action-search"></i></label>
                             <i class="mdi-navigation-close close"></i>
                         </div>
@@ -68,7 +71,6 @@
             </nav>
         </div>
 
-    <a href="{% url 'pikquick:notificaciones' %}">Noti</a>
 
     {% block post %}
     {% endblock %}
@@ -90,16 +92,23 @@
 <!--Imports (jquery antes que materialize)-->
 <script type="text/javascript" src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
-<script>
 
 
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
 <script>
     function enviar(){
         search = $('#buscador').val();
         search = search.split(' ').join("");
         window.location.href= "/buscador/"+search+"/";
     }
+
+
+    $('.noEnterSubmit').keypress(function(e){
+    if ( e.which == 13 ) return false;
+    //or...
+    if ( e.which == 13 ) e.preventDefault();
+});
 </script>
 
 {% block scripts %}
