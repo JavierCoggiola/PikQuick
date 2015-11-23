@@ -294,9 +294,9 @@ def buscador(request, busqueda):
                                   context)
     except Exception as e:
         mensaje = "No existe ese usuario"
-        return redirect("/",
+        return render_to_response('inicio.html',
                         {'mensaje':mensaje},
-                       )
+                        context)
 
 def notificaciones(request):
     context = RequestContext(request)
