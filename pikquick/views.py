@@ -90,16 +90,6 @@ def perfil(request, usuario):
                               context)
 
 @requires_csrf_token
-@login_required(login_url='/usuario/ingreso')
-def enviar_mail(request):
-    context = RequestContext(request)
-    if request.method=='POST':
-        send_mail(request.POST['asunto'], request.POST['mensaje'], 'pikquickcontact@gmail.com',
-    [request.POST['mail']], fail_silently=False)
-    return render_to_response('perfil.html',
-                              context)
-
-@requires_csrf_token
 def nuevo_usuario(request):
     context = RequestContext(request)
     if request.method=='POST':
@@ -172,9 +162,9 @@ def cambiar_pass(request):
             request.user.save()
             user= authenticate(username=request.user.username, password=request.POST['password2'])
             login(request, user)
-            return redirect("/perfil")
-    return render_to_response('perfil.html',
-                              context)
+            logout(request)
+            return redirect("/")
+    return redirect("/")
 
 @login_required(login_url='/usuario/ingreso')
 def nuevapublic(request):
