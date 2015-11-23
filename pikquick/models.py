@@ -24,7 +24,11 @@ class Imagen (models.Model):
     img = models.FileField(u'Imagen de portada',upload_to = 'img_public', default='null')
     desc = models.TextField(u'Descripcion Imagen' , max_length = 100 , default=' ')
     entrada = models.ForeignKey(Entrada, related_name="imagenes")
-    #like = models.IntegerField(u'Likes', default='0')
+    liked = models.ManyToManyField(User)
+
+    def getLikes(self):
+        return len(self.liked.all())
+
 
     def __str__(self):
         return self.desc.encode('utf8')
@@ -34,7 +38,7 @@ class Coment(models.Model):
     class Meta:
         verbose_name = "Comentario"
         verbose_name_plural = "Comentarios"
-        ordering = ['-fecha_pub']
+        ordering = ['fecha_pub']
     usuario = models.CharField(u'Usuario', max_length = 100, default=' ')
     fecha_pub = models.DateTimeField('date published', auto_now_add=True)
     coment_txt = models.TextField('Comentatrio', max_length=100)

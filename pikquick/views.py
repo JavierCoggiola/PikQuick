@@ -258,12 +258,35 @@ def unFollow(request, toUnFollow_un):
 
 def buscador(request, busqueda):
     context = RequestContext(request)
-    imagenes = Imagen.objects.all()
-    posts = Entrada.objects.filter(usuario = busqueda)
-    return render_to_response('perfil.html',
-                              {'posts':posts,
-                              'imagenes': imagenes},
-                              context)
+    try:
+        imagenes = Imagen.objects.all()
+        posts = Entrada.objects.filter(usuario = busqueda)
+        nombreusuario = busqueda
+        user_reg = request.user
+        who_follows = user_reg.who_follows.values('follower__username')
+        lista_followers = []
+        for v in who_follows:
+            lista_followers.append(v['follower__username'])
+        user2view = User.objects.get(username=busqueda)
+        siguiendo=len(user2view.who_follows.values('follower__username'))-1
+        seguidores=len(user2view.who_is_followed.values('follower__username'))-1
+        entradas = posts.count()
+        imagenes = Imagen.objects.all()
+        return render_to_response('perfil.html',
+                                  {'imagenes': imagenes,
+                                  'posts':posts,
+                                  'seguidores':seguidores,
+                                  'siguiendo':siguiendo,
+                                  'usuario':nombreusuario,
+                                  'lista_followers':lista_followers,
+                                  'entradas':entradas
+                                  },
+                                  context)
+    except Exception as e:
+        mensaje = "No existe ese usuario"
+        return redirect("/",
+                        {'mensaje':mensaje},
+                       )
 
 def notificaciones(request):
     context = RequestContext(request)
@@ -273,8 +296,50 @@ def notificaciones(request):
         users_follow.append(followers.follower)
     posts = Entrada.objects.filter(usuario__in=users_follow)
     coments = Coment.objects.filter(usuario__in=users_follow)
-    coments = coments.order_by('fecha_pub')
+    coments = coments.order_by('-fecha_pub')
     return render_to_response('notificaciones.html',
                               {'posts':posts,
                                'coments':coments},
                               context)
+
+def like(request, post, imge):
+    if request.method == 'POST':
+        for img in post.imagenes:
+            if img.id == imge:
+                img.liked.add(request.user)
+            else:
+                img.liked.remove(request.user)
+    return redirect("/")
+
+from django.http import JsonResponse
+from django.http import HttpResponse
+
+def countLike(request, post):
+    context = RequestContext(request)
+    imge = str(request.GET['imgid'])
+    post_obj = Entrada.objects.get(pk=post)
+    cont=0
+    for img in post_obj.imagenes.all():
+        print img
+        print "{} - {} ".format(img.id, imge)
+        if int(img.id) == int(imge):
+            if request.user in img.liked.all():
+                img.liked.remove(request.user)
+            else:
+                img.liked.add(request.user)
+        else:
+            print "remove {}".format(request.user)
+            img.liked.remove(request.user)
+        if cont==0:
+            print "aa"
+            imagen1=img
+        else:
+            print "bb"
+            imagen2=img
+        cont+=1
+    corazon= "fa fa-heart-o"
+    mg= " Me gusta"
+    likes1= str(imagen1.getLikes())
+    likes2= str(imagen2.getLikes())
+    data = {'image1': likes1 + mg, 'image2': likes2 + mg}
+    return JsonResponse(data)

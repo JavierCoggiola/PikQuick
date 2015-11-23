@@ -1,33 +1,66 @@
 {% extends 'base.html' %}
 
 {% block post %}
-<div id="containLib" class="container center" style="width:100%">
+<div id="containLib" class="container center" style="width:40%">
 <div class='section white center'>
-    Publicaciones:
+        <h3>Publicaciones</h3>
+    <br>
+    <br>
     {% for post in posts %}
     {% if not post.usuario == user.username %}
-    <div class="col s1 cyan-text" style="text-align: left">
-        {{post.usuario}} Subio una publicacion
+    <div class="card">
+        <div class="col s12">
+            <h5>{{post.usuario}} Subio una publicacion</h5>
+        </div>
+                <div class="col s12">
+                <h5>"{{post.descPub}}" </h5>
+        </div>
+        <div style="text-align: rigth">
+            <h6 >Hace  {{post.fecha|timesince}}</h6>
+        </div>
+
+        {% endif %}
+        <br>
     </div>
-    <div class="col s1 cyan-text" style="text-align: rigth">
-        Hace  {{post.fecha|timesince}}
-    </div>
-    {% endif %}
-    <br>
     {% endfor %}
-    <hr>
-    Comentarios:
+
+    <br>
+    <br>
+
+
+    </div>
+    </div>
+<div id="containLib" class="container center" style="width:40%">
+<div class='section white center'>
+
+        <h3>Comentarios</h3>
+    <br>
+    <br>
     {% for comentario in coments %}
     {% if not comentario.usuario == user.username %}
-    <div class="col s1 cyan-text" style="text-align: left">
-        {{comentario.usuario}} Comento
+    <div class="card">
+        <div class="col s12">
+            <h5>{{comentario.usuario}} Comento: </h5>
+        </div>
+
+        <div class="col s12">
+                <h5>"{{comentario.coment_txt}}" </h5>
+        </div>
+
+        <div style="text-align: rigth">
+            <h6 > Hace  {{comentario.fecha_pub|timesince}}</h6>
+        </div>
+
+        {% endif %}
+        <br>
     </div>
-    <div class="col s1 cyan-text" style="text-align: rigth">
-        {{comentario.coment_txt}} : {{comentario.fecha_pub|timesince}}
-    </div>
-    {% endif %}
-    <br>
     {% endfor %}
-</div>
-</div>
+
+    <br>
+    <br>
+
+
+    </div>
+    </div>
+
 {% endblock %}

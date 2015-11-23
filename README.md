@@ -15,11 +15,9 @@ Los casos de uso son muy diversos , puede ser desde preguntar donde salen una no
 <li>Dudas en comprar ropa (este pantalon o el otro , esta zapatillas o las otras , etc)</li>
 <li>Queres saber donde salen tus amigos una noche , y mandas la duda y que ellos voten a donde van a salir</li>
 <li>No sabes si comer Hamburgesa o Milanesa y te importa saber que dicen los demas , y bueno subi la duda a nuestra aplicacion</li>
-<<<<<<< HEAD
-=======
+
 
 
 Primer Mockup:
 
 <img src="Mockup.png" alt="Mockup" style="width:304px;height:228px;">
->>>>>>> PikQuick/master

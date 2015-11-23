@@ -18,4 +18,6 @@ urlpatterns = patterns('',
                        url(r'^todo/$', 'pikquick.views.inicioAll', name='inicioAll'),
                        url(r'^buscador/(?P<busqueda>\w+)/$', 'pikquick.views.buscador', name='buscador'),
                        url(r'^notificaciones/$', 'pikquick.views.notificaciones', name='notificaciones'),
+                       url(r'^like/(?P<post>\w+)/(?P<imge>\w+)/$', 'pikquick.views.like', name='like'),
+                       url(r'^countlike/(?P<post>\w+)/$', 'pikquick.views.countLike', name='countLike'),
                       )
