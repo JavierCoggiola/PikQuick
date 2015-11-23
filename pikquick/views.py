@@ -293,8 +293,10 @@ def buscador(request, busqueda):
                                   },
                                   context)
     except Exception as e:
-        print "No hay usuario"
-        return redirect("/")
+        mensaje = "No existe ese usuario"
+        return redirect("/",
+                        {'mensaje':mensaje},
+                       )
 
 def notificaciones(request):
     context = RequestContext(request)
