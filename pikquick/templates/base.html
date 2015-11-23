@@ -24,7 +24,7 @@
 
                 <ul class="right hide-on-med-and-down">
 
-                    <li><button class="btn waves-effect waves-light" id="btn_buscar" name="enviar" onclick="enviar()"> Buscar </button></li>
+                    <li><a class="waves-effect waves-light" id="btn_buscar" name="enviar" onclick="enviar()"> Buscar </a></li>
 
                     <li><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Notificaciones" href="{% if user.is_authenticated %}{% url 'pikquick:notificaciones' %}{% else %}#!{% endif %}"><i class="fa fa-bell"></i></a></li>
 
