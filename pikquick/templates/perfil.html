@@ -12,16 +12,25 @@
                             <img src="{% static 'images/perfil.jpg' %}" class="align-right circle">
                         </div>
                         <div class="col s2 center-align">
-                            <h4>{{usuario}}</h4>
+                            <h3>{{usuario}}</h3>
                             </div>
                         <div class="col s2 center-align">
-                            <label>Publicaciones</label>{{entradas}} <br>
+                            <label><h6>Publicaciones</h6></label>
+                            <div class="section">
+                            <font size="5" style="font:22px">{{entradas}} <br>
+                            </div>
                             </div>
                         <div class="col s2 center-align">
-                            <label>Seguidores</label> {{seguidores}} <br>
+                            <label><h6>Seguidores</h6> </label>
+                            <div class="section">
+                            <font size="5" style="font:22px">{{seguidores}}</font> <br>
+                            </div>
                             </div>
                         <div class="col s2 center-align">
-                            <label>Seguidos</label> {{siguiendo}} <br>
+                            <label><h6>Seguidos</h6> </label>
+                            <div class="section">
+                            <font size="5" style="font:22px">{{siguiendo}}</font> <br>
+                            </div>
                             </div>
                         </div>
                     </div>
